@@ -6,611 +6,291 @@
 
     <title>Solace — Insights</title>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
         rel="stylesheet"
     >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
-        rel="stylesheet"
-    >
-
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        background: "#051424",
-                        primary: "#d4e4fa",
-                        secondary: "#a8cfbc",
-                        secondaryContainer: "#294e3f",
-                        surfaceContainer: "#122131",
-                        surfaceHigh: "#1c2b3c",
-                        muted: "#c6c6cd"
-                    },
-
-                    fontFamily: {
-                        display: ["Manrope", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                        mono: ["JetBrains Mono", "monospace"]
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
         body {
-            margin: 0;
             background:
-                radial-gradient(
-                    circle at 25% 0%,
-                    rgba(41,78,63,.25),
-                    transparent 35%
-                ),
+                radial-gradient(circle at 20% 0%, rgba(41,78,63,.25), transparent 35%),
                 #051424;
         }
 
         .glass {
-            background: rgba(39,54,71,.42);
+            background: rgba(18,33,49,.55);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,.08);
         }
 
-        .mood-button {
-            transition:
-                transform .2s ease,
-                border-color .2s ease,
-                background .2s ease;
+        .mood {
+            transition: .2s ease;
         }
 
-        .mood-button:hover {
-            transform: translateY(-2px);
-        }
-
-        .mood-button.selected {
-            background: rgba(41,78,63,.75);
+        .mood.selected {
+            background: rgba(41,78,63,.8);
             border-color: rgba(168,207,188,.6);
-            box-shadow: 0 0 0 1px rgba(168,207,188,.12);
         }
 
         input[type="range"] {
-            accent-color: #a8cfbc;
+            accent-color: #A8CFBC;
         }
     </style>
 </head>
 
-<body class="text-primary font-body min-h-screen">
+<body class="min-h-screen text-white">
 
-    <!-- Desktop nav -->
-    <header class="hidden md:flex fixed top-0 left-0 right-0 z-40 h-16 glass border-b border-white/5">
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
 
-        <div class="w-full max-w-7xl mx-auto px-8 flex items-center justify-between">
+    if (!localStorage.getItem("access_token")) {
+        window.location.href = "login.html";
+    }
+</script>
+
+<header class="fixed top-0 left-0 right-0 z-40 glass border-b border-white/5">
+
+    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+
+        <a href="dashboard.html"
+           class="text-xl font-bold text-[#A8CFBC]">
+            Solace
+        </a>
+
+        <nav class="flex items-center gap-4 text-sm">
 
             <a href="dashboard.html"
-               class="font-display text-xl font-bold text-secondary">
-                Solace
-            </a>
-
-            <nav class="flex items-center gap-2">
-
-                <a href="dashboard.html"
-                   class="px-4 py-2 rounded-xl text-sm text-white/55 hover:text-white hover:bg-white/5 transition">
-                    Dashboard
-                </a>
-
-                <a href="insights.html"
-                   class="px-4 py-2 rounded-xl text-sm text-secondary bg-secondaryContainer/70 font-semibold">
-                    Insights
-                </a>
-
-                <a href="chat.html"
-                   class="px-4 py-2 rounded-xl text-sm text-white/55 hover:text-white hover:bg-white/5 transition">
-                    AI Companion
-                </a>
-
-            </nav>
-
-        </div>
-    </header>
-
-    <!-- Main -->
-    <main class="max-w-7xl mx-auto px-5 md:px-8 py-24 md:py-28">
-
-        <!-- Header -->
-        <section class="mb-8">
-
-            <p class="text-xs uppercase tracking-[0.2em] text-secondary">
-                Daily check-in
-            </p>
-
-            <h1
-                id="welcome-message"
-                class="mt-3 text-3xl md:text-4xl font-display font-bold text-white"
-            >
-                How are you feeling today?
-            </h1>
-
-            <p class="mt-3 text-white/50 max-w-2xl">
-                Take a moment to check in with yourself. Your answers can
-                help build a clearer picture of your emotional patterns.
-            </p>
-
-        </section>
-
-        <!-- Mood selector -->
-        <section class="glass rounded-3xl p-6 md:p-8">
-
-            <div class="flex items-center justify-between gap-4 mb-7">
-
-                <div>
-                    <h2 class="text-xl font-display font-bold text-white">
-                        Choose your mood
-                    </h2>
-
-                    <p class="mt-1 text-sm text-white/45">
-                        Select the option that feels closest right now.
-                    </p>
-                </div>
-
-                <span
-                    id="selected-mood-label"
-                    class="hidden md:block text-sm text-secondary font-semibold"
-                >
-                    Nothing selected
-                </span>
-
-            </div>
-
-            <div id="mood-grid"
-                 class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-
-                <button
-                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
-                    data-mood="joyful"
-                    type="button"
-                >
-                    <span class="material-symbols-outlined text-yellow-300">
-                        sentiment_very_satisfied
-                    </span>
-
-                    <span class="block mt-4 font-semibold text-white">
-                        Joyful
-                    </span>
-
-                    <span class="block mt-1 text-xs text-white/40">
-                        Energized & positive
-                    </span>
-                </button>
-
-                <button
-                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
-                    data-mood="content"
-                    type="button"
-                >
-                    <span class="material-symbols-outlined text-secondary">
-                        sentiment_satisfied
-                    </span>
-
-                    <span class="block mt-4 font-semibold text-white">
-                        Content
-                    </span>
-
-                    <span class="block mt-1 text-xs text-white/40">
-                        Calm & comfortable
-                    </span>
-                </button>
-
-                <button
-                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
-                    data-mood="neutral"
-                    type="button"
-                >
-                    <span class="material-symbols-outlined text-white/70">
-                        sentiment_neutral
-                    </span>
-
-                    <span class="block mt-4 font-semibold text-white">
-                        Neutral
-                    </span>
-
-                    <span class="block mt-1 text-xs text-white/40">
-                        Neither high nor low
-                    </span>
-                </button>
-
-                <button
-                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
-                    data-mood="anxious"
-                    type="button"
-                >
-                    <span class="material-symbols-outlined text-orange-300">
-                        sentiment_dissatisfied
-                    </span>
-
-                    <span class="block mt-4 font-semibold text-white">
-                        Anxious
-                    </span>
-
-                    <span class="block mt-1 text-xs text-white/40">
-                        Restless or worried
-                    </span>
-                </button>
-
-                <button
-                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
-                    data-mood="sad"
-                    type="button"
-                >
-                    <span class="material-symbols-outlined text-blue-300">
-                        sentiment_very_dissatisfied
-                    </span>
-
-                    <span class="block mt-4 font-semibold text-white">
-                        Sad
-                    </span>
-
-                    <span class="block mt-1 text-xs text-white/40">
-                        Low or heavy
-                    </span>
-                </button>
-
-            </div>
-
-        </section>
-
-        <!-- Energy -->
-        <section class="glass rounded-3xl p-6 md:p-8 mt-6">
-
-            <div class="flex items-center justify-between">
-
-                <div>
-                    <h2 class="text-xl font-display font-bold text-white">
-                        Energy level
-                    </h2>
-
-                    <p class="mt-1 text-sm text-white/45">
-                        How much energy do you have right now?
-                    </p>
-                </div>
-
-                <div class="w-14 h-14 rounded-2xl bg-secondaryContainer flex items-center justify-center">
-
-                    <span
-                        id="energy-value"
-                        class="text-xl font-display font-bold text-secondary"
-                    >
-                        5
-                    </span>
-
-                </div>
-
-            </div>
-
-            <input
-                id="energy-slider"
-                type="range"
-                min="1"
-                max="10"
-                value="5"
-                class="w-full mt-8"
-            >
-
-            <div class="flex justify-between text-xs text-white/35 mt-2">
-                <span>Very low</span>
-                <span>Balanced</span>
-                <span>Very high</span>
-            </div>
-
-        </section>
-
-        <!-- Save -->
-        <section class="mt-6 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-
-            <button
-                id="save-mood-button"
-                class="flex-1 bg-secondary text-slate-950 rounded-2xl px-6 py-4 font-semibold hover:opacity-90 transition"
-            >
-                Save Check-In
-            </button>
-
-            <a
-                href="chat.html"
-                class="flex-1 glass rounded-2xl px-6 py-4 text-center font-semibold text-white hover:bg-white/10 transition"
-            >
-                Talk About How You Feel
-            </a>
-
-        </section>
-
-        <p
-            id="save-status"
-            class="mt-4 text-sm text-center text-white/45 min-h-5"
-        ></p>
-
-        <!-- History -->
-        <section class="mt-12">
-
-            <div class="flex items-center justify-between mb-6">
-
-                <div>
-                    <p class="text-xs uppercase tracking-[0.2em] text-secondary">
-                        History
-                    </p>
-
-                    <h2 class="mt-2 text-2xl font-display font-bold text-white">
-                        Recent emotional rhythm
-                    </h2>
-                </div>
-
-                <a href="dashboard.html"
-                   class="text-sm text-secondary font-semibold">
-                    Dashboard →
-                </a>
-
-            </div>
-
-            <div class="glass rounded-3xl p-6">
-
-                <div
-                    id="history-chart"
-                    class="h-64 flex items-end gap-3"
-                >
-                    <!-- Populated by JavaScript -->
-                </div>
-
-                <div
-                    id="history-labels"
-                    class="mt-3 grid grid-cols-7 text-center text-xs text-white/35"
-                >
-                    <!-- Populated by JavaScript -->
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-    <!-- Mobile nav -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 glass border-t border-white/5 px-4 py-3">
-
-        <div class="grid grid-cols-3">
-
-            <a href="dashboard.html"
-               class="flex flex-col items-center gap-1 text-white/50">
-                <span class="material-symbols-outlined">
-                    dashboard
-                </span>
-                <span class="text-[11px]">
-                    Dashboard
-                </span>
+               class="text-white/45">
+                Dashboard
             </a>
 
             <a href="insights.html"
-               class="flex flex-col items-center gap-1 text-secondary">
-                <span class="material-symbols-outlined">
-                    insights
-                </span>
-                <span class="text-[11px]">
-                    Insights
-                </span>
+               class="text-[#A8CFBC]">
+                Insights
             </a>
 
             <a href="chat.html"
-               class="flex flex-col items-center gap-1 text-white/50">
-                <span class="material-symbols-outlined">
-                    chat
-                </span>
-                <span class="text-[11px]">
-                    Chat
-                </span>
+               class="text-white/45">
+                Chat
             </a>
+
+        </nav>
+
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 pt-28 pb-16">
+
+    <section>
+
+        <p class="text-xs uppercase tracking-[.2em] text-[#A8CFBC]">
+            Daily check-in
+        </p>
+
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold">
+            How are you feeling today?
+        </h1>
+
+        <p class="mt-4 text-white/50 max-w-2xl leading-7">
+            Choose the mood that feels closest right now, then
+            describe your current energy level.
+        </p>
+
+    </section>
+
+    <section class="glass rounded-3xl p-6 md:p-8 mt-10">
+
+        <h2 class="text-xl font-bold">
+            Your mood
+        </h2>
+
+        <div id="moodGrid"
+             class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-6">
+
+            <button class="mood glass rounded-2xl p-5 text-left"
+                    data-mood="joyful">
+                <span class="text-2xl">😊</span>
+                <p class="mt-3 font-semibold">Joyful</p>
+            </button>
+
+            <button class="mood glass rounded-2xl p-5 text-left"
+                    data-mood="content">
+                <span class="text-2xl">🙂</span>
+                <p class="mt-3 font-semibold">Content</p>
+            </button>
+
+            <button class="mood glass rounded-2xl p-5 text-left"
+                    data-mood="neutral">
+                <span class="text-2xl">😐</span>
+                <p class="mt-3 font-semibold">Neutral</p>
+            </button>
+
+            <button class="mood glass rounded-2xl p-5 text-left"
+                    data-mood="anxious">
+                <span class="text-2xl">😟</span>
+                <p class="mt-3 font-semibold">Anxious</p>
+            </button>
+
+            <button class="mood glass rounded-2xl p-5 text-left"
+                    data-mood="sad">
+                <span class="text-2xl">😔</span>
+                <p class="mt-3 font-semibold">Sad</p>
+            </button>
 
         </div>
 
-    </nav>
+    </section>
 
-    <script src="api.js"></script>
-    <script src="auth.js"></script>
-    <script src="insights.js"></script>
+    <section class="glass rounded-3xl p-6 md:p-8 mt-6">
 
-    <script>
-        let selectedMood = null;
+        <div class="flex justify-between">
 
-        const moodButtons =
-            document.querySelectorAll(".mood-button");
+            <div>
+                <h2 class="text-xl font-bold">
+                    Energy
+                </h2>
 
-        const energySlider =
-            document.getElementById("energy-slider");
+                <p class="mt-1 text-sm text-white/40">
+                    How much energy do you have right now?
+                </p>
+            </div>
 
-        const energyValue =
-            document.getElementById("energy-value");
+            <div id="energyValue"
+                 class="text-2xl font-bold text-[#A8CFBC]">
+                5
+            </div>
 
-        const selectedMoodLabel =
-            document.getElementById("selected-mood-label");
+        </div>
 
-        const saveButton =
-            document.getElementById("save-mood-button");
+        <input
+            id="energy"
+            type="range"
+            min="1"
+            max="10"
+            value="5"
+            class="w-full mt-8"
+        >
 
-        const saveStatus =
-            document.getElementById("save-status");
+        <div class="flex justify-between text-xs text-white/30">
+            <span>Very low</span>
+            <span>Balanced</span>
+            <span>Very high</span>
+        </div>
 
-        moodButtons.forEach(button => {
+    </section>
+
+    <button
+        id="save"
+        class="w-full mt-6 rounded-2xl bg-[#A8CFBC] text-slate-950 py-4 font-semibold"
+    >
+        Save Check-In
+    </button>
+
+    <p id="status"
+       class="mt-4 text-center text-sm text-white/40">
+    </p>
+
+    <section class="glass rounded-3xl p-6 mt-10">
+
+        <h2 class="text-xl font-bold">
+            Recent history
+        </h2>
+
+        <div id="history"
+             class="mt-6 space-y-3">
+        </div>
+
+    </section>
+
+</main>
+
+<script>
+    let selectedMood = null;
+
+    const authHeaders = () => ({
+        Authorization:
+            `Bearer ${localStorage.getItem("access_token")}`
+    });
+
+    document.querySelectorAll(".mood")
+        .forEach(button => {
 
             button.addEventListener("click", () => {
 
-                moodButtons.forEach(item => {
-                    item.classList.remove("selected");
-                });
+                document.querySelectorAll(".mood")
+                    .forEach(item => {
+                        item.classList.remove("selected");
+                    });
 
                 button.classList.add("selected");
 
                 selectedMood =
                     button.dataset.mood;
-
-                selectedMoodLabel.textContent =
-                    selectedMood.charAt(0).toUpperCase() +
-                    selectedMood.slice(1);
             });
-
         });
 
-        energySlider.addEventListener("input", () => {
-            energyValue.textContent =
-                energySlider.value;
+    document.getElementById("energy")
+        .addEventListener("input", event => {
+
+            document.getElementById("energyValue")
+                .textContent =
+                event.target.value;
         });
 
-        function renderHistory(history = []) {
+    document.getElementById("save")
+        .addEventListener("click", async () => {
 
-            const chart =
-                document.getElementById("history-chart");
-
-            const labels =
-                document.getElementById("history-labels");
-
-            chart.innerHTML = "";
-            labels.innerHTML = "";
-
-            if (!history.length) {
-
-                const fallback =
-                    [30, 45, 55, 40, 65, 50, 70];
-
-                const dayNames =
-                    ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-                fallback.forEach((value, index) => {
-
-                    const wrapper =
-                        document.createElement("div");
-
-                    wrapper.className =
-                        "flex-1 h-full flex items-end";
-
-                    const bar =
-                        document.createElement("div");
-
-                    bar.className =
-                        "w-full bg-secondary/45 rounded-t-xl";
-
-                    bar.style.height =
-                        `${value}%`;
-
-                    wrapper.appendChild(bar);
-                    chart.appendChild(wrapper);
-
-                    const label =
-                        document.createElement("span");
-
-                    label.textContent =
-                        dayNames[index];
-
-                    labels.appendChild(label);
-                });
-
-                return;
-            }
-
-            history.slice(-7).forEach(entry => {
-
-                const wrapper =
-                    document.createElement("div");
-
-                wrapper.className =
-                    "flex-1 h-full flex items-end";
-
-                const bar =
-                    document.createElement("div");
-
-                bar.className =
-                    "w-full bg-secondary/55 rounded-t-xl";
-
-                const value =
-                    Number(entry.energy ?? entry.value ?? 50);
-
-                bar.style.height =
-                    `${Math.max(5, Math.min(100, value * 10))}%`;
-
-                wrapper.appendChild(bar);
-                chart.appendChild(wrapper);
-
-                const label =
-                    document.createElement("span");
-
-                label.textContent =
-                    entry.day || entry.date || "—";
-
-                labels.appendChild(label);
-            });
-        }
-
-        async function saveMood() {
+            const status =
+                document.getElementById("status");
 
             if (!selectedMood) {
-
-                saveStatus.textContent =
-                    "Please select your mood first.";
-
-                saveStatus.className =
-                    "mt-4 text-sm text-center text-yellow-300";
-
+                status.textContent =
+                    "Please choose a mood first.";
                 return;
             }
 
             const energy =
-                Number(energySlider.value);
-
-            if (!getToken()) {
-
-                saveStatus.textContent =
-                    "Please log in before saving your check-in.";
-
-                saveStatus.className =
-                    "mt-4 text-sm text-center text-yellow-300";
-
-                return;
-            }
-
-            saveButton.disabled = true;
-            saveButton.textContent = "Saving...";
+                Number(
+                    document.getElementById("energy").value
+                );
 
             try {
 
-                /*
-                 * Expected backend endpoint:
-                 *
-                 * POST /mood/
-                 *
-                 * {
-                 *     "mood": "anxious",
-                 *     "energy": 4
-                 * }
-                 */
+                const response =
+                    await fetch(
+                        `${API_BASE}/mood/`,
+                        {
+                            method: "POST",
+                            headers: {
+                                ...authHeaders(),
+                                "Content-Type":
+                                    "application/json"
+                            },
+                            body: JSON.stringify({
+                                mood: selectedMood,
+                                energy
+                            })
+                        }
+                    );
 
-                await apiFetch("/mood/", {
-                    method: "POST",
+                const data =
+                    await response.json();
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail ||
+                        "Unable to save check-in."
+                    );
+                }
 
-                    body: JSON.stringify({
-                        mood: selectedMood,
-                        energy: energy
-                    })
-                });
+                status.className =
+                    "mt-4 text-center text-sm text-[#A8CFBC]";
 
-                saveStatus.textContent =
+                status.textContent =
                     "Your check-in has been saved.";
-
-                saveStatus.className =
-                    "mt-4 text-sm text-center text-secondary";
 
                 loadHistory();
 
@@ -618,57 +298,87 @@
 
                 console.error(error);
 
-                saveStatus.textContent =
-                    "The mood API is not connected yet.";
+                status.className =
+                    "mt-4 text-center text-sm text-yellow-300";
 
-                saveStatus.className =
-                    "mt-4 text-sm text-center text-yellow-300";
-
-            } finally {
-
-                saveButton.disabled = false;
-                saveButton.textContent =
-                    "Save Check-In";
-
+                status.textContent =
+                    error.message ||
+                    "Unable to save check-in.";
             }
-        }
+        });
 
-        async function loadHistory() {
+    async function loadHistory() {
 
-            if (!getToken()) {
-                renderHistory();
+        const container =
+            document.getElementById("history");
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/mood/history`,
+                    {
+                        headers: authHeaders()
+                    }
+                );
+
+            if (!response.ok) {
+                throw new Error();
+            }
+
+            const data =
+                await response.json();
+
+            const history =
+                data.history || [];
+
+            if (!history.length) {
+
+                container.innerHTML = `
+                    <p class="text-sm text-white/30">
+                        No mood history yet.
+                    </p>
+                `;
+
                 return;
             }
 
-            try {
+            container.innerHTML =
+                history
+                    .slice(0, 10)
+                    .map(item => `
+                        <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-4 flex items-center justify-between">
 
-                const data =
-                    await apiFetch("/mood/history");
+                            <div>
+                                <p class="font-semibold capitalize">
+                                    ${item.mood}
+                                </p>
 
-                renderHistory(
-                    Array.isArray(data)
-                        ? data
-                        : data.history || []
-                );
+                                <p class="text-xs text-white/30 mt-1">
+                                    ${item.date || ""}
+                                </p>
+                            </div>
 
-            } catch (error) {
+                            <span class="text-[#A8CFBC] font-bold">
+                                ${item.energy}/10
+                            </span>
 
-                console.error(
-                    "Mood history unavailable:",
-                    error
-                );
+                        </div>
+                    `)
+                    .join("");
 
-                renderHistory();
-            }
+        } catch {
+
+            container.innerHTML = `
+                <p class="text-sm text-yellow-300">
+                    Mood history is not connected to persistent storage yet.
+                </p>
+            `;
         }
+    }
 
-        saveButton.addEventListener(
-            "click",
-            saveMood
-        );
-
-        loadHistory();
-    </script>
+    loadHistory();
+</script>
 
 </body>
 </html>

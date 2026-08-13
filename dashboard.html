@@ -3,727 +3,361 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Solace — Dashboard</title>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
         rel="stylesheet"
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet"
     >
-
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        background: "#051424",
-                        surface: "#051424",
-                        primary: "#d4e4fa",
-                        secondary: "#a8cfbc",
-                        secondaryContainer: "#294e3f",
-                        surfaceContainer: "#122131",
-                        surfaceHigh: "#1c2b3c",
-                        surfaceHighest: "#273647",
-                        muted: "#c6c6cd",
-                        danger: "#ffb4ab"
-                    },
-
-                    fontFamily: {
-                        display: ["Manrope", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                        mono: ["JetBrains Mono", "monospace"]
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
         body {
-            margin: 0;
             background:
-                radial-gradient(
-                    circle at 70% 0%,
-                    rgba(41, 78, 63, 0.2),
-                    transparent 35%
-                ),
+                radial-gradient(circle at 70% 0%, rgba(41,78,63,.2), transparent 35%),
                 #051424;
         }
 
         .glass {
-            background: rgba(19, 33, 49, 0.58);
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .card-hover {
-            transition: transform .25s ease, border-color .25s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-3px);
-            border-color: rgba(168,207,188,.25);
-        }
-
-        .bar {
-            transition: height .5s ease;
-        }
-
-        .loading-shimmer {
-            animation: pulse 1.8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                opacity: .45;
-            }
-            50% {
-                opacity: .9;
-            }
+            background: rgba(18,33,49,.55);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.08);
         }
     </style>
 </head>
 
-<body class="text-primary font-body min-h-screen">
+<body class="min-h-screen text-white">
 
-    <!-- Desktop sidebar -->
-    <aside class="hidden md:flex fixed left-0 top-0 bottom-0 w-64 glass border-r border-white/5 flex-col p-5 z-40">
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
+    const token = localStorage.getItem("access_token");
 
-        <a href="dashboard.html"
-           class="font-display text-2xl font-bold text-secondary">
-            Solace
-        </a>
+    if (!token) {
+        window.location.href = "login.html";
+    }
+</script>
 
-        <p class="text-xs text-white/40 mt-1">
-            Mental wellness companion
-        </p>
+<header class="fixed top-0 left-0 right-0 z-40 glass border-b border-white/5">
 
-        <nav class="mt-10 space-y-2">
-
-            <a href="dashboard.html"
-               class="flex items-center gap-3 rounded-xl px-4 py-3 bg-secondaryContainer/70 text-secondary font-semibold">
-                <span class="material-symbols-outlined">
-                    dashboard
-                </span>
-
-                Dashboard
-            </a>
-
-            <a href="insights.html"
-               class="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition">
-                <span class="material-symbols-outlined">
-                    insights
-                </span>
-
-                Insights
-            </a>
-
-            <a href="chat.html"
-               class="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition">
-                <span class="material-symbols-outlined">
-                    chat
-                </span>
-
-                AI Companion
-            </a>
-
-            <button
-                id="assessment-button"
-                class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition text-left"
-            >
-                <span class="material-symbols-outlined">
-                    assignment
-                </span>
-
-                Assessment
-            </button>
-
-        </nav>
-
-        <div class="mt-auto">
-
-            <button
-                id="logout-button"
-                class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-white/50 hover:text-white hover:bg-white/5 transition"
-            >
-                <span class="material-symbols-outlined">
-                    logout
-                </span>
-
-                Logout
-            </button>
-
-        </div>
-
-    </aside>
-
-    <!-- Mobile header -->
-    <header class="md:hidden fixed top-0 left-0 right-0 z-40 glass border-b border-white/5 px-5 h-16 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
 
         <a href="dashboard.html"
-           class="font-display text-xl font-bold text-secondary">
+           class="font-bold text-xl text-[#A8CFBC]"
+           style="font-family:Manrope,sans-serif">
             Solace
         </a>
 
         <button
-            id="mobile-menu-button"
-            class="text-secondary"
+            id="logout"
+            class="text-sm text-white/50 hover:text-white"
         >
-            <span class="material-symbols-outlined">
-                menu
-            </span>
+            Logout
         </button>
 
-    </header>
-
-    <!-- Mobile menu -->
-    <div
-        id="mobile-menu"
-        class="hidden md:hidden fixed top-16 left-0 right-0 z-30 glass p-4 border-b border-white/5"
-    >
-        <div class="grid grid-cols-3 gap-2">
-
-            <a href="dashboard.html"
-               class="text-center p-3 rounded-xl bg-secondaryContainer text-secondary text-xs">
-                Dashboard
-            </a>
-
-            <a href="insights.html"
-               class="text-center p-3 rounded-xl bg-white/5 text-white/70 text-xs">
-                Insights
-            </a>
-
-            <a href="chat.html"
-               class="text-center p-3 rounded-xl bg-white/5 text-white/70 text-xs">
-                Chat
-            </a>
-
-        </div>
     </div>
+</header>
 
-    <!-- Main -->
-    <main class="md:ml-64 min-h-screen">
+<main class="max-w-7xl mx-auto px-5 pt-28 pb-16">
 
-        <div class="max-w-7xl mx-auto px-5 md:px-8 py-24 md:py-10">
+    <section>
 
-            <!-- Greeting -->
-            <section class="mb-8">
+        <p class="text-xs uppercase tracking-[.2em] text-[#A8CFBC]">
+            Your wellness space
+        </p>
 
-                <p class="text-sm text-secondary uppercase tracking-[0.18em]">
-                    Your space
+        <h1 id="welcome"
+            class="mt-3 text-3xl md:text-4xl font-bold"
+            style="font-family:Manrope,sans-serif">
+            Welcome back
+        </h1>
+
+        <p class="mt-2 text-white/50">
+            Here's your current Solace snapshot.
+        </p>
+
+    </section>
+
+    <section class="grid md:grid-cols-3 gap-5 mt-8">
+
+        <div class="glass rounded-3xl p-6">
+
+            <p class="text-sm text-white/40">
+                Current Vibe
+            </p>
+
+            <p id="vibe"
+               class="mt-3 text-2xl font-bold"
+               style="font-family:Manrope,sans-serif">
+                Loading...
+            </p>
+
+        </div>
+
+        <div class="glass rounded-3xl p-6">
+
+            <p class="text-sm text-white/40">
+                Overall Score
+            </p>
+
+            <p id="score"
+               class="mt-3 text-3xl font-bold"
+               style="font-family:Manrope,sans-serif">
+                —
+            </p>
+
+        </div>
+
+        <div class="glass rounded-3xl p-6">
+
+            <p class="text-sm text-white/40">
+                Latest Insight
+            </p>
+
+            <p id="insight"
+               class="mt-3 text-white/70 leading-6">
+                No insight available yet.
+            </p>
+
+        </div>
+
+    </section>
+
+    <section class="grid md:grid-cols-3 gap-5 mt-6">
+
+        <a href="assessment.html"
+           class="glass rounded-3xl p-6 hover:border-[#A8CFBC]/30 transition">
+
+            <span class="material-symbols-outlined text-[#A8CFBC]">
+                assignment
+            </span>
+
+            <h2 class="mt-5 text-xl font-bold">
+                Take Assessment
+            </h2>
+
+            <p class="mt-2 text-sm text-white/45">
+                Complete your wellness assessment and receive an AI-generated report.
+            </p>
+        </a>
+
+        <a href="insights.html"
+           class="glass rounded-3xl p-6 hover:border-[#A8CFBC]/30 transition">
+
+            <span class="material-symbols-outlined text-[#A8CFBC]">
+                insights
+            </span>
+
+            <h2 class="mt-5 text-xl font-bold">
+                Check In
+            </h2>
+
+            <p class="mt-2 text-sm text-white/45">
+                Log your mood and energy.
+            </p>
+        </a>
+
+        <a href="chat.html"
+           class="glass rounded-3xl p-6 hover:border-[#A8CFBC]/30 transition">
+
+            <span class="material-symbols-outlined text-[#A8CFBC]">
+                chat
+            </span>
+
+            <h2 class="mt-5 text-xl font-bold">
+                Talk to Solace
+            </h2>
+
+            <p class="mt-2 text-sm text-white/45">
+                Open the AI companion.
+            </p>
+        </a>
+
+    </section>
+
+    <section class="glass rounded-3xl p-6 mt-6">
+
+        <div class="flex justify-between items-center">
+
+            <div>
+                <p class="text-xs uppercase tracking-[.2em] text-[#A8CFBC]">
+                    Assessment history
                 </p>
 
-                <h1
-                    id="welcome-message"
-                    class="mt-2 text-3xl md:text-4xl font-display font-bold text-white"
-                >
-                    Welcome back
-                </h1>
+                <h2 class="mt-2 text-2xl font-bold">
+                    Your progress
+                </h2>
+            </div>
 
-                <p class="mt-2 text-white/50">
-                    Here's a snapshot of your recent wellness activity.
-                </p>
+            <button id="refresh"
+                    class="text-sm text-[#A8CFBC]">
+                Refresh
+            </button>
 
-            </section>
+        </div>
 
-            <!-- Top cards -->
-            <section class="grid md:grid-cols-3 gap-5 mb-6">
+        <div id="history"
+             class="mt-6 space-y-3">
+        </div>
 
-                <div class="glass rounded-3xl p-6 card-hover">
+    </section>
 
-                    <div class="flex justify-between items-start">
+</main>
 
-                        <div>
-                            <p class="text-sm text-white/50">
-                                Current Vibe
-                            </p>
+<script>
+    const authHeaders = () => ({
+        Authorization:
+            `Bearer ${localStorage.getItem("access_token")}`
+    });
 
-                            <h2
-                                id="current-vibe"
-                                class="mt-2 text-2xl font-display font-bold text-white loading-shimmer"
-                            >
-                                Loading...
-                            </h2>
-                        </div>
+    async function loadDashboard() {
 
-                        <div class="w-11 h-11 rounded-2xl bg-secondaryContainer flex items-center justify-center">
-                            <span class="material-symbols-outlined text-secondary">
-                                mood
-                            </span>
-                        </div>
+        try {
 
-                    </div>
+            const response =
+                await fetch(
+                    `${API_BASE}/dashboard/`,
+                    {
+                        headers: authHeaders()
+                    }
+                );
 
-                    <p
-                        id="vibe-description"
-                        class="mt-4 text-sm text-white/50"
-                    >
-                        Your latest wellness information will appear here.
+            if (!response.ok) {
+                throw new Error("Dashboard request failed.");
+            }
+
+            const data =
+                await response.json();
+
+            document.getElementById("welcome").textContent =
+                `Welcome back, ${data.user_name || "there"}`;
+
+            document.getElementById("vibe").textContent =
+                formatCategory(data.current_vibe);
+
+            document.getElementById("score").textContent =
+                data.overall_score ?? "—";
+
+            document.getElementById("insight").textContent =
+                data.latest_insight ||
+                "Complete an assessment to generate your first insight.";
+
+        } catch (error) {
+
+            console.error(error);
+
+            document.getElementById("vibe").textContent =
+                "Unavailable";
+
+            document.getElementById("insight").textContent =
+                "The dashboard endpoint is not fully populated yet.";
+        }
+    }
+
+    async function loadAssessmentHistory() {
+
+        const container =
+            document.getElementById("history");
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/assessment/history`,
+                    {
+                        headers: authHeaders()
+                    }
+                );
+
+            if (!response.ok) {
+                throw new Error("History request failed.");
+            }
+
+            const data =
+                await response.json();
+
+            if (!data.assessments?.length) {
+
+                container.innerHTML = `
+                    <p class="text-sm text-white/35">
+                        No assessments yet.
                     </p>
-
-                </div>
-
-                <div class="glass rounded-3xl p-6 card-hover">
-
-                    <div class="flex justify-between items-start">
-
-                        <div>
-                            <p class="text-sm text-white/50">
-                                Overall Score
-                            </p>
-
-                            <h2
-                                id="overall-score"
-                                class="mt-2 text-3xl font-display font-bold text-white"
-                            >
-                                —
-                            </h2>
-                        </div>
-
-                        <div class="w-11 h-11 rounded-2xl bg-secondaryContainer flex items-center justify-center">
-                            <span class="material-symbols-outlined text-secondary">
-                                monitoring
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <div class="mt-5 h-2 bg-white/5 rounded-full overflow-hidden">
-                        <div
-                            id="score-bar"
-                            class="h-full bg-secondary rounded-full"
-                            style="width:0%"
-                        ></div>
-                    </div>
-
-                </div>
-
-                <div class="glass rounded-3xl p-6 card-hover">
-
-                    <div class="flex justify-between items-start">
-
-                        <div>
-                            <p class="text-sm text-white/50">
-                                Latest Assessment
-                            </p>
-
-                            <h2
-                                id="assessment-status"
-                                class="mt-2 text-xl font-display font-bold text-white"
-                            >
-                                No assessment
-                            </h2>
-                        </div>
-
-                        <div class="w-11 h-11 rounded-2xl bg-secondaryContainer flex items-center justify-center">
-                            <span class="material-symbols-outlined text-secondary">
-                                assignment_turned_in
-                            </span>
-                        </div>
-
-                    </div>
-
-                    <button
-                        id="assessment-action"
-                        class="mt-5 text-sm text-secondary font-semibold hover:underline"
-                    >
-                        Take assessment →
-                    </button>
-
-                </div>
-
-            </section>
-
-            <!-- Main content -->
-            <section class="grid lg:grid-cols-12 gap-6">
-
-                <!-- Weekly activity -->
-                <div class="lg:col-span-8 glass rounded-3xl p-6">
-
-                    <div class="flex items-center justify-between">
-
-                        <div>
-                            <h2 class="text-xl font-display font-bold text-white">
-                                Weekly Rhythm
-                            </h2>
-
-                            <p class="mt-1 text-sm text-white/45">
-                                Your recent activity pattern
-                            </p>
-                        </div>
-
-                        <a href="insights.html"
-                           class="text-sm text-secondary font-semibold">
-                            View insights
-                        </a>
-
-                    </div>
-
-                    <div
-                        id="weekly-chart"
-                        class="mt-8 h-64 flex items-end gap-3"
-                    >
-                        <!-- Bars created by JavaScript -->
-
-                        <div class="flex-1 h-8 bg-white/5 rounded-lg loading-shimmer"></div>
-                        <div class="flex-1 h-16 bg-white/5 rounded-lg loading-shimmer"></div>
-                        <div class="flex-1 h-24 bg-white/5 rounded-lg loading-shimmer"></div>
-                        <div class="flex-1 h-14 bg-white/5 rounded-lg loading-shimmer"></div>
-                        <div class="flex-1 h-20 bg-white/5 rounded-lg loading-shimmer"></div>
-                        <div class="flex-1 h-12 bg-white/5 rounded-lg loading-shimmer"></div>
-                        <div class="flex-1 h-10 bg-white/5 rounded-lg loading-shimmer"></div>
-                    </div>
-
-                    <div class="mt-3 grid grid-cols-7 text-center text-xs text-white/35">
-                        <span>Mon</span>
-                        <span>Tue</span>
-                        <span>Wed</span>
-                        <span>Thu</span>
-                        <span>Fri</span>
-                        <span>Sat</span>
-                        <span>Sun</span>
-                    </div>
-
-                </div>
-
-                <!-- Quick actions -->
-                <div class="lg:col-span-4 grid gap-6">
-
-                    <a
-                        href="insights.html"
-                        class="glass rounded-3xl p-6 card-hover"
-                    >
-
-                        <div class="flex items-start justify-between">
-
-                            <div>
-                                <p class="text-xs uppercase tracking-widest text-secondary">
-                                    Daily check-in
-                                </p>
-
-                                <h2 class="mt-3 text-xl font-display font-bold text-white">
-                                    Log your mood
-                                </h2>
-
-                                <p class="mt-2 text-sm leading-6 text-white/50">
-                                    Record how you're feeling today.
-                                </p>
-                            </div>
-
-                            <span class="material-symbols-outlined text-secondary">
-                                sentiment_satisfied
-                            </span>
-
-                        </div>
-
-                    </a>
-
-                    <a
-                        href="chat.html"
-                        class="glass rounded-3xl p-6 card-hover"
-                    >
-
-                        <div class="flex items-start justify-between">
-
-                            <div>
-                                <p class="text-xs uppercase tracking-widest text-secondary">
-                                    Companion
-                                </p>
-
-                                <h2 class="mt-3 text-xl font-display font-bold text-white">
-                                    Talk it through
-                                </h2>
-
-                                <p class="mt-2 text-sm leading-6 text-white/50">
-                                    Open a private conversation with your AI companion.
-                                </p>
-                            </div>
-
-                            <span class="material-symbols-outlined text-secondary">
-                                chat
-                            </span>
-
-                        </div>
-
-                    </a>
-
-                </div>
-
-                <!-- Latest insight -->
-                <div class="lg:col-span-12 glass rounded-3xl p-6">
-
-                    <div class="flex items-start gap-4">
-
-                        <div class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center flex-shrink-0">
-                            <span class="material-symbols-outlined text-secondary">
-                                lightbulb
-                            </span>
-                        </div>
-
-                        <div class="flex-1">
-
-                            <p class="text-xs uppercase tracking-widest text-secondary">
-                                Latest insight
-                            </p>
-
-                            <h2
-                                id="latest-insight-title"
-                                class="mt-2 text-xl font-display font-bold text-white"
-                            >
-                                Your latest insight will appear here.
-                            </h2>
-
-                            <p
-                                id="latest-insight"
-                                class="mt-2 text-white/50 leading-7"
-                            >
-                                Complete an assessment or add mood information
-                                to start building your personal insight history.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-
-    </main>
-
-    <!-- Mobile bottom nav -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-white/5 px-4 py-3">
-
-        <div class="grid grid-cols-3">
-
-            <a href="dashboard.html"
-               class="flex flex-col items-center gap-1 text-secondary">
-                <span class="material-symbols-outlined">
-                    dashboard
-                </span>
-                <span class="text-[11px]">
-                    Dashboard
-                </span>
-            </a>
-
-            <a href="insights.html"
-               class="flex flex-col items-center gap-1 text-white/50">
-                <span class="material-symbols-outlined">
-                    insights
-                </span>
-                <span class="text-[11px]">
-                    Insights
-                </span>
-            </a>
-
-            <a href="chat.html"
-               class="flex flex-col items-center gap-1 text-white/50">
-                <span class="material-symbols-outlined">
-                    chat
-                </span>
-                <span class="text-[11px]">
-                    Chat
-                </span>
-            </a>
-
-        </div>
-
-    </nav>
-
-    <script src="api.js"></script>
-
-    <script src="auth.js"></script>
-
-    <script src="dashboard.js"></script>
-
-    <script>
-        /*
-         * Backend-ready dashboard.
-         *
-         * Expected future backend endpoint:
-         * GET /dashboard/
-         *
-         * Example response:
-         * {
-         *   "user_name": "Aatulya",
-         *   "current_vibe": "Calm & Centered",
-         *   "overall_score": 72,
-         *   "category": "Balanced",
-         *   "weekly_activity": [20, 45, 75, 40, 65, 30, 25],
-         *   "latest_insight": "..."
-         * }
-         */
-
-        function escapeHtml(value) {
-            const div = document.createElement("div");
-            div.textContent = value ?? "";
-            return div.innerHTML;
-        }
-
-        function renderWeeklyChart(values = []) {
-            const chart = document.getElementById("weekly-chart");
-
-            const safeValues = values.length === 7
-                ? values
-                : [20, 35, 50, 30, 45, 25, 20];
-
-            chart.innerHTML = "";
-
-            safeValues.forEach((value) => {
-
-                const wrapper = document.createElement("div");
-                wrapper.className = "flex-1 h-full flex items-end";
-
-                const bar = document.createElement("div");
-
-                bar.className =
-                    "w-full bg-secondary/50 rounded-t-xl bar hover:bg-secondary";
-
-                const clamped =
-                    Math.max(5, Math.min(100, Number(value) || 5));
-
-                bar.style.height = `${clamped}%`;
-
-                wrapper.appendChild(bar);
-                chart.appendChild(wrapper);
-            });
-        }
-
-        async function loadDashboard() {
-
-            const token = getToken();
-
-            if (!token) {
-                document.getElementById("welcome-message").textContent =
-                    "Welcome to Solace";
-
-                document.getElementById("current-vibe").textContent =
-                    "Sign in required";
-
-                document.getElementById("vibe-description").textContent =
-                    "Log in to see your personal wellness information.";
-
-                document.getElementById("assessment-status").textContent =
-                    "Sign in to continue";
-
-                renderWeeklyChart();
+                `;
 
                 return;
             }
 
-            try {
+            container.innerHTML =
+                data.assessments
+                    .slice(0, 8)
+                    .map(item => `
+                        <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-4 flex items-center justify-between">
 
-                const data = await apiFetch("/dashboard/");
+                            <div>
+                                <p class="font-semibold">
+                                    ${formatCategory(item.category)}
+                                </p>
 
-                document.getElementById("welcome-message").textContent =
-                    data.user_name
-                        ? `Welcome back, ${data.user_name}`
-                        : "Welcome back";
+                                <p class="text-xs text-white/35 mt-1">
+                                    ${new Date(item.created_at).toLocaleString()}
+                                </p>
+                            </div>
 
-                document.getElementById("current-vibe").textContent =
-                    data.current_vibe || data.category || "No data yet";
+                            <span class="text-[#A8CFBC] font-bold">
+                                ${item.overall_score}
+                            </span>
 
-                document.getElementById("vibe-description").textContent =
-                    data.vibe_description ||
-                    "Your latest wellness information is shown here.";
+                        </div>
+                    `)
+                    .join("");
 
-                const score = Number(data.overall_score);
+        } catch (error) {
 
-                if (!Number.isNaN(score)) {
-                    document.getElementById("overall-score").textContent =
-                        `${score}`;
+            container.innerHTML = `
+                <p class="text-sm text-yellow-300">
+                    Assessment history is unavailable.
+                </p>
+            `;
+        }
+    }
 
-                    document.getElementById("score-bar").style.width =
-                        `${Math.max(0, Math.min(100, score))}%`;
-                }
+    function formatCategory(category) {
 
-                if (data.assessment_id) {
-                    document.getElementById("assessment-status").textContent =
-                        "Completed";
+        if (!category) return "No data";
 
-                    document.getElementById("assessment-action").textContent =
-                        "View latest assessment →";
-                }
-
-                document.getElementById("latest-insight-title").textContent =
-                    data.latest_insight_title ||
-                    "Your latest insight";
-
-                document.getElementById("latest-insight").textContent =
-                    data.latest_insight ||
-                    "Continue checking in to build a more useful personal history.";
-
-                renderWeeklyChart(data.weekly_activity);
-
-            } catch (error) {
-
-                console.error("Dashboard request failed:", error);
-
-                document.getElementById("current-vibe").textContent =
-                    "Not available yet";
-
-                document.getElementById("vibe-description").textContent =
-                    "The dashboard API has not been connected yet.";
-
-                document.getElementById("assessment-status").textContent =
-                    "Backend needed";
-
-                document.getElementById("overall-score").textContent = "—";
-
-                renderWeeklyChart();
-
-            }
+        if (typeof category === "object") {
+            return category.label ||
+                category.category ||
+                "Assessment result";
         }
 
-        document
-            .getElementById("assessment-button")
-            .addEventListener("click", () => {
-                alert(
-                    "Assessment page is the next frontend screen to connect to /assessment/score."
-                );
-            });
+        return String(category)
+            .replaceAll("_", " ")
+            .replace(/\b\w/g, c => c.toUpperCase());
+    }
 
-        document
-            .getElementById("assessment-action")
-            .addEventListener("click", () => {
-                alert(
-                    "Connect this button to your assessment page."
-                );
-            });
+    document.getElementById("logout")
+        .addEventListener("click", () => {
 
-        document
-            .getElementById("logout-button")
-            .addEventListener("click", () => {
-
-                localStorage.removeItem("access_token");
-                localStorage.removeItem("user_id");
-
-                window.location.href = "landing.html";
-            });
-
-        const mobileMenuButton =
-            document.getElementById("mobile-menu-button");
-
-        const mobileMenu =
-            document.getElementById("mobile-menu");
-
-        mobileMenuButton.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
+            localStorage.clear();
+            window.location.href = "login.html";
         });
 
-        loadDashboard();
-    </script>
+    document.getElementById("refresh")
+        .addEventListener("click", () => {
+
+            loadDashboard();
+            loadAssessmentHistory();
+        });
+
+    loadDashboard();
+    loadAssessmentHistory();
+</script>
 
 </body>
 </html>

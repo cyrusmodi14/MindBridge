@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Solace — Create Account</title>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
@@ -17,984 +13,312 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet"
     >
 
-    <script>
-        tailwind.config = {
-
-            darkMode: "class",
-
-            theme: {
-
-                extend: {
-
-                    colors: {
-
-                        background: "#051424",
-                        surface: "#051424",
-
-                        primary: "#d4e4fa",
-
-                        secondary: "#a8cfbc",
-                        secondaryContainer: "#294e3f",
-
-                        surfaceContainer: "#122131",
-                        surfaceHigh: "#1c2b3c",
-                        surfaceHighest: "#273647",
-
-                        muted: "#c6c6cd",
-
-                        error: "#ffb4ab"
-
-                    },
-
-                    fontFamily: {
-
-                        display: [
-                            "Manrope",
-                            "sans-serif"
-                        ],
-
-                        body: [
-                            "Inter",
-                            "sans-serif"
-                        ]
-
-                    }
-
-                }
-
-            }
-
-        };
-    </script>
-
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-
             background:
-                radial-gradient(
-                    circle at 50% 15%,
-                    rgba(41, 78, 63, 0.35),
-                    transparent 35%
-                ),
+                radial-gradient(circle at 50% 10%, rgba(41,78,63,.35), transparent 35%),
                 #051424;
         }
 
         .glass {
-            background: rgba(18, 33, 49, 0.55);
-
+            background: rgba(18,33,49,.58);
             backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,.08);
         }
 
-        .input-field {
-
-            background: rgba(5,20,36,0.65);
-
-            border: 1px solid rgba(255,255,255,0.1);
-
-            transition:
-                border-color .2s ease,
-                box-shadow .2s ease;
-
+        input {
+            background: rgba(5,20,36,.65) !important;
+            border: 1px solid rgba(255,255,255,.1) !important;
+            color: white !important;
         }
 
-        .input-field:focus {
-
-            border-color:
-                rgba(168,207,188,0.8);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(168,207,188,0.08);
-
+        input:focus {
+            border-color: rgba(168,207,188,.7) !important;
+            box-shadow: 0 0 0 3px rgba(168,207,188,.08) !important;
         }
-
-        .password-strength {
-            transition:
-                width .25s ease,
-                background-color .25s ease;
-        }
-
-        .star {
-            position: absolute;
-
-            width: 2px;
-            height: 2px;
-
-            border-radius: 999px;
-
-            background: rgba(255,255,255,.75);
-
-            animation:
-                floatStar 8s linear infinite;
-        }
-
-        @keyframes floatStar {
-
-            0% {
-                opacity: .1;
-                transform: translateY(0);
-            }
-
-            50% {
-                opacity: .8;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-90px);
-            }
-
-        }
-
-        .spinner {
-            width: 18px;
-            height: 18px;
-
-            border: 2px solid
-                rgba(15,23,42,.25);
-
-            border-top-color:
-                rgba(15,23,42,.9);
-
-            border-radius: 50%;
-
-            animation:
-                spin .7s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
     </style>
 </head>
 
-<body class="min-h-screen text-primary font-body">
+<body class="min-h-screen flex items-center justify-center px-5 py-10 text-white">
 
-    <!-- Background -->
-    <div
-        id="starfield"
-        class="fixed inset-0 overflow-hidden pointer-events-none"
-    ></div>
+<div class="w-full max-w-md">
 
+    <a href="landing.html"
+       class="block text-center text-2xl font-bold text-[#A8CFBC] mb-8"
+       style="font-family:Manrope,sans-serif">
+        Solace
+    </a>
 
-    <!-- Header -->
+    <div class="glass rounded-3xl p-7 md:p-9">
 
-    <header class="absolute top-0 left-0 right-0 z-20">
+        <div class="text-center">
 
-        <div class="max-w-6xl mx-auto px-5 py-5">
-
-            <a
-                href="landing.html"
-                class="inline-flex items-center gap-2 text-secondary font-display font-bold text-xl"
-            >
-
-                <span class="material-symbols-outlined">
+            <div class="mx-auto w-14 h-14 rounded-2xl bg-[#294E3F] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#A8CFBC] text-3xl">
                     spa
                 </span>
-
-                Solace
-
-            </a>
-
-        </div>
-
-    </header>
-
-
-    <!-- Main -->
-
-    <main class="min-h-screen flex items-center justify-center px-5 py-24">
-
-        <div class="w-full max-w-md">
-
-            <div class="glass rounded-3xl p-7 md:p-9 shadow-2xl">
-
-                <!-- Header -->
-
-                <div class="text-center mb-8">
-
-                    <div class="mx-auto w-14 h-14 rounded-2xl bg-secondaryContainer flex items-center justify-center">
-
-                        <span class="material-symbols-outlined text-secondary text-3xl">
-                            self_improvement
-                        </span>
-
-                    </div>
-
-                    <h1 class="mt-5 text-3xl font-display font-bold text-white">
-                        Create Your Space
-                    </h1>
-
-                    <p class="mt-2 text-white/50">
-                        Begin your Solace journey.
-                    </p>
-
-                </div>
-
-
-                <!-- Error -->
-
-                <div
-                    id="error-message"
-                    class="hidden mb-5 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200"
-                ></div>
-
-
-                <!-- Success -->
-
-                <div
-                    id="success-message"
-                    class="hidden mb-5 rounded-xl border border-secondary/20 bg-secondary/10 px-4 py-3 text-sm text-secondary"
-                ></div>
-
-
-                <!-- Form -->
-
-                <form
-                    id="register-form"
-                    class="space-y-5"
-                >
-
-                    <!-- Email -->
-
-                    <div>
-
-                        <label
-                            for="email"
-                            class="block text-sm font-medium text-white/70 mb-2"
-                        >
-                            Email address
-                        </label>
-
-                        <div class="relative">
-
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
-
-                                <span class="material-symbols-outlined">
-                                    mail
-                                </span>
-
-                            </span>
-
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autocomplete="email"
-                                required
-                                placeholder="you@example.com"
-                                class="input-field w-full rounded-xl px-4 pl-12 py-3.5 text-white placeholder:text-white/25 outline-none"
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Password -->
-
-                    <div>
-
-                        <label
-                            for="password"
-                            class="block text-sm font-medium text-white/70 mb-2"
-                        >
-                            Password
-                        </label>
-
-                        <div class="relative">
-
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
-
-                                <span class="material-symbols-outlined">
-                                    lock
-                                </span>
-
-                            </span>
-
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autocomplete="new-password"
-                                required
-                                minlength="8"
-                                placeholder="At least 8 characters"
-                                class="input-field w-full rounded-xl px-4 pl-12 pr-12 py-3.5 text-white placeholder:text-white/25 outline-none"
-                            >
-
-                            <button
-                                type="button"
-                                id="toggle-password"
-                                class="absolute right-4 top-1/2 -translate-y-1/2 text-white/35 hover:text-white"
-                            >
-
-                                <span
-                                    id="password-icon"
-                                    class="material-symbols-outlined"
-                                >
-                                    visibility
-                                </span>
-
-                            </button>
-
-                        </div>
-
-
-                        <!-- Strength -->
-
-                        <div class="mt-3">
-
-                            <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
-
-                                <div
-                                    id="strength-bar"
-                                    class="password-strength h-full w-0 rounded-full"
-                                ></div>
-
-                            </div>
-
-                            <p
-                                id="strength-text"
-                                class="mt-2 text-xs text-white/35"
-                            >
-                                Use at least 8 characters.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Confirm password -->
-
-                    <div>
-
-                        <label
-                            for="confirm-password"
-                            class="block text-sm font-medium text-white/70 mb-2"
-                        >
-                            Confirm password
-                        </label>
-
-                        <div class="relative">
-
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
-
-                                <span class="material-symbols-outlined">
-                                    lock_reset
-                                </span>
-
-                            </span>
-
-                            <input
-                                id="confirm-password"
-                                name="confirm-password"
-                                type="password"
-                                autocomplete="new-password"
-                                required
-                                placeholder="Repeat your password"
-                                class="input-field w-full rounded-xl px-4 pl-12 pr-12 py-3.5 text-white placeholder:text-white/25 outline-none"
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Agreement -->
-
-                    <label class="flex items-start gap-3 cursor-pointer">
-
-                        <input
-                            id="terms"
-                            type="checkbox"
-                            required
-                            class="mt-1 rounded border-white/20 bg-transparent text-secondary focus:ring-secondary"
-                        >
-
-                        <span class="text-xs leading-5 text-white/45">
-                            I understand that Solace is a wellness support
-                            tool and not a replacement for professional
-                            medical or mental-health care.
-                        </span>
-
-                    </label>
-
-
-                    <!-- Submit -->
-
-                    <button
-                        id="register-button"
-                        type="submit"
-                        class="w-full rounded-xl bg-secondary text-slate-950 font-semibold py-3.5 flex items-center justify-center gap-2 hover:opacity-90 transition"
-                    >
-
-                        <span id="register-button-text">
-                            Create Account
-                        </span>
-
-                        <span
-                            id="register-spinner"
-                            class="spinner hidden"
-                        ></span>
-
-                        <span
-                            id="register-arrow"
-                            class="material-symbols-outlined"
-                        >
-                            arrow_forward
-                        </span>
-
-                    </button>
-
-                </form>
-
-
-                <!-- Login -->
-
-                <div class="mt-7 pt-6 border-t border-white/10 text-center">
-
-                    <p class="text-sm text-white/45">
-
-                        Already have an account?
-
-                        <a
-                            href="login.html"
-                            class="text-secondary font-semibold hover:underline"
-                        >
-                            Sign in
-                        </a>
-
-                    </p>
-
-                </div>
-
-
-                <div class="mt-6 text-center">
-
-                    <a
-                        href="landing.html"
-                        class="text-sm text-white/35 hover:text-white transition"
-                    >
-                        ← Back to Solace
-                    </a>
-
-                </div>
-
             </div>
 
+            <h1 class="mt-5 text-3xl font-bold">
+                Create Your Space
+            </h1>
 
-            <p class="mt-5 text-center text-xs text-white/30">
-
-                Your account credentials are handled by the Solace backend.
-
+            <p class="mt-2 text-white/50">
+                Start your Solace journey.
             </p>
 
         </div>
 
-    </main>
+        <div id="message"
+             class="hidden mt-6 rounded-xl px-4 py-3 text-sm">
+        </div>
 
+        <form id="registerForm" class="mt-7 space-y-5">
 
-    <script src="api.js"></script>
+            <div>
+                <label class="block text-sm text-white/70 mb-2">
+                    Email
+                </label>
 
-    <script src="auth.js"></script>
+                <input
+                    id="email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    class="w-full rounded-xl px-4 py-3.5 outline-none"
+                >
+            </div>
 
-    <script>
-        requireAuth();
-    </script>
+            <div>
+                <label class="block text-sm text-white/70 mb-2">
+                    Password
+                </label>
 
-    <script>
+                <input
+                    id="password"
+                    type="password"
+                    required
+                    minlength="8"
+                    autocomplete="new-password"
+                    placeholder="At least 8 characters"
+                    class="w-full rounded-xl px-4 py-3.5 outline-none"
+                >
 
-        const registerForm =
-            document.getElementById(
-                "register-form"
+                <div class="mt-2 h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div id="strengthBar"
+                         class="h-full w-0 transition-all"></div>
+                </div>
+
+                <p id="strengthText"
+                   class="mt-2 text-xs text-white/35">
+                    Use at least 8 characters.
+                </p>
+            </div>
+
+            <div>
+                <label class="block text-sm text-white/70 mb-2">
+                    Confirm Password
+                </label>
+
+                <input
+                    id="confirmPassword"
+                    type="password"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Repeat your password"
+                    class="w-full rounded-xl px-4 py-3.5 outline-none"
+                >
+            </div>
+
+            <label class="flex gap-3 text-xs text-white/45 leading-5">
+
+                <input
+                    id="terms"
+                    type="checkbox"
+                    required
+                    class="mt-1"
+                >
+
+                <span>
+                    I understand that Solace is a wellness support tool
+                    and is not a replacement for professional care.
+                </span>
+
+            </label>
+
+            <button
+                id="registerBtn"
+                type="submit"
+                class="w-full rounded-xl bg-[#A8CFBC] text-slate-950 py-3.5 font-semibold"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="mt-7 pt-6 border-t border-white/10 text-center text-sm text-white/45">
+
+            Already have an account?
+
+            <a href="login.html"
+               class="text-[#A8CFBC] font-semibold">
+                Sign in
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    const form =
+        document.getElementById("registerForm");
+
+    const message =
+        document.getElementById("message");
+
+    const button =
+        document.getElementById("registerBtn");
+
+    const password =
+        document.getElementById("password");
+
+    function showMessage(text, success = false) {
+
+        message.textContent = text;
+
+        message.className =
+            "mt-6 rounded-xl px-4 py-3 text-sm " +
+            (success
+                ? "bg-green-500/10 text-green-300 border border-green-500/20"
+                : "bg-red-500/10 text-red-200 border border-red-500/20");
+
+        message.classList.remove("hidden");
+    }
+
+    password.addEventListener("input", () => {
+
+        const value = password.value;
+
+        let score = 0;
+
+        if (value.length >= 8) score++;
+        if (/[A-Z]/.test(value)) score++;
+        if (/[a-z]/.test(value)) score++;
+        if (/[0-9]/.test(value)) score++;
+        if (/[^A-Za-z0-9]/.test(value)) score++;
+
+        const bar =
+            document.getElementById("strengthBar");
+
+        const text =
+            document.getElementById("strengthText");
+
+        bar.style.width =
+            `${score * 20}%`;
+
+        if (score <= 1) {
+            bar.style.background = "#ef4444";
+            text.textContent = "Weak password.";
+        } else if (score <= 3) {
+            bar.style.background = "#eab308";
+            text.textContent = "Moderate password.";
+        } else {
+            bar.style.background = "#A8CFBC";
+            text.textContent = "Strong password.";
+        }
+    });
+
+    form.addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const passwordValue =
+            password.value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        if (passwordValue.length < 8) {
+            showMessage(
+                "Password must contain at least 8 characters."
             );
+            return;
+        }
 
-        const emailInput =
-            document.getElementById(
-                "email"
+        if (passwordValue !== confirmPassword) {
+            showMessage(
+                "Passwords do not match."
             );
+            return;
+        }
 
-        const passwordInput =
-            document.getElementById(
-                "password"
-            );
-
-        const confirmPasswordInput =
-            document.getElementById(
-                "confirm-password"
-            );
-
-        const registerButton =
-            document.getElementById(
-                "register-button"
-            );
-
-        const registerButtonText =
-            document.getElementById(
-                "register-button-text"
-            );
-
-        const registerSpinner =
-            document.getElementById(
-                "register-spinner"
-            );
-
-        const registerArrow =
-            document.getElementById(
-                "register-arrow"
-            );
-
-        const errorMessage =
-            document.getElementById(
-                "error-message"
-            );
-
-        const successMessage =
-            document.getElementById(
-                "success-message"
-            );
-
+        button.disabled = true;
+        button.textContent = "Creating account...";
 
         /*
-         * Messages
+         * IMPORTANT:
+         * The current FastAPI register endpoint receives
+         * email and password as query parameters.
          */
 
-        function showError(message) {
+        const url =
+            `${API_BASE}/auth/register` +
+            `?email=${encodeURIComponent(email)}` +
+            `&password=${encodeURIComponent(passwordValue)}`;
 
-            errorMessage.textContent =
-                message;
+        try {
 
-            errorMessage.classList.remove(
-                "hidden"
-            );
+            const response =
+                await fetch(url, {
+                    method: "POST"
+                });
 
-            successMessage.classList.add(
-                "hidden"
-            );
+            const data =
+                await response.json();
 
-        }
-
-
-        function showSuccess(message) {
-
-            successMessage.textContent =
-                message;
-
-            successMessage.classList.remove(
-                "hidden"
-            );
-
-            errorMessage.classList.add(
-                "hidden"
-            );
-
-        }
-
-
-        /*
-         * Loading state
-         */
-
-        function setLoading(loading) {
-
-            registerButton.disabled =
-                loading;
-
-            registerSpinner.classList.toggle(
-                "hidden",
-                !loading
-            );
-
-            registerArrow.classList.toggle(
-                "hidden",
-                loading
-            );
-
-            registerButtonText.textContent =
-                loading
-                    ? "Creating account..."
-                    : "Create Account";
-
-        }
-
-
-        /*
-         * Password strength
-         */
-
-        const strengthBar =
-            document.getElementById(
-                "strength-bar"
-            );
-
-        const strengthText =
-            document.getElementById(
-                "strength-text"
-            );
-
-
-        function updatePasswordStrength(password) {
-
-            let score = 0;
-
-            if (password.length >= 8) {
-                score++;
-            }
-
-            if (/[A-Z]/.test(password)) {
-                score++;
-            }
-
-            if (/[a-z]/.test(password)) {
-                score++;
-            }
-
-            if (/[0-9]/.test(password)) {
-                score++;
-            }
-
-            if (/[^A-Za-z0-9]/.test(password)) {
-                score++;
-            }
-
-
-            const widths = [
-                "0%",
-                "20%",
-                "40%",
-                "60%",
-                "80%",
-                "100%"
-            ];
-
-            strengthBar.style.width =
-                widths[score];
-
-
-            if (score <= 1) {
-
-                strengthBar.style.background =
-                    "#ef4444";
-
-                strengthText.textContent =
-                    "Very weak password.";
-
-            }
-
-            else if (score === 2) {
-
-                strengthBar.style.background =
-                    "#f97316";
-
-                strengthText.textContent =
-                    "Weak password.";
-
-            }
-
-            else if (score === 3) {
-
-                strengthBar.style.background =
-                    "#eab308";
-
-                strengthText.textContent =
-                    "Moderate password.";
-
-            }
-
-            else if (score === 4) {
-
-                strengthBar.style.background =
-                    "#84cc16";
-
-                strengthText.textContent =
-                    "Strong password.";
-
-            }
-
-            else {
-
-                strengthBar.style.background =
-                    "#a8cfbc";
-
-                strengthText.textContent =
-                    "Very strong password.";
-
-            }
-
-        }
-
-
-        passwordInput.addEventListener(
-            "input",
-            () => {
-
-                updatePasswordStrength(
-                    passwordInput.value
+            if (!response.ok) {
+                throw new Error(
+                    data.detail || "Registration failed."
                 );
-
             }
-        );
 
-
-        /*
-         * Show / hide password
-         */
-
-        document
-            .getElementById("toggle-password")
-            .addEventListener(
-                "click",
-                () => {
-
-                    const isPassword =
-                        passwordInput.type ===
-                        "password";
-
-                    passwordInput.type =
-                        isPassword
-                            ? "text"
-                            : "password";
-
-                    document
-                        .getElementById(
-                            "password-icon"
-                        )
-                        .textContent =
-                            isPassword
-                                ? "visibility_off"
-                                : "visibility";
-
-                }
+            showMessage(
+                "Your Solace account was created successfully.",
+                true
             );
 
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 800);
 
-        /*
-         * Register
-         */
+        } catch (error) {
 
-        registerForm.addEventListener(
-            "submit",
-            async (event) => {
+            console.error(error);
 
-                event.preventDefault();
-
-                errorMessage.classList.add(
-                    "hidden"
-                );
-
-                successMessage.classList.add(
-                    "hidden"
-                );
-
-
-                const email =
-                    emailInput.value.trim();
-
-                const password =
-                    passwordInput.value;
-
-                const confirmPassword =
-                    confirmPasswordInput.value;
-
-
-                if (!email) {
-
-                    showError(
-                        "Please enter your email address."
-                    );
-
-                    return;
-
-                }
-
-
-                if (password.length < 8) {
-
-                    showError(
-                        "Password must contain at least 8 characters."
-                    );
-
-                    return;
-
-                }
-
-
-                if (password !== confirmPassword) {
-
-                    showError(
-                        "Passwords do not match."
-                    );
-
-                    return;
-
-                }
-
-
-                setLoading(true);
-
-
-                try {
-
-                    /*
-                     * Your FastAPI backend currently expects:
-                     *
-                     * POST /auth/register
-                     *
-                     * email
-                     * password
-                     *
-                     * as query/form parameters.
-                     *
-                     * We send them as URL-encoded form data.
-                     */
-
-                    const body =
-                        new URLSearchParams();
-
-                    body.append(
-                        "email",
-                        email
-                    );
-
-                    body.append(
-                        "password",
-                        password
-                    );
-
-
-                    const response =
-                        await fetch(
-                            `${API_BASE}/auth/register`,
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/x-www-form-urlencoded"
-                                },
-
-                                body
-                            }
-                        );
-
-
-                    let data = {};
-
-                    try {
-
-                        data =
-                            await response.json();
-
-                    } catch {
-
-                        data = {};
-
-                    }
-
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            data.detail ||
-                            "Registration failed."
-                        );
-
-                    }
-
-
-                    showSuccess(
-                        "Account created successfully. Redirecting to sign in..."
-                    );
-
-
-                    setTimeout(
-                        () => {
-
-                            window.location.href =
-                                "login.html";
-
-                        },
-                        800
-                    );
-
-
-                } catch (error) {
-
-                    console.error(
-                        "Registration error:",
-                        error
-                    );
-
-                    showError(
-                        error.message ||
-                        "Unable to create your account."
-                    );
-
-
-                } finally {
-
-                    setLoading(false);
-
-                }
-
-            }
-        );
-
-
-        /*
-         * Background stars
-         */
-
-        const starfield =
-            document.getElementById(
-                "starfield"
+            showMessage(
+                error.message ||
+                "Unable to create your account."
             );
 
+        } finally {
 
-        for (let i = 0; i < 80; i++) {
-
-            const star =
-                document.createElement(
-                    "div"
-                );
-
-            star.className =
-                "star";
-
-            star.style.left =
-                `${Math.random() * 100}%`;
-
-            star.style.top =
-                `${Math.random() * 100}%`;
-
-            star.style.animationDelay =
-                `${Math.random() * 8}s`;
-
-            starfield.appendChild(
-                star
-            );
-
+            button.disabled = false;
+            button.textContent = "Create Account";
         }
-
-    </script>
+    });
+</script>
 
 </body>
 </html>

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Solace — Wellness Assessment</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            background:
+                radial-gradient(circle at 50% 0%, rgba(41,78,63,.25), transparent 35%),
+                #051424;
+        }
+
+        .glass {
+            background: rgba(18,33,49,.56);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .answer {
+            transition: .2s ease;
+        }
+
+        .answer.selected {
+            background: rgba(41,78,63,.8);
+            border-color: rgba(168,207,188,.6);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-white">
+
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    if (!localStorage.getItem("access_token")) {
+        window.location.href = "login.html";
+    }
+</script>
+
+<header class="fixed top-0 left-0 right-0 z-40 glass border-b border-white/5">
+
+    <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
+
+        <a href="dashboard.html"
+           class="text-xl font-bold text-[#A8CFBC]"
+           style="font-family:Manrope,sans-serif">
+            Solace
+        </a>
+
+        <a href="dashboard.html"
+           class="text-sm text-white/45">
+            Exit
+        </a>
+
+    </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-5 pt-28 pb-16">
+
+    <div class="text-center">
+
+        <p class="text-xs uppercase tracking-[.2em] text-[#A8CFBC]">
+            Wellness Assessment
+        </p>
+
+        <h1 class="mt-3 text-3xl md:text-5xl font-bold"
+            style="font-family:Manrope,sans-serif">
+            Take a moment to check in.
+        </h1>
+
+        <p class="mt-4 max-w-2xl mx-auto text-white/50 leading-7">
+            Answer each question based on how you have generally felt
+            during the relevant period. There are no right or wrong answers.
+        </p>
+
+    </div>
+
+    <div class="mt-10 glass rounded-3xl p-5 md:p-8">
+
+        <div class="flex items-center justify-between">
+
+            <span id="progressText"
+                  class="text-sm text-white/45">
+                Question 1 of 25
+            </span>
+
+            <span id="domainText"
+                  class="text-sm text-[#A8CFBC]">
+                Mood
+            </span>
+
+        </div>
+
+        <div class="mt-3 h-2 bg-white/5 rounded-full overflow-hidden">
+            <div id="progressBar"
+                 class="h-full bg-[#A8CFBC] transition-all"
+                 style="width:4%">
+            </div>
+        </div>
+
+        <div class="mt-10">
+
+            <p id="questionNumber"
+               class="text-sm text-[#A8CFBC]">
+                Question 1
+            </p>
+
+            <h2 id="questionText"
+                class="mt-3 text-2xl font-bold leading-9"
+                style="font-family:Manrope,sans-serif">
+            </h2>
+
+        </div>
+
+        <div id="answers"
+             class="grid sm:grid-cols-5 gap-3 mt-8">
+        </div>
+
+        <div class="mt-10 flex justify-between gap-4">
+
+            <button
+                id="previous"
+                class="rounded-xl border border-white/10 px-6 py-3 text-white/60 disabled:opacity-25"
+            >
+                Previous
+            </button>
+
+            <button
+                id="next"
+                class="rounded-xl bg-[#A8CFBC] text-slate-950 px-7 py-3 font-semibold"
+            >
+                Next
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="mt-5 text-xs leading-5 text-white/30 text-center">
+        This assessment is a wellness support tool, not a diagnosis.
+    </div>
+
+</main>
+
+<script>
+    const questions = [
+        [1,"mood","During the past two weeks, how often have you felt down, sad, or emotionally low?"],
+        [2,"mood","During the past two weeks, how often have you lost interest in activities you normally enjoy?"],
+        [3,"mood","How often have you felt emotionally overwhelmed by your usual responsibilities?"],
+        [4,"mood","How often have you felt that things will not get better?"],
+        [5,"anxiety","How often have you experienced excessive worry about things in your life?"],
+        [6,"anxiety","How often have you found it difficult to control your worrying?"],
+        [7,"anxiety","How often have you felt restless, tense, or unable to relax?"],
+        [8,"anxiety","How often have worries made it difficult for you to concentrate?"],
+        [9,"stress","How often have you felt that the demands in your life were difficult to manage?"],
+        [10,"stress","How often have you felt under significant pressure from school, work, family, or other responsibilities?"],
+        [11,"stress","How often have you felt unable to cope with the problems you are facing?"],
+        [12,"sleep","How often have you had difficulty falling or staying asleep?"],
+        [13,"sleep","How often have you woken up feeling unrested?"],
+        [14,"sleep","How often have low energy or tiredness made your day more difficult?"],
+        [15,"functioning","How often have your emotional difficulties interfered with your school, work, or studies?"],
+        [16,"functioning","How often have you struggled to concentrate on tasks that normally require your attention?"],
+        [17,"functioning","How often have you found it difficult to complete your normal daily responsibilities?"],
+        [18,"social","How often have you avoided spending time with friends, family, or other people?"],
+        [19,"social","How often have you felt disconnected from people around you?"],
+        [20,"social","How often have your difficulties affected your relationships with others?"],
+        [21,"coping","How often have you felt that your usual ways of dealing with problems are no longer helping?"],
+        [22,"coping","How often have you found it difficult to ask others for help when you need it?"],
+        [23,"safety","Have you recently had thoughts of hurting yourself or ending your life?"],
+        [24,"safety","Have you recently had thoughts about seriously hurting another person?"],
+        [25,"safety","Do you currently feel that you may be unable to keep yourself safe?"]
+    ];
+
+    const normalOptions = [
+        ["0","Not at all"],
+        ["1","Rarely"],
+        ["2","Sometimes"],
+        ["3","Often"],
+        ["4","Nearly every day"]
+    ];
+
+    const safetyOptions23 = [
+        ["0","No"],
+        ["1","Rarely"],
+        ["2","Sometimes"],
+        ["3","Often"],
+        ["4","Very often"]
+    ];
+
+    const safetyOptions25 = [
+        ["0","No"],
+        ["1","Unsure"],
+        ["2","Possibly"],
+        ["3","Probably"],
+        ["4","Yes"]
+    ];
+
+    let current = 0;
+    const answers = {};
+
+    const progressText =
+        document.getElementById("progressText");
+
+    const domainText =
+        document.getElementById("domainText");
+
+    const progressBar =
+        document.getElementById("progressBar");
+
+    const questionNumber =
+        document.getElementById("questionNumber");
+
+    const questionText =
+        document.getElementById("questionText");
+
+    const answerContainer =
+        document.getElementById("answers");
+
+    const previousButton =
+        document.getElementById("previous");
+
+    const nextButton =
+        document.getElementById("next");
+
+    function render() {
+
+        const [id, domain, text] =
+            questions[current];
+
+        progressText.textContent =
+            `Question ${current + 1} of ${questions.length}`;
+
+        domainText.textContent =
+            domain.charAt(0).toUpperCase() +
+            domain.slice(1);
+
+        progressBar.style.width =
+            `${((current + 1) / questions.length) * 100}%`;
+
+        questionNumber.textContent =
+            `Question ${current + 1}`;
+
+        questionText.textContent =
+            text;
+
+        answerContainer.innerHTML = "";
+
+        let options = normalOptions;
+
+        if (domain === "safety" && id !== 25) {
+            options = safetyOptions23;
+        }
+
+        if (id === 25) {
+            options = safetyOptions25;
+        }
+
+        options.forEach(([value,label]) => {
+
+            const button =
+                document.createElement("button");
+
+            button.type = "button";
+
+            button.className =
+                "answer glass rounded-2xl border border-white/10 p-4 text-center hover:bg-white/5";
+
+            if (
+                answers[id] !== undefined &&
+                Number(answers[id]) === Number(value)
+            ) {
+                button.classList.add("selected");
+            }
+
+            button.innerHTML = `
+                <span class="block text-lg font-bold text-[#A8CFBC]">
+                    ${value}
+                </span>
+                <span class="block mt-2 text-xs text-white/55 leading-5">
+                    ${label}
+                </span>
+            `;
+
+            button.addEventListener("click", () => {
+
+                answers[id] =
+                    Number(value);
+
+                [...answerContainer.children]
+                    .forEach(
+                        child =>
+                            child.classList.remove("selected")
+                    );
+
+                button.classList.add("selected");
+
+            });
+
+            answerContainer.appendChild(button);
+
+        });
+
+        previousButton.disabled =
+            current === 0;
+
+        nextButton.textContent =
+            current === questions.length - 1
+                ? "Submit Assessment"
+                : "Next";
+    }
+
+    previousButton.addEventListener(
+        "click",
+        () => {
+
+            if (current > 0) {
+                current--;
+                render();
+            }
+        }
+    );
+
+    nextButton.addEventListener(
+        "click",
+        async () => {
+
+            const [id] =
+                questions[current];
+
+            if (answers[id] === undefined) {
+                alert("Please answer this question.");
+                return;
+            }
+
+            if (current < questions.length - 1) {
+
+                current++;
+                render();
+
+                return;
+            }
+
+            await submitAssessment();
+        }
+    );
+
+    async function submitAssessment() {
+
+        nextButton.disabled = true;
+        nextButton.textContent = "Submitting...";
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE}/assessment/score`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json",
+                            "Authorization":
+                                `Bearer ${localStorage.getItem("access_token")}`
+                        },
+                        body: JSON.stringify({
+                            answers
+                        })
+                    }
+                );
+
+            const result =
+                await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.detail ||
+                    "Assessment submission failed."
+                );
+            }
+
+            if (result.safety_override) {
+
+                document.body.innerHTML = `
+                    <main class="min-h-screen flex items-center justify-center px-5">
+
+                        <div class="max-w-xl glass rounded-3xl p-8 text-center">
+
+                            <p class="text-xs uppercase tracking-[.2em] text-red-300">
+                                Please pause here
+                            </p>
+
+                            <h1 class="mt-4 text-3xl font-bold">
+                                Your responses indicate that immediate support may be important.
+                            </h1>
+
+                            <p class="mt-5 text-white/60 leading-7">
+                                ${result.recommendation || "Please seek immediate support from a qualified professional or appropriate local emergency/crisis services."}
+                            </p>
+
+                            <a
+                                href="dashboard.html"
+                                class="inline-block mt-7 bg-[#A8CFBC] text-slate-950 rounded-xl px-6 py-3 font-semibold"
+                            >
+                                Return to Solace
+                            </a>
+
+                        </div>
+                    </main>
+                `;
+
+                return;
+            }
+
+            const reportResponse =
+                await fetch(
+                    `${API_BASE}/assessment/report/${result.assessment_id}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Authorization":
+                                `Bearer ${localStorage.getItem("access_token")}`
+                        }
+                    }
+                );
+
+            const report =
+                await reportResponse.json();
+
+            if (!reportResponse.ok) {
+                throw new Error(
+                    report.detail ||
+                    "Report generation failed."
+                );
+            }
+
+            localStorage.setItem(
+                "latest_assessment",
+                JSON.stringify({
+                    result,
+                    report
+                })
+            );
+
+            showResults(
+                result,
+                report
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                error.message ||
+                "Unable to submit the assessment."
+            );
+
+            nextButton.disabled = false;
+            nextButton.textContent = "Submit Assessment";
+        }
+    }
+
+    function showResults(result, report) {
+
+        const category =
+            typeof result.category === "object"
+                ? result.category.label ||
+                  result.category.category
+                : result.category;
+
+        const reportText =
+            typeof report.report === "string"
+                ? report.report
+                : JSON.stringify(
+                    report.report,
+                    null,
+                    2
+                );
+
+        document.body.innerHTML = `
+            <header class="fixed top-0 left-0 right-0 z-40 glass border-b border-white/5">
+                <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
+                    <a href="dashboard.html"
+                       class="text-xl font-bold text-[#A8CFBC]">
+                        Solace
+                    </a>
+
+                    <a href="dashboard.html"
+                       class="text-sm text-white/45">
+                        Dashboard
+                    </a>
+                </div>
+            </header>
+
+            <main class="max-w-4xl mx-auto px-5 pt-28 pb-16">
+
+                <div class="glass rounded-3xl p-7 md:p-10">
+
+                    <p class="text-xs uppercase tracking-[.2em] text-[#A8CFBC]">
+                        Assessment Complete
+                    </p>
+
+                    <h1 class="mt-3 text-4xl font-bold">
+                        Your results
+                    </h1>
+
+                    <div class="grid md:grid-cols-2 gap-5 mt-8">
+
+                        <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-6">
+                            <p class="text-sm text-white/40">
+                                Overall Score
+                            </p>
+
+                            <p class="mt-3 text-4xl font-bold text-[#A8CFBC]">
+                                ${result.overall_score}
+                            </p>
+                        </div>
+
+                        <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-6">
+                            <p class="text-sm text-white/40">
+                                Category
+                            </p>
+
+                            <p class="mt-3 text-2xl font-bold">
+                                ${category}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-8">
+
+                        <p class="text-xs uppercase tracking-[.2em] text-[#A8CFBC]">
+                            AI-generated report
+                        </p>
+
+                        <div class="mt-4 whitespace-pre-wrap text-white/65 leading-8">
+                            ${escapeHtml(reportText)}
+                        </div>
+
+                    </div>
+
+                    <div class="mt-9 flex flex-col sm:flex-row gap-3">
+
+                        <a href="dashboard.html"
+                           class="rounded-xl bg-[#A8CFBC] text-slate-950 px-6 py-3 text-center font-semibold">
+                            Back to Dashboard
+                        </a>
+
+                        <a href="insights.html"
+                           class="rounded-xl border border-white/10 px-6 py-3 text-center font-semibold">
+                            Check In
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </main>
+        `;
+    }
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent = text;
+
+        return div.innerHTML;
+    }
+
+    render();
+</script>
+
+</body>
+</html>

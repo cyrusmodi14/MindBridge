@@ -1,53 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solace — Mental Wellness Companion</title>
 
-    <title>Solace — Your Mental Wellness Companion</title>
-
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
         rel="stylesheet"
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet"
     >
 
     <script>
         tailwind.config = {
-            darkMode: "class",
-
             theme: {
                 extend: {
-
                     colors: {
-                        background: "#051424",
-                        surface: "#051424",
-
-                        primary: "#d4e4fa",
-
-                        secondary: "#a8cfbc",
-                        secondaryContainer: "#294e3f",
-
-                        surfaceContainer: "#122131",
-                        surfaceHigh: "#1c2b3c",
-                        surfaceHighest: "#273647",
-
-                        muted: "#c6c6cd"
+                        bg: "#051424",
+                        card: "#102033",
+                        card2: "#17283A",
+                        green: "#A8CFBC",
+                        greenDark: "#294E3F"
                     },
-
                     fontFamily: {
                         display: ["Manrope", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                        mono: ["JetBrains Mono", "monospace"]
+                        body: ["Inter", "sans-serif"]
                     }
                 }
             }
@@ -55,1299 +41,556 @@
     </script>
 
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
         html {
             scroll-behavior: smooth;
         }
 
         body {
-            margin: 0;
-            overflow-x: hidden;
-
             background:
-                radial-gradient(
-                    circle at 50% 10%,
-                    rgba(41, 78, 63, 0.38),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 90% 55%,
-                    rgba(41, 78, 63, 0.12),
-                    transparent 30%
-                ),
+                radial-gradient(circle at 50% 10%, rgba(41,78,63,.35), transparent 35%),
                 #051424;
+            color: #d4e4fa;
         }
 
         .glass {
-            background: rgba(18, 33, 49, 0.48);
-
+            background: rgba(16,32,51,.55);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .glass-strong {
-            background: rgba(10, 27, 43, 0.72);
-
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255,255,255,.08);
         }
 
         .gradient-text {
-            background:
-                linear-gradient(
-                    135deg,
-                    #a8cfbc 0%,
-                    #d1f0de 100%
-                );
-
+            background: linear-gradient(135deg,#A8CFBC,#D7F3E4);
             -webkit-background-clip: text;
             background-clip: text;
-
-            -webkit-text-fill-color: transparent;
+            color: transparent;
         }
 
-        .hero-glow {
-            box-shadow:
-                0 30px 100px rgba(0, 0, 0, 0.35),
-                0 0 80px rgba(168, 207, 188, 0.05);
+        .card {
+            transition: .25s ease;
         }
 
-        .feature-card {
-            transition:
-                transform 0.3s ease,
-                border-color 0.3s ease,
-                background 0.3s ease,
-                box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-
-            border-color:
-                rgba(168, 207, 188, 0.28);
-
-            background:
-                rgba(22, 41, 56, 0.64);
-
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, 0.18);
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(168,207,188,.25);
+            background: rgba(20,40,58,.7);
         }
 
         .star {
-            position: absolute;
-
+            position: fixed;
             width: 2px;
             height: 2px;
-
             border-radius: 999px;
-
-            background: rgba(255,255,255,0.7);
-
-            animation:
-                floatStar 8s linear infinite;
-        }
-
-        @keyframes floatStar {
-
-            0% {
-                opacity: 0.1;
-                transform: translateY(0);
-            }
-
-            50% {
-                opacity: 0.85;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-80px);
-            }
-
-        }
-
-        .orb {
-            position: absolute;
-
-            border-radius: 999px;
-
-            filter: blur(1px);
-
+            background: rgba(255,255,255,.6);
+            animation: float 7s linear infinite;
             pointer-events: none;
         }
 
-        .fade-up {
-            animation:
-                fadeUp .8s ease both;
-        }
-
-        .fade-up-delay-1 {
-            animation-delay: .12s;
-        }
-
-        .fade-up-delay-2 {
-            animation-delay: .24s;
-        }
-
-        .fade-up-delay-3 {
-            animation-delay: .36s;
-        }
-
-        @keyframes fadeUp {
-
+        @keyframes float {
             from {
-                opacity: 0;
-                transform: translateY(18px);
-            }
-
-            to {
-                opacity: 1;
                 transform: translateY(0);
+                opacity: .2;
             }
-
-        }
-
-        .pulse-ring {
-            animation:
-                pulseRing 3s ease-in-out infinite;
-        }
-
-        @keyframes pulseRing {
-
-            0%, 100% {
-                transform: scale(1);
+            50% {
                 opacity: .8;
             }
-
-            50% {
-                transform: scale(1.05);
-                opacity: 1;
+            to {
+                transform: translateY(-80px);
+                opacity: 0;
             }
-
         }
-
     </style>
 </head>
 
+<body class="font-body">
 
-<body class="text-primary font-body min-h-screen">
+<div id="stars" class="fixed inset-0 -z-10 overflow-hidden"></div>
 
+<header class="fixed top-0 left-0 right-0 z-50">
+    <div class="glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-5 h-16 flex items-center justify-between">
 
-    <!-- =========================================
-         BACKGROUND
-    ========================================== -->
+            <a href="landing.html"
+               class="font-display font-bold text-xl text-green">
+                Solace
+            </a>
 
-    <div
-        id="starfield"
-        class="fixed inset-0 -z-20 overflow-hidden pointer-events-none"
-    ></div>
+            <nav class="hidden md:flex items-center gap-7">
 
-    <div
-        class="orb w-72 h-72 bg-emerald-300/5 blur-3xl top-20 left-[10%] -z-10"
-    ></div>
-
-    <div
-        class="orb w-96 h-96 bg-blue-300/5 blur-3xl top-[45%] right-[5%] -z-10"
-    ></div>
-
-
-
-    <!-- =========================================
-         NAVIGATION
-    ========================================== -->
-
-    <header class="fixed top-0 left-0 right-0 z-50">
-
-        <div class="glass border-b border-white/5">
-
-            <div
-                class="max-w-7xl mx-auto px-5 lg:px-10 h-16 flex items-center justify-between"
-            >
-
-                <!-- Logo -->
-
-                <a
-                    href="landing.html"
-                    class="flex items-center gap-2 font-display font-bold text-xl text-secondary"
-                >
-
-                    <span class="material-symbols-outlined">
-                        spa
-                    </span>
-
-                    Solace
-
-                </a>
-
-
-                <!-- Desktop navigation -->
-
-                <nav class="hidden md:flex items-center gap-7">
-
-                    <a
-                        href="#features"
-                        class="text-sm text-white/60 hover:text-white transition"
-                    >
-                        Features
-                    </a>
-
-                    <a
-                        href="#how-it-works"
-                        class="text-sm text-white/60 hover:text-white transition"
-                    >
-                        How It Works
-                    </a>
-
-                    <a
-                        href="#about"
-                        class="text-sm text-white/60 hover:text-white transition"
-                    >
-                        About
-                    </a>
-
-                    <a
-                        href="login.html"
-                        class="text-sm text-white/70 hover:text-white transition"
-                    >
-                        Sign In
-                    </a>
-
-                    <a
-                        href="register.html"
-                        class="inline-flex items-center gap-2 bg-secondary text-slate-950 rounded-full px-5 py-2.5 text-sm font-semibold hover:opacity-90 transition"
-                    >
-                        Get Started
-
-                        <span class="material-symbols-outlined text-lg">
-                            arrow_forward
-                        </span>
-
-                    </a>
-
-                </nav>
-
-
-                <!-- Mobile navigation button -->
-
-                <button
-                    id="mobile-menu-button"
-                    type="button"
-                    class="md:hidden text-secondary"
-                    aria-label="Open menu"
-                >
-                    <span class="material-symbols-outlined">
-                        menu
-                    </span>
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- Mobile menu -->
-
-        <div
-            id="mobile-menu"
-            class="hidden md:hidden glass border-b border-white/5"
-        >
-
-            <div class="px-5 py-5 space-y-2">
-
-                <a
-                    href="#features"
-                    class="block rounded-xl px-4 py-3 text-white/70 hover:bg-white/5"
-                >
+                <a href="#features"
+                   class="text-sm text-white/60 hover:text-white">
                     Features
                 </a>
 
-                <a
-                    href="#how-it-works"
-                    class="block rounded-xl px-4 py-3 text-white/70 hover:bg-white/5"
-                >
+                <a href="#how"
+                   class="text-sm text-white/60 hover:text-white">
                     How It Works
                 </a>
 
-                <a
-                    href="#about"
-                    class="block rounded-xl px-4 py-3 text-white/70 hover:bg-white/5"
-                >
-                    About
+                <a href="login.html"
+                   class="text-sm text-white/70 hover:text-white">
+                    Sign In
                 </a>
 
-                <div class="pt-2 grid grid-cols-2 gap-2">
+                <a href="register.html"
+                   class="bg-green text-slate-950 rounded-full px-5 py-2.5 text-sm font-semibold">
+                    Get Started
+                </a>
 
-                    <a
-                        href="login.html"
-                        class="rounded-xl px-4 py-3 text-center text-sm text-white border border-white/10"
-                    >
-                        Sign In
-                    </a>
+            </nav>
 
-                    <a
-                        href="register.html"
-                        class="rounded-xl px-4 py-3 text-center text-sm font-semibold bg-secondary text-slate-950"
-                    >
-                        Get Started
-                    </a>
+            <button
+                id="menuBtn"
+                class="md:hidden text-green"
+                type="button"
+            >
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </div>
 
-                </div>
+    <div id="mobileMenu"
+         class="hidden md:hidden glass border-b border-white/5">
 
-            </div>
+        <div class="p-5 space-y-2">
+
+            <a href="#features"
+               class="block rounded-xl p-3 text-white/70">
+                Features
+            </a>
+
+            <a href="#how"
+               class="block rounded-xl p-3 text-white/70">
+                How It Works
+            </a>
+
+            <a href="login.html"
+               class="block rounded-xl p-3 text-white/70">
+                Sign In
+            </a>
+
+            <a href="register.html"
+               class="block rounded-xl p-3 bg-green text-slate-950 text-center font-semibold">
+                Get Started
+            </a>
 
         </div>
+    </div>
+</header>
 
-    </header>
+<main>
 
+    <!-- HERO -->
 
+    <section class="min-h-screen flex items-center justify-center px-5 pt-24 pb-16">
 
-    <!-- =========================================
-         MAIN
-    ========================================== -->
+        <div class="max-w-5xl mx-auto text-center">
 
-    <main>
-
-
-        <!-- =====================================
-             HERO
-        ====================================== -->
-
-        <section
-            class="relative min-h-screen flex items-center justify-center px-5 pt-28 pb-20"
-        >
-
-            <div class="max-w-6xl mx-auto text-center">
-
-
-                <!-- Badge -->
-
-                <div
-                    class="fade-up inline-flex items-center gap-2 glass rounded-full px-4 py-2 mb-8"
-                >
-
-                    <span
-                        class="material-symbols-outlined text-secondary text-lg"
-                    >
-                        self_improvement
-                    </span>
-
-                    <span
-                        class="text-xs uppercase tracking-[0.2em] text-secondary"
-                    >
-                        Your mental wellness space
-                    </span>
-
-                </div>
-
-
-                <!-- Heading -->
-
-                <h1
-                    class="fade-up fade-up-delay-1 font-display font-extrabold text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.04] text-white tracking-tight"
-                >
-
-                    Understand your mind.
-
-                    <br>
-
-                    <span class="gradient-text">
-                        Move forward.
-                    </span>
-
-                </h1>
-
-
-                <!-- Description -->
-
-                <p
-                    class="fade-up fade-up-delay-2 mt-7 text-lg md:text-xl leading-8 text-white/55 max-w-2xl mx-auto"
-                >
-                    Solace gives you a calmer place to reflect,
-                    understand your emotions, explore personal insights,
-                    and have supportive conversations with an AI companion.
-                </p>
-
-
-                <!-- CTA -->
-
-                <div
-                    class="fade-up fade-up-delay-3 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
-                >
-
-                    <a
-                        href="register.html"
-                        class="inline-flex items-center justify-center gap-2 bg-secondary text-slate-950 rounded-full px-8 py-4 font-semibold shadow-lg shadow-emerald-950/30 hover:scale-[1.02] hover:opacity-95 transition"
-                    >
-
-                        Start Your Journey
-
-                        <span class="material-symbols-outlined">
-                            arrow_forward
-                        </span>
-
-                    </a>
-
-
-                    <a
-                        href="login.html"
-                        class="inline-flex items-center justify-center gap-2 glass rounded-full px-8 py-4 text-white font-semibold hover:bg-white/10 transition"
-                    >
-
-                        Sign In
-
-                        <span class="material-symbols-outlined">
-                            login
-                        </span>
-
-                    </a>
-
-                </div>
-
-
-                <!-- Trust note -->
-
-                <div
-                    class="mt-7 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-white/35"
-                >
-
-                    <span class="flex items-center gap-1.5">
-
-                        <span class="material-symbols-outlined text-sm text-secondary">
-                            lock
-                        </span>
-
-                        Private account
-                    </span>
-
-                    <span class="flex items-center gap-1.5">
-
-                        <span class="material-symbols-outlined text-sm text-secondary">
-                            psychology
-                        </span>
-
-                        Reflection focused
-                    </span>
-
-                    <span class="flex items-center gap-1.5">
-
-                        <span class="material-symbols-outlined text-sm text-secondary">
-                            favorite
-                        </span>
-
-                        Supportive by design
-                    </span>
-
-                </div>
-
-
-                <!-- Mini product preview -->
-
-                <div
-                    class="mt-20 max-w-4xl mx-auto glass-strong rounded-[32px] p-4 hero-glow pulse-ring"
-                >
-
-                    <div
-                        class="rounded-[24px] bg-[#07192a] border border-white/5 overflow-hidden"
-                    >
-
-                        <!-- Fake browser bar -->
-
-                        <div
-                            class="h-10 border-b border-white/5 flex items-center gap-2 px-4"
-                        >
-
-                            <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span>
-                            <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span>
-
-                            <div class="mx-auto w-1/2 h-5 rounded-md bg-white/5"></div>
-
-                        </div>
-
-
-                        <!-- Preview content -->
-
-                        <div class="grid md:grid-cols-[190px_1fr] min-h-[310px]">
-
-                            <div
-                                class="hidden md:block border-r border-white/5 p-5 text-left"
-                            >
-
-                                <div class="font-display font-bold text-secondary">
-                                    Solace
-                                </div>
-
-                                <div class="mt-7 space-y-2">
-
-                                    <div
-                                        class="rounded-lg bg-secondaryContainer/60 px-3 py-2 text-xs text-secondary"
-                                    >
-                                        Dashboard
-                                    </div>
-
-                                    <div
-                                        class="rounded-lg px-3 py-2 text-xs text-white/30"
-                                    >
-                                        Insights
-                                    </div>
-
-                                    <div
-                                        class="rounded-lg px-3 py-2 text-xs text-white/30"
-                                    >
-                                        AI Companion
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-
-                            <div class="p-6 md:p-8 text-left">
-
-                                <p class="text-xs uppercase tracking-widest text-secondary">
-                                    Your wellness space
-                                </p>
-
-                                <h3 class="mt-2 text-2xl font-display font-bold text-white">
-                                    Welcome back.
-                                </h3>
-
-                                <div class="grid sm:grid-cols-3 gap-4 mt-7">
-
-                                    <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-4">
-
-                                        <span class="text-xs text-white/35">
-                                            Current vibe
-                                        </span>
-
-                                        <p class="mt-3 text-lg font-display font-bold text-white">
-                                            Calm &amp; Centered
-                                        </p>
-
-                                    </div>
-
-                                    <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-4">
-
-                                        <span class="text-xs text-white/35">
-                                            Insight
-                                        </span>
-
-                                        <p class="mt-3 text-lg font-display font-bold text-white">
-                                            Building awareness
-                                        </p>
-
-                                    </div>
-
-                                    <div class="rounded-2xl bg-white/[0.03] border border-white/5 p-4">
-
-                                        <span class="text-xs text-white/35">
-                                            Companion
-                                        </span>
-
-                                        <p class="mt-3 text-lg font-display font-bold text-white">
-                                            Ready to listen
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-
-                                <div class="mt-5 h-24 rounded-2xl bg-white/[0.025] border border-white/5 relative overflow-hidden">
-
-                                    <div class="absolute inset-x-0 bottom-0 h-px bg-white/5"></div>
-
-                                    <div class="absolute bottom-0 left-[5%] w-[8%] h-[32%] rounded-t-lg bg-secondary/30"></div>
-                                    <div class="absolute bottom-0 left-[18%] w-[8%] h-[48%] rounded-t-lg bg-secondary/35"></div>
-                                    <div class="absolute bottom-0 left-[31%] w-[8%] h-[40%] rounded-t-lg bg-secondary/30"></div>
-                                    <div class="absolute bottom-0 left-[44%] w-[8%] h-[65%] rounded-t-lg bg-secondary/45"></div>
-                                    <div class="absolute bottom-0 left-[57%] w-[8%] h-[52%] rounded-t-lg bg-secondary/35"></div>
-                                    <div class="absolute bottom-0 left-[70%] w-[8%] h-[72%] rounded-t-lg bg-secondary/50"></div>
-                                    <div class="absolute bottom-0 left-[83%] w-[8%] h-[58%] rounded-t-lg bg-secondary/40"></div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             FEATURES
-        ====================================== -->
-
-        <section
-            id="features"
-            class="py-28 px-5"
-        >
-
-            <div class="max-w-7xl mx-auto">
-
-                <div class="max-w-2xl mb-14">
-
-                    <p class="text-secondary text-xs uppercase tracking-[0.2em]">
-                        One connected experience
-                    </p>
-
-                    <h2 class="mt-3 text-3xl md:text-5xl font-display font-bold text-white">
-                        Tools designed around your emotional wellbeing.
-                    </h2>
-
-                    <p class="mt-5 text-white/50 leading-7">
-                        Reflect, track, understand and talk through what
-                        you're experiencing in one place.
-                    </p>
-
-                </div>
-
-
-                <div
-                    class="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
-                >
-
-
-                    <!-- Assessment -->
-
-                    <a
-                        href="register.html"
-                        class="feature-card glass rounded-3xl p-7 min-h-[290px] flex flex-col"
-                    >
-
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                        >
-
-                            <span class="material-symbols-outlined text-secondary">
-                                assignment
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-display font-bold text-white">
-                            Wellness Assessment
-                        </h3>
-
-                        <p class="mt-3 text-white/55 leading-7">
-                            Structured assessments help you understand your
-                            current emotional state and identify areas worth
-                            paying attention to.
-                        </p>
-
-                        <span class="mt-auto pt-6 text-sm font-semibold text-secondary">
-                            Explore assessment →
-                        </span>
-
-                    </a>
-
-
-                    <!-- Insights -->
-
-                    <a
-                        href="register.html"
-                        class="feature-card glass rounded-3xl p-7 min-h-[290px] flex flex-col"
-                    >
-
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                        >
-
-                            <span class="material-symbols-outlined text-secondary">
-                                insights
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-display font-bold text-white">
-                            Emotional Insights
-                        </h3>
-
-                        <p class="mt-3 text-white/55 leading-7">
-                            Track moods and patterns over time so you can
-                            better understand how your emotional rhythm changes.
-                        </p>
-
-                        <span class="mt-auto pt-6 text-sm font-semibold text-secondary">
-                            View insights →
-                        </span>
-
-                    </a>
-
-
-                    <!-- AI -->
-
-                    <a
-                        href="register.html"
-                        class="feature-card glass rounded-3xl p-7 min-h-[290px] flex flex-col"
-                    >
-
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                        >
-
-                            <span class="material-symbols-outlined text-secondary">
-                                smart_toy
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-display font-bold text-white">
-                            AI Companion
-                        </h3>
-
-                        <p class="mt-3 text-white/55 leading-7">
-                            Talk through your thoughts in a supportive
-                            conversational environment built around reflection.
-                        </p>
-
-                        <span class="mt-auto pt-6 text-sm font-semibold text-secondary">
-                            Meet your companion →
-                        </span>
-
-                    </a>
-
-
-                    <!-- Journal -->
-
-                    <div
-                        class="feature-card glass rounded-3xl p-7 min-h-[290px] flex flex-col"
-                    >
-
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                        >
-
-                            <span class="material-symbols-outlined text-secondary">
-                                menu_book
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-display font-bold text-white">
-                            Private Journal
-                        </h3>
-
-                        <p class="mt-3 text-white/55 leading-7">
-                            Put your thoughts into words and build a simple
-                            habit of self-reflection.
-                        </p>
-
-                        <span class="mt-auto pt-6 text-xs uppercase tracking-wider text-white/30">
-                            Coming soon
-                        </span>
-
-                    </div>
-
-
-                    <!-- Reset -->
-
-                    <div
-                        class="feature-card glass rounded-3xl p-7 min-h-[290px] flex flex-col"
-                    >
-
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                        >
-
-                            <span class="material-symbols-outlined text-secondary">
-                                air
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-display font-bold text-white">
-                            Grounding Tools
-                        </h3>
-
-                        <p class="mt-3 text-white/55 leading-7">
-                            Short breathing and grounding activities for
-                            moments when you need to slow down.
-                        </p>
-
-                        <span class="mt-auto pt-6 text-xs uppercase tracking-wider text-white/30">
-                            Coming soon
-                        </span>
-
-                    </div>
-
-
-                    <!-- Privacy -->
-
-                    <div
-                        class="feature-card glass rounded-3xl p-7 min-h-[290px] flex flex-col"
-                    >
-
-                        <div
-                            class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                        >
-
-                            <span class="material-symbols-outlined text-secondary">
-                                shield
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-6 text-xl font-display font-bold text-white">
-                            Privacy First
-                        </h3>
-
-                        <p class="mt-3 text-white/55 leading-7">
-                            Your browser talks to the Solace backend,
-                            keeping database credentials and AI API keys
-                            away from the client.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             HOW IT WORKS
-        ====================================== -->
-
-        <section
-            id="how-it-works"
-            class="py-28 px-5 border-y border-white/5"
-        >
-
-            <div class="max-w-6xl mx-auto">
-
-                <div class="text-center max-w-2xl mx-auto">
-
-                    <p class="text-secondary text-xs uppercase tracking-[0.2em]">
-                        How Solace works
-                    </p>
-
-                    <h2 class="mt-3 text-3xl md:text-5xl font-display font-bold text-white">
-                        A simple path from reflection to action.
-                    </h2>
-
-                </div>
-
-
-                <div
-                    class="grid md:grid-cols-3 gap-6 mt-16"
-                >
-
-                    <div class="glass rounded-3xl p-7">
-
-                        <div class="flex items-center justify-between">
-
-                            <span class="font-mono text-sm text-secondary">
-                                01
-                            </span>
-
-                            <span class="material-symbols-outlined text-secondary">
-                                edit_note
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-8 text-xl font-display font-bold text-white">
-                            Check In
-                        </h3>
-
-                        <p class="mt-3 text-white/50 leading-7">
-                            Share your mood, thoughts or complete an assessment
-                            to create a snapshot of where you are right now.
-                        </p>
-
-                    </div>
-
-
-                    <div class="glass rounded-3xl p-7">
-
-                        <div class="flex items-center justify-between">
-
-                            <span class="font-mono text-sm text-secondary">
-                                02
-                            </span>
-
-                            <span class="material-symbols-outlined text-secondary">
-                                psychology
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-8 text-xl font-display font-bold text-white">
-                            Understand
-                        </h3>
-
-                        <p class="mt-3 text-white/50 leading-7">
-                            Solace turns your check-ins and assessments
-                            into structured information and useful insights.
-                        </p>
-
-                    </div>
-
-
-                    <div class="glass rounded-3xl p-7">
-
-                        <div class="flex items-center justify-between">
-
-                            <span class="font-mono text-sm text-secondary">
-                                03
-                            </span>
-
-                            <span class="material-symbols-outlined text-secondary">
-                                directions_walk
-                            </span>
-
-                        </div>
-
-                        <h3 class="mt-8 text-xl font-display font-bold text-white">
-                            Move Forward
-                        </h3>
-
-                        <p class="mt-3 text-white/50 leading-7">
-                            Use those insights, reflection tools and
-                            conversations to decide what your next step looks like.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             ABOUT / POSITIONING
-        ====================================== -->
-
-        <section
-            id="about"
-            class="py-28 px-5"
-        >
-
-            <div class="max-w-5xl mx-auto">
-
-                <div class="glass rounded-[32px] p-8 md:p-14 text-center hero-glow">
-
-                    <div
-                        class="mx-auto w-16 h-16 rounded-2xl bg-secondaryContainer flex items-center justify-center"
-                    >
-
-                        <span class="material-symbols-outlined text-secondary text-3xl">
-                            spa
-                        </span>
-
-                    </div>
-
-                    <h2 class="mt-7 text-3xl md:text-5xl font-display font-bold text-white">
-                        Mental wellness starts with noticing.
-                    </h2>
-
-                    <p class="mt-5 max-w-2xl mx-auto text-white/50 leading-8">
-                        Solace is built to make self-reflection feel less
-                        overwhelming and more approachable. It helps you
-                        notice patterns, organize your thoughts and create a
-                        clearer picture of your emotional wellbeing.
-                    </p>
-
-                    <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm">
-
-                        <span class="glass rounded-full px-4 py-2 text-white/55">
-                            Reflection
-                        </span>
-
-                        <span class="glass rounded-full px-4 py-2 text-white/55">
-                            Self-awareness
-                        </span>
-
-                        <span class="glass rounded-full px-4 py-2 text-white/55">
-                            Emotional insights
-                        </span>
-
-                        <span class="glass rounded-full px-4 py-2 text-white/55">
-                            AI support
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =====================================
-             CTA
-        ====================================== -->
-
-        <section class="px-5 pb-28">
-
-            <div class="max-w-5xl mx-auto text-center">
-
-                <p class="text-secondary text-xs uppercase tracking-[0.2em]">
-                    Begin today
-                </p>
-
-                <h2 class="mt-4 text-4xl md:text-6xl font-display font-bold text-white">
-                    Give your mind some room.
-                </h2>
-
-                <p class="mt-5 text-white/50 max-w-xl mx-auto leading-7">
-                    Create your Solace account and start building a more
-                    thoughtful understanding of yourself.
-                </p>
-
-                <div class="mt-9 flex flex-col sm:flex-row gap-4 justify-center">
-
-                    <a
-                        href="register.html"
-                        class="inline-flex items-center justify-center gap-2 bg-secondary text-slate-950 rounded-full px-8 py-4 font-semibold hover:opacity-90 transition"
-                    >
-
-                        Create Your Account
-
-                        <span class="material-symbols-outlined">
-                            arrow_forward
-                        </span>
-
-                    </a>
-
-                    <a
-                        href="login.html"
-                        class="inline-flex items-center justify-center gap-2 glass rounded-full px-8 py-4 text-white font-semibold hover:bg-white/10 transition"
-                    >
-
-                        I Already Have an Account
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer class="border-t border-white/5 py-8 px-5">
-
-        <div
-            class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-
-            <div class="flex items-center gap-2">
-
-                <span class="material-symbols-outlined text-secondary">
-                    spa
+            <div class="inline-flex items-center gap-2 glass rounded-full px-4 py-2">
+                <span class="material-symbols-outlined text-green text-lg">
+                    self_improvement
                 </span>
 
-                <span class="font-display font-bold text-secondary">
-                    Solace
+                <span class="text-xs uppercase tracking-[.2em] text-green">
+                    Your mental wellness space
                 </span>
-
             </div>
 
-            <p class="text-xs text-white/35 text-center">
-                A mental wellness support prototype focused on reflection,
-                awareness and conversation.
+            <h1 class="mt-8 text-5xl md:text-7xl font-display font-extrabold leading-tight text-white">
+                Understand your mind.
+                <br>
+                <span class="gradient-text">
+                    Move forward.
+                </span>
+            </h1>
+
+            <p class="mt-7 max-w-2xl mx-auto text-lg md:text-xl leading-8 text-white/55">
+                Solace brings reflection, wellness assessments,
+                emotional insights and an AI companion into one calm,
+                private space.
             </p>
 
-            <div class="text-xs text-white/30">
-                © 2026 Solace
+            <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4">
+
+                <a href="register.html"
+                   class="bg-green text-slate-950 rounded-full px-8 py-4 font-semibold hover:opacity-90">
+                    Start Your Journey
+                </a>
+
+                <a href="login.html"
+                   class="glass text-white rounded-full px-8 py-4 font-semibold hover:bg-white/10">
+                    Sign In
+                </a>
+
+            </div>
+
+            <div class="mt-8 flex flex-wrap justify-center gap-5 text-xs text-white/35">
+
+                <span>
+                    <span class="material-symbols-outlined text-sm align-middle text-green">
+                        lock
+                    </span>
+                    Private account
+                </span>
+
+                <span>
+                    <span class="material-symbols-outlined text-sm align-middle text-green">
+                        psychology
+                    </span>
+                    Reflection focused
+                </span>
+
+                <span>
+                    <span class="material-symbols-outlined text-sm align-middle text-green">
+                        favorite
+                    </span>
+                    Supportive by design
+                </span>
+
+            </div>
+
+            <!-- Preview -->
+
+            <div class="mt-16 glass rounded-[30px] p-4">
+
+                <div class="rounded-[24px] bg-[#07192A] border border-white/5 overflow-hidden">
+
+                    <div class="h-10 border-b border-white/5 flex items-center gap-2 px-4">
+                        <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-white/10"></span>
+                        <div class="mx-auto w-1/2 h-5 bg-white/5 rounded"></div>
+                    </div>
+
+                    <div class="grid md:grid-cols-[190px_1fr] min-h-[280px]">
+
+                        <aside class="hidden md:block border-r border-white/5 p-5 text-left">
+
+                            <div class="font-display font-bold text-green">
+                                Solace
+                            </div>
+
+                            <div class="mt-7 space-y-2">
+                                <div class="rounded-lg bg-greenDark/60 px-3 py-2 text-xs text-green">
+                                    Dashboard
+                                </div>
+
+                                <div class="px-3 py-2 text-xs text-white/30">
+                                    Insights
+                                </div>
+
+                                <div class="px-3 py-2 text-xs text-white/30">
+                                    AI Companion
+                                </div>
+                            </div>
+
+                        </aside>
+
+                        <div class="p-6 md:p-8 text-left">
+
+                            <p class="text-xs uppercase tracking-widest text-green">
+                                Your wellness space
+                            </p>
+
+                            <h3 class="mt-2 text-2xl font-display font-bold text-white">
+                                Welcome back.
+                            </h3>
+
+                            <div class="grid sm:grid-cols-3 gap-4 mt-6">
+
+                                <div class="glass rounded-2xl p-4">
+                                    <p class="text-xs text-white/35">Current vibe</p>
+                                    <p class="mt-3 font-display font-bold text-white">
+                                        Calm &amp; Centered
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-4">
+                                    <p class="text-xs text-white/35">Insight</p>
+                                    <p class="mt-3 font-display font-bold text-white">
+                                        Building awareness
+                                    </p>
+                                </div>
+
+                                <div class="glass rounded-2xl p-4">
+                                    <p class="text-xs text-white/35">Companion</p>
+                                    <p class="mt-3 font-display font-bold text-white">
+                                        Ready to listen
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
-
-    </footer>
-
+    </section>
 
 
-    <!-- =========================================
-         JAVASCRIPT
-    ========================================== -->
+    <!-- FEATURES -->
 
-    <script>
+    <section id="features" class="py-24 px-5">
 
-        /*
-         * Mobile menu
-         */
+        <div class="max-w-7xl mx-auto">
 
-        const mobileMenuButton =
-            document.getElementById(
-                "mobile-menu-button"
-            );
+            <div class="max-w-2xl">
+                <p class="text-xs uppercase tracking-[.2em] text-green">
+                    One connected experience
+                </p>
 
-        const mobileMenu =
-            document.getElementById(
-                "mobile-menu"
-            );
+                <h2 class="mt-3 text-3xl md:text-5xl font-display font-bold text-white">
+                    Everything you need to understand your wellbeing.
+                </h2>
+
+                <p class="mt-5 text-white/50 leading-7">
+                    Reflect on how you feel, understand patterns,
+                    complete structured assessments and talk things through.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+
+                <a href="assessment.html"
+                   class="card glass rounded-3xl p-7 min-h-[260px] flex flex-col">
+
+                    <span class="material-symbols-outlined text-green">
+                        assignment
+                    </span>
+
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Wellness Assessment
+                    </h3>
+
+                    <p class="mt-3 text-white/50 leading-7">
+                        Complete a structured assessment and receive
+                        personalized scoring and an AI-generated report.
+                    </p>
+
+                    <span class="mt-auto pt-5 text-sm text-green font-semibold">
+                        Take assessment →
+                    </span>
+                </a>
+
+                <a href="insights.html"
+                   class="card glass rounded-3xl p-7 min-h-[260px] flex flex-col">
+
+                    <span class="material-symbols-outlined text-green">
+                        insights
+                    </span>
+
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Emotional Insights
+                    </h3>
+
+                    <p class="mt-3 text-white/50 leading-7">
+                        Record your mood and energy and build a clearer
+                        picture of your emotional rhythm.
+                    </p>
+
+                    <span class="mt-auto pt-5 text-sm text-green font-semibold">
+                        Check in →
+                    </span>
+                </a>
+
+                <a href="chat.html"
+                   class="card glass rounded-3xl p-7 min-h-[260px] flex flex-col">
+
+                    <span class="material-symbols-outlined text-green">
+                        smart_toy
+                    </span>
+
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        AI Companion
+                    </h3>
+
+                    <p class="mt-3 text-white/50 leading-7">
+                        Have a supportive conversation in a space designed
+                        around reflection.
+                    </p>
+
+                    <span class="mt-auto pt-5 text-sm text-green font-semibold">
+                        Open companion →
+                    </span>
+                </a>
+
+                <div class="card glass rounded-3xl p-7 min-h-[260px] flex flex-col">
+
+                    <span class="material-symbols-outlined text-green">
+                        menu_book
+                    </span>
+
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Private Journal
+                    </h3>
+
+                    <p class="mt-3 text-white/50 leading-7">
+                        Capture thoughts and reflections in one place.
+                    </p>
+
+                    <span class="mt-auto pt-5 text-xs text-white/30 uppercase">
+                        Coming soon
+                    </span>
+                </div>
+
+                <div class="card glass rounded-3xl p-7 min-h-[260px] flex flex-col">
+
+                    <span class="material-symbols-outlined text-green">
+                        air
+                    </span>
+
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Grounding Tools
+                    </h3>
+
+                    <p class="mt-3 text-white/50 leading-7">
+                        Short breathing and grounding experiences for
+                        moments that feel overwhelming.
+                    </p>
+
+                    <span class="mt-auto pt-5 text-xs text-white/30 uppercase">
+                        Coming soon
+                    </span>
+                </div>
+
+                <div class="card glass rounded-3xl p-7 min-h-[260px] flex flex-col">
+
+                    <span class="material-symbols-outlined text-green">
+                        shield
+                    </span>
+
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Privacy First
+                    </h3>
+
+                    <p class="mt-3 text-white/50 leading-7">
+                        Your browser communicates with the backend instead
+                        of exposing database or AI credentials.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
 
-        mobileMenuButton.addEventListener(
-            "click",
-            () => {
+    <!-- HOW -->
 
-                mobileMenu.classList.toggle(
-                    "hidden"
-                );
+    <section id="how" class="py-24 px-5 border-y border-white/5">
 
-            }
-        );
+        <div class="max-w-6xl mx-auto">
 
+            <div class="text-center max-w-2xl mx-auto">
 
-        /*
-         * Close mobile menu after navigation
-         */
+                <p class="text-xs uppercase tracking-[.2em] text-green">
+                    How Solace works
+                </p>
 
-        const mobileLinks =
-            mobileMenu.querySelectorAll("a");
+                <h2 class="mt-3 text-3xl md:text-5xl font-display font-bold text-white">
+                    From reflection to understanding.
+                </h2>
+            </div>
 
+            <div class="grid md:grid-cols-3 gap-6 mt-14">
 
-        mobileLinks.forEach(link => {
+                <div class="glass rounded-3xl p-7">
+                    <span class="text-green font-mono">01</span>
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Check In
+                    </h3>
+                    <p class="mt-3 text-white/50 leading-7">
+                        Share your mood or complete an assessment.
+                    </p>
+                </div>
 
-            link.addEventListener(
-                "click",
-                () => {
+                <div class="glass rounded-3xl p-7">
+                    <span class="text-green font-mono">02</span>
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Understand
+                    </h3>
+                    <p class="mt-3 text-white/50 leading-7">
+                        Turn your responses into structured personal insights.
+                    </p>
+                </div>
 
-                    mobileMenu.classList.add(
-                        "hidden"
-                    );
+                <div class="glass rounded-3xl p-7">
+                    <span class="text-green font-mono">03</span>
+                    <h3 class="mt-6 text-xl font-display font-bold text-white">
+                        Move Forward
+                    </h3>
+                    <p class="mt-3 text-white/50 leading-7">
+                        Use your insights and companion tools to decide what
+                        comes next.
+                    </p>
+                </div>
 
-                }
-            );
+            </div>
 
-        });
-
-
-        /*
-         * Lightweight animated stars.
-         *
-         * This is intentionally much simpler than the old
-         * WebGL/template animation so the landing page remains
-         * fast and easy to maintain.
-         */
-
-        const starfield =
-            document.getElementById(
-                "starfield"
-            );
-
-
-        function createStars() {
-
-            starfield.innerHTML = "";
-
-            const count =
-                Math.min(
-                    100,
-                    Math.max(
-                        40,
-                        Math.floor(
-                            window.innerWidth / 15
-                        )
-                    )
-                );
+        </div>
+    </section>
 
 
-            for (
-                let i = 0;
-                i < count;
-                i++
-            ) {
+    <!-- CTA -->
 
-                const star =
-                    document.createElement(
-                        "div"
-                    );
+    <section class="py-24 px-5">
 
+        <div class="max-w-4xl mx-auto glass rounded-[32px] p-10 md:p-14 text-center">
 
-                star.className =
-                    "star";
+            <span class="material-symbols-outlined text-green text-4xl">
+                spa
+            </span>
 
+            <h2 class="mt-5 text-3xl md:text-5xl font-display font-bold text-white">
+                Give your mind some room.
+            </h2>
 
-                star.style.left =
-                    `${Math.random() * 100}%`;
+            <p class="mt-5 text-white/50 max-w-xl mx-auto">
+                Create your Solace account and start your journey.
+            </p>
 
+            <a href="register.html"
+               class="inline-block mt-8 bg-green text-slate-950 rounded-full px-8 py-4 font-semibold">
+                Create Your Account
+            </a>
 
-                star.style.top =
-                    `${Math.random() * 100}%`;
+        </div>
+    </section>
 
+</main>
 
-                star.style.animationDelay =
-                    `${Math.random() * 8}s`;
+<footer class="border-t border-white/5 py-8 px-5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-4 text-sm">
+        <span class="font-display font-bold text-green">
+            Solace
+        </span>
 
+        <span class="text-white/30 text-center">
+            A mental wellness support prototype focused on reflection and self-awareness.
+        </span>
+    </div>
+</footer>
 
-                star.style.animationDuration =
-                    `${5 + Math.random() * 7}s`;
+<script>
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
 
+    menuBtn.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+    });
 
-                star.style.opacity =
-                    `${0.15 + Math.random() * 0.55}`;
+    const stars = document.getElementById("stars");
 
-
-                starfield.appendChild(
-                    star
-                );
-
-            }
-
-        }
-
-
-        createStars();
-
-
-        /*
-         * Rebuild background on resize.
-         */
-
-        let resizeTimeout;
-
-        window.addEventListener(
-            "resize",
-            () => {
-
-                clearTimeout(
-                    resizeTimeout
-                );
-
-                resizeTimeout =
-                    setTimeout(
-                        createStars,
-                        200
-                    );
-
-            }
-        );
-
-    </script>
+    for (let i = 0; i < 90; i++) {
+        const star = document.createElement("div");
+        star.className = "star";
+        star.style.left = Math.random() * 100 + "%";
+        star.style.top = Math.random() * 100 + "%";
+        star.style.animationDelay = Math.random() * 7 + "s";
+        stars.appendChild(star);
+    }
+</script>
 
 </body>
 </html>

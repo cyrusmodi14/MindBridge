@@ -6,566 +6,285 @@
 
     <title>Solace — AI Companion</title>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
         rel="stylesheet"
     >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
-        rel="stylesheet"
-    >
-
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        background: "#051424",
-                        primary: "#d4e4fa",
-                        secondary: "#a8cfbc",
-                        secondaryContainer: "#294e3f",
-                        surfaceContainer: "#122131",
-                        surfaceHigh: "#1c2b3c",
-                        surfaceHighest: "#273647",
-                        muted: "#c6c6cd"
-                    },
-
-                    fontFamily: {
-                        display: ["Manrope", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                        mono: ["JetBrains Mono", "monospace"]
-                    }
-                }
-            }
-        }
-    </script>
 
     <style>
         body {
-            margin: 0;
             background:
-                radial-gradient(
-                    circle at 80% 5%,
-                    rgba(41,78,63,.22),
-                    transparent 30%
-                ),
+                radial-gradient(circle at 80% 0%, rgba(41,78,63,.25), transparent 30%),
                 #051424;
         }
 
         .glass {
-            background: rgba(5,20,36,.55);
+            background: rgba(18,33,49,.55);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255,255,255,.08);
         }
 
-        .message-user {
-            background: #294e3f;
-            color: #d8f0e3;
+        .bubble-user {
+            background: #294E3F;
         }
 
-        .message-ai {
-            background: rgba(39,54,71,.6);
-            color: #d4e4fa;
-        }
-
-        .suggestion {
-            transition:
-                background .2s ease,
-                border-color .2s ease,
-                transform .2s ease;
-        }
-
-        .suggestion:hover {
-            background: rgba(255,255,255,.07);
-            border-color: rgba(168,207,188,.35);
-            transform: translateY(-1px);
-        }
-
-        .typing-dot {
-            animation: blink 1.2s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: .15s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: .3s;
-        }
-
-        @keyframes blink {
-            0%, 60%, 100% {
-                opacity: .25;
-            }
-
-            30% {
-                opacity: 1;
-            }
+        .bubble-ai {
+            background: rgba(39,54,71,.7);
         }
     </style>
 </head>
 
-<body class="text-primary font-body min-h-screen">
+<body class="min-h-screen text-white">
 
-    <!-- Desktop sidebar -->
-    <aside class="hidden md:flex fixed left-0 top-0 bottom-0 w-64 glass border-r border-white/5 flex-col p-5 z-40">
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    if (!localStorage.getItem("access_token")) {
+        window.location.href = "login.html";
+    }
+</script>
+
+<header class="fixed top-0 left-0 right-0 z-40 glass border-b border-white/5">
+
+    <div class="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
 
         <a href="dashboard.html"
-           class="font-display text-2xl font-bold text-secondary">
+           class="text-xl font-bold text-[#A8CFBC]">
             Solace
         </a>
 
-        <p class="text-xs text-white/40 mt-1">
-            Mental wellness companion
-        </p>
+        <a href="dashboard.html"
+           class="text-sm text-white/40">
+            Dashboard
+        </a>
 
-        <nav class="mt-10 space-y-2">
+    </div>
+</header>
 
-            <a href="dashboard.html"
-               class="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition">
-                <span class="material-symbols-outlined">
-                    dashboard
-                </span>
-                Dashboard
-            </a>
+<main class="max-w-4xl mx-auto px-5 pt-24 pb-10">
 
-            <a href="insights.html"
-               class="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition">
-                <span class="material-symbols-outlined">
-                    insights
-                </span>
-                Insights
-            </a>
+    <div class="glass rounded-[28px] overflow-hidden min-h-[calc(100vh-7rem)] flex flex-col">
 
-            <a href="chat.html"
-               class="flex items-center gap-3 rounded-xl px-4 py-3 bg-secondaryContainer/70 text-secondary font-semibold">
-                <span class="material-symbols-outlined">
-                    chat
-                </span>
+        <div class="p-5 border-b border-white/5">
+
+            <h1 class="text-xl font-bold">
                 AI Companion
-            </a>
+            </h1>
 
-        </nav>
+            <p class="text-xs text-white/40 mt-1">
+                A space for reflection and supportive conversation.
+            </p>
 
-    </aside>
+        </div>
 
-    <!-- Main -->
-    <main class="md:ml-64 min-h-screen flex flex-col">
+        <div id="messages"
+             class="flex-1 overflow-y-auto p-5 md:p-7 space-y-5">
 
-        <!-- Top -->
-        <header class="h-16 fixed md:left-64 left-0 right-0 top-0 z-30 glass border-b border-white/5">
+            <div class="flex">
 
-            <div class="h-full px-5 md:px-8 flex items-center justify-between">
+                <div class="bubble-ai rounded-2xl rounded-tl-sm p-4 max-w-[80%]">
 
-                <div>
-                    <h1 class="font-display font-bold text-white">
-                        Wellness Companion
-                    </h1>
-
-                    <p class="text-xs text-white/40 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-secondary rounded-full"></span>
-                        Present and listening
+                    <p class="text-sm leading-7">
+                        Hi. I'm here to listen.
+                        You can share what's been on your mind,
+                        talk through a difficult moment, or simply
+                        put your thoughts into words.
                     </p>
+
                 </div>
-
-                <a href="dashboard.html"
-                   class="text-white/50 hover:text-white transition">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
-                </a>
-
-            </div>
-
-        </header>
-
-        <!-- Chat wrapper -->
-        <div class="pt-16 flex-1">
-
-            <div class="max-w-5xl mx-auto h-[calc(100vh-4rem)] px-4 md:px-8 py-4">
-
-                <section class="glass rounded-[28px] h-full flex flex-col overflow-hidden">
-
-                    <!-- Messages -->
-                    <div
-                        id="chat-messages"
-                        class="flex-1 overflow-y-auto p-5 md:p-8 space-y-5"
-                    >
-
-                        <div class="flex justify-start">
-
-                            <div class="message-ai max-w-[85%] md:max-w-[70%] rounded-2xl rounded-tl-none px-5 py-4">
-
-                                <p class="text-sm leading-7">
-                                    Hi. I'm here to listen.
-                                    You can share what's been on your mind,
-                                    talk through a difficult moment, or simply
-                                    put your thoughts into words.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <!-- Suggestions -->
-                    <div class="px-5 md:px-8 pb-3">
-
-                        <p class="text-xs text-white/35 uppercase tracking-widest mb-3">
-                            Suggested reflections
-                        </p>
-
-                        <div class="flex flex-wrap gap-2">
-
-                            <button
-                                type="button"
-                                class="suggestion glass rounded-full px-4 py-2 text-sm text-white/65"
-                                data-message="I want to try a grounding exercise."
-                            >
-                                I want to try a grounding exercise.
-                            </button>
-
-                            <button
-                                type="button"
-                                class="suggestion glass rounded-full px-4 py-2 text-sm text-white/65"
-                                data-message="Let's talk about work stress."
-                            >
-                                Let's talk about work stress.
-                            </button>
-
-                            <button
-                                type="button"
-                                class="suggestion glass rounded-full px-4 py-2 text-sm text-white/65"
-                                data-message="I just need to vent for a moment."
-                            >
-                                I just need to vent for a moment.
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- Input -->
-                    <div class="p-5 md:p-8 border-t border-white/5">
-
-                        <form
-                            id="chat-form"
-                            class="flex items-center gap-3"
-                        >
-
-                            <div class="flex-1 glass rounded-2xl px-4 py-3 flex items-center gap-3">
-
-                                <span class="material-symbols-outlined text-white/30">
-                                    chat_bubble
-                                </span>
-
-                                <input
-                                    id="chat-input"
-                                    type="text"
-                                    autocomplete="off"
-                                    placeholder="Share your thoughts..."
-                                    class="flex-1 bg-transparent border-0 outline-none ring-0 text-white placeholder:text-white/30 focus:ring-0"
-                                >
-
-                            </div>
-
-                            <button
-                                id="send-button"
-                                type="submit"
-                                class="w-12 h-12 rounded-2xl bg-secondary text-slate-950 flex items-center justify-center hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
-                            >
-                                <span class="material-symbols-outlined">
-                                    send
-                                </span>
-                            </button>
-
-                        </form>
-
-                        <p class="mt-3 text-[11px] text-white/30 text-center">
-                            Solace is a wellness support tool and not a replacement for professional care.
-                        </p>
-
-                    </div>
-
-                </section>
 
             </div>
 
         </div>
 
-    </main>
+        <div class="p-5 border-t border-white/5">
 
-    <!-- Mobile nav -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 glass border-t border-white/5 px-4 py-3">
+            <div class="flex flex-wrap gap-2 mb-4">
 
-        <div class="grid grid-cols-3">
+                <button class="suggestion glass rounded-full px-4 py-2 text-xs text-white/60"
+                        data-message="I just need to vent for a moment.">
+                    I just need to vent.
+                </button>
 
-            <a href="dashboard.html"
-               class="flex flex-col items-center gap-1 text-white/50">
-                <span class="material-symbols-outlined">
-                    dashboard
-                </span>
-                <span class="text-[11px]">
-                    Dashboard
-                </span>
-            </a>
+                <button class="suggestion glass rounded-full px-4 py-2 text-xs text-white/60"
+                        data-message="Let's talk about work stress.">
+                    Work stress
+                </button>
 
-            <a href="insights.html"
-               class="flex flex-col items-center gap-1 text-white/50">
-                <span class="material-symbols-outlined">
-                    insights
-                </span>
-                <span class="text-[11px]">
-                    Insights
-                </span>
-            </a>
+                <button class="suggestion glass rounded-full px-4 py-2 text-xs text-white/60"
+                        data-message="I want to try a grounding exercise.">
+                    Grounding exercise
+                </button>
 
-            <a href="chat.html"
-               class="flex flex-col items-center gap-1 text-secondary">
-                <span class="material-symbols-outlined">
-                    chat
-                </span>
-                <span class="text-[11px]">
-                    Chat
-                </span>
-            </a>
+            </div>
+
+            <form id="chatForm"
+                  class="flex gap-3">
+
+                <input
+                    id="chatInput"
+                    type="text"
+                    autocomplete="off"
+                    placeholder="Share your thoughts..."
+                    class="flex-1 rounded-2xl px-4 py-3 bg-[#07192A] border border-white/10 outline-none text-white placeholder:text-white/30"
+                >
+
+                <button
+                    id="send"
+                    type="submit"
+                    class="w-12 rounded-2xl bg-[#A8CFBC] text-slate-950 font-semibold"
+                >
+                    →
+                </button>
+
+            </form>
+
+            <p class="mt-3 text-center text-[11px] text-white/25">
+                Solace is a wellness support tool and not a replacement for professional care.
+            </p>
 
         </div>
 
-    </nav>
+    </div>
 
-    <script src="api.js"></script>
-    <script src="auth.js"></script>
-    <script src="chat.js"></script>
+</main>
 
-    <script>
-        const form =
-            document.getElementById("chat-form");
+<script>
+    const authHeaders = () => ({
+        Authorization:
+            `Bearer ${localStorage.getItem("access_token")}`
+    });
 
-        const input =
-            document.getElementById("chat-input");
+    const form =
+        document.getElementById("chatForm");
 
-        const sendButton =
-            document.getElementById("send-button");
+    const input =
+        document.getElementById("chatInput");
 
-        const messages =
-            document.getElementById("chat-messages");
+    const send =
+        document.getElementById("send");
 
-        const suggestions =
-            document.querySelectorAll(".suggestion");
+    const messages =
+        document.getElementById("messages");
 
-        function addMessage(text, sender) {
+    function addMessage(text, sender) {
 
-            const wrapper =
-                document.createElement("div");
+        const row =
+            document.createElement("div");
 
-            wrapper.className =
-                sender === "user"
-                    ? "flex justify-end"
-                    : "flex justify-start";
+        row.className =
+            sender === "user"
+                ? "flex justify-end"
+                : "flex";
 
-            const bubble =
-                document.createElement("div");
+        const bubble =
+            document.createElement("div");
 
-            bubble.className =
-                sender === "user"
-                    ? "message-user max-w-[85%] md:max-w-[70%] rounded-2xl rounded-tr-none px-5 py-4"
-                    : "message-ai max-w-[85%] md:max-w-[70%] rounded-2xl rounded-tl-none px-5 py-4";
+        bubble.className =
+            sender === "user"
+                ? "bubble-user rounded-2xl rounded-tr-sm p-4 max-w-[80%]"
+                : "bubble-ai rounded-2xl rounded-tl-sm p-4 max-w-[80%]";
 
-            const paragraph =
-                document.createElement("p");
+        const p =
+            document.createElement("p");
 
-            paragraph.className =
-                "text-sm leading-7 whitespace-pre-wrap";
+        p.className =
+            "text-sm leading-7 whitespace-pre-wrap";
 
-            paragraph.textContent = text;
+        p.textContent =
+            text;
 
-            bubble.appendChild(paragraph);
-            wrapper.appendChild(bubble);
-            messages.appendChild(wrapper);
+        bubble.appendChild(p);
+        row.appendChild(bubble);
+        messages.appendChild(row);
 
-            messages.scrollTop =
-                messages.scrollHeight;
-        }
+        messages.scrollTop =
+            messages.scrollHeight;
+    }
 
-        function addTypingIndicator() {
+    form.addEventListener("submit", async event => {
 
-            const wrapper =
-                document.createElement("div");
+        event.preventDefault();
 
-            wrapper.id = "typing-indicator";
+        const text =
+            input.value.trim();
 
-            wrapper.className =
-                "flex justify-start";
+        if (!text) return;
 
-            wrapper.innerHTML = `
-                <div class="message-ai rounded-2xl rounded-tl-none px-5 py-4">
-                    <div class="flex items-center gap-1">
-                        <span class="typing-dot w-2 h-2 rounded-full bg-secondary"></span>
-                        <span class="typing-dot w-2 h-2 rounded-full bg-secondary"></span>
-                        <span class="typing-dot w-2 h-2 rounded-full bg-secondary"></span>
-                    </div>
-                </div>
-            `;
+        addMessage(text, "user");
 
-            messages.appendChild(wrapper);
+        input.value = "";
 
-            messages.scrollTop =
-                messages.scrollHeight;
-        }
+        send.disabled = true;
+        send.textContent = "...";
 
-        function removeTypingIndicator() {
+        try {
 
-            const indicator =
-                document.getElementById(
-                    "typing-indicator"
-                );
-
-            if (indicator) {
-                indicator.remove();
-            }
-        }
-
-        async function sendMessage(message) {
-
-            const text =
-                message.trim();
-
-            if (!text) return;
-
-            addMessage(text, "user");
-
-            input.value = "";
-
-            sendButton.disabled = true;
-
-            addTypingIndicator();
-
-            try {
-
-                if (!getToken()) {
-
-                    removeTypingIndicator();
-
-                    addMessage(
-                        "Please log in before using the AI companion.",
-                        "ai"
-                    );
-
-                    return;
-                }
-
-                /*
-                 * Expected backend endpoint:
-                 *
-                 * POST /chat/
-                 *
-                 * {
-                 *     "message": "I'm feeling stressed."
-                 * }
-                 *
-                 * Expected response:
-                 *
-                 * {
-                 *     "response": "..."
-                 * }
-                 */
-
-                const result =
-                    await apiFetch("/chat/", {
+            const response =
+                await fetch(
+                    `${API_BASE}/chat/`,
+                    {
                         method: "POST",
-
                         headers: {
-                            "Content-Type": "application/json"
+                            ...authHeaders(),
+                            "Content-Type":
+                                "application/json"
                         },
-
                         body: JSON.stringify({
                             message: text
                         })
-                    });
-
-                removeTypingIndicator();
-
-                addMessage(
-                    result.response ||
-                    result.message ||
-                    "I received your message, but the backend did not return a response.",
-                    "ai"
+                    }
                 );
 
-            } catch (error) {
+            const data =
+                await response.json();
 
-                console.error(
-                    "Chat request failed:",
-                    error
+            if (!response.ok) {
+                throw new Error(
+                    data.detail ||
+                    "Chat request failed."
                 );
-
-                removeTypingIndicator();
-
-                addMessage(
-                    "The AI chat backend is not connected yet. Your frontend is ready for the /chat/ endpoint.",
-                    "ai"
-                );
-
-            } finally {
-
-                sendButton.disabled = false;
-                input.focus();
-
             }
-        }
 
-        form.addEventListener(
-            "submit",
-            event => {
-
-                event.preventDefault();
-
-                sendMessage(input.value);
-
-            }
-        );
-
-        suggestions.forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const message =
-                        button.dataset.message;
-
-                    input.value = message;
-
-                    input.focus();
-
-                }
+            addMessage(
+                data.response ||
+                "No response received.",
+                "ai"
             );
 
+        } catch (error) {
+
+            console.error(error);
+
+            addMessage(
+                error.message ||
+                "Unable to connect to Solace right now.",
+                "ai"
+            );
+
+        } finally {
+
+            send.disabled = false;
+            send.textContent = "→";
+            input.focus();
+
+        }
+    });
+
+    document.querySelectorAll(".suggestion")
+        .forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                input.value =
+                    button.dataset.message;
+
+                input.focus();
+            });
         });
-
-        input.addEventListener(
-            "keydown",
-            event => {
-
-                if (
-                    event.key === "Enter" &&
-                    !event.shiftKey
-                ) {
-                    event.preventDefault();
-
-                    form.requestSubmit();
-                }
-
-            }
-        );
-    </script>
+</script>
 
 </body>
 </html>

@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Solace — Sign In</title>
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
@@ -17,741 +13,306 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
         rel="stylesheet"
     >
 
-    <script>
-        tailwind.config = {
-            darkMode: "class",
-
-            theme: {
-                extend: {
-
-                    colors: {
-                        background: "#051424",
-                        surface: "#051424",
-
-                        primary: "#d4e4fa",
-
-                        secondary: "#a8cfbc",
-                        secondaryContainer: "#294e3f",
-
-                        surfaceContainer: "#122131",
-                        surfaceHigh: "#1c2b3c",
-                        surfaceHighest: "#273647",
-
-                        muted: "#c6c6cd",
-
-                        error: "#ffb4ab"
-                    },
-
-                    fontFamily: {
-                        display: ["Manrope", "sans-serif"],
-                        body: ["Inter", "sans-serif"]
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-
             background:
-                radial-gradient(
-                    circle at 50% 15%,
-                    rgba(41, 78, 63, 0.35),
-                    transparent 35%
-                ),
+                radial-gradient(circle at 50% 10%, rgba(41,78,63,.35), transparent 35%),
                 #051424;
         }
 
         .glass {
-            background: rgba(18, 33, 49, 0.55);
-
+            background: rgba(18,33,49,.58);
             backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,.08);
         }
 
-        .input-field {
-            background: rgba(5,20,36,0.65);
-
-            border: 1px solid rgba(255,255,255,0.1);
-
-            transition:
-                border-color .2s ease,
-                box-shadow .2s ease;
+        input {
+            background: rgba(5,20,36,.65) !important;
+            border: 1px solid rgba(255,255,255,.1) !important;
+            color: white !important;
         }
 
-        .input-field:focus {
-            border-color: rgba(168,207,188,0.8);
-
-            box-shadow:
-                0 0 0 3px rgba(168,207,188,0.08);
+        input:focus {
+            border-color: rgba(168,207,188,.7) !important;
+            box-shadow: 0 0 0 3px rgba(168,207,188,.08) !important;
         }
-
-        .star {
-            position: absolute;
-
-            width: 2px;
-            height: 2px;
-
-            border-radius: 999px;
-
-            background: rgba(255,255,255,0.75);
-
-            animation:
-                floatStar 8s linear infinite;
-        }
-
-        @keyframes floatStar {
-
-            0% {
-                opacity: 0.1;
-                transform: translateY(0);
-            }
-
-            50% {
-                opacity: 0.8;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translateY(-90px);
-            }
-
-        }
-
-        .spinner {
-            width: 18px;
-            height: 18px;
-
-            border: 2px solid rgba(15,23,42,0.25);
-            border-top-color: rgba(15,23,42,0.9);
-
-            border-radius: 50%;
-
-            animation: spin .7s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
     </style>
 </head>
 
-<body class="min-h-screen text-primary font-body">
+<body class="min-h-screen flex items-center justify-center px-5 text-white">
 
-    <!-- Background -->
-    <div
-        id="starfield"
-        class="fixed inset-0 overflow-hidden pointer-events-none"
-    ></div>
+<div class="w-full max-w-md">
 
-    <!-- Header -->
-    <header class="absolute top-0 left-0 right-0 z-20">
+    <a href="landing.html"
+       class="block text-center text-2xl font-bold text-[#A8CFBC] mb-8"
+       style="font-family:Manrope,sans-serif">
+        Solace
+    </a>
 
-        <div class="max-w-6xl mx-auto px-5 py-5">
+    <div class="glass rounded-3xl p-7 md:p-9">
 
-            <a
-                href="landing.html"
-                class="inline-flex items-center gap-2 text-secondary font-display font-bold text-xl"
-            >
+        <div class="text-center">
 
-                <span class="material-symbols-outlined">
-                    spa
+            <div class="mx-auto w-14 h-14 rounded-2xl bg-[#294E3F] flex items-center justify-center">
+                <span class="material-symbols-outlined text-[#A8CFBC] text-3xl">
+                    self_improvement
                 </span>
-
-                Solace
-
-            </a>
-
-        </div>
-
-    </header>
-
-    <!-- Main -->
-    <main class="min-h-screen flex items-center justify-center px-5 py-24">
-
-        <div class="w-full max-w-md">
-
-            <!-- Card -->
-            <div class="glass rounded-3xl p-7 md:p-9 shadow-2xl">
-
-                <!-- Logo -->
-                <div class="text-center mb-8">
-
-                    <div class="mx-auto w-14 h-14 rounded-2xl bg-secondaryContainer flex items-center justify-center">
-
-                        <span class="material-symbols-outlined text-secondary text-3xl">
-                            self_improvement
-                        </span>
-
-                    </div>
-
-                    <h1 class="mt-5 text-3xl font-display font-bold text-white">
-                        Welcome Back
-                    </h1>
-
-                    <p class="mt-2 text-white/50">
-                        Return to your Solace space.
-                    </p>
-
-                </div>
-
-                <!-- Error -->
-                <div
-                    id="error-message"
-                    class="hidden mb-5 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200"
-                ></div>
-
-                <!-- Success -->
-                <div
-                    id="success-message"
-                    class="hidden mb-5 rounded-xl border border-secondary/20 bg-secondary/10 px-4 py-3 text-sm text-secondary"
-                ></div>
-
-                <!-- Form -->
-                <form id="login-form" class="space-y-5">
-
-                    <!-- Email -->
-                    <div>
-
-                        <label
-                            for="email"
-                            class="block text-sm font-medium text-white/70 mb-2"
-                        >
-                            Email address
-                        </label>
-
-                        <div class="relative">
-
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
-                                <span class="material-symbols-outlined">
-                                    mail
-                                </span>
-                            </span>
-
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                autocomplete="email"
-                                required
-                                placeholder="you@example.com"
-                                class="input-field w-full rounded-xl px-4 pl-12 py-3.5 text-white placeholder:text-white/25 outline-none"
-                            >
-
-                        </div>
-
-                    </div>
-
-                    <!-- Password -->
-                    <div>
-
-                        <div class="flex items-center justify-between mb-2">
-
-                            <label
-                                for="password"
-                                class="text-sm font-medium text-white/70"
-                            >
-                                Password
-                            </label>
-
-                            <button
-                                type="button"
-                                id="forgot-password"
-                                class="text-sm text-secondary hover:underline"
-                            >
-                                Forgot password?
-                            </button>
-
-                        </div>
-
-                        <div class="relative">
-
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
-                                <span class="material-symbols-outlined">
-                                    lock
-                                </span>
-                            </span>
-
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                autocomplete="current-password"
-                                required
-                                placeholder="Enter your password"
-                                class="input-field w-full rounded-xl px-4 pl-12 pr-12 py-3.5 text-white placeholder:text-white/25 outline-none"
-                            >
-
-                            <button
-                                type="button"
-                                id="toggle-password"
-                                class="absolute right-4 top-1/2 -translate-y-1/2 text-white/35 hover:text-white"
-                                aria-label="Show password"
-                            >
-                                <span
-                                    id="password-icon"
-                                    class="material-symbols-outlined"
-                                >
-                                    visibility
-                                </span>
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                    <!-- Submit -->
-                    <button
-                        id="login-button"
-                        type="submit"
-                        class="w-full rounded-xl bg-secondary text-slate-950 font-semibold py-3.5 flex items-center justify-center gap-2 hover:opacity-90 transition"
-                    >
-
-                        <span id="login-button-text">
-                            Sign In
-                        </span>
-
-                        <span
-                            id="login-spinner"
-                            class="spinner hidden"
-                        ></span>
-
-                        <span
-                            id="login-arrow"
-                            class="material-symbols-outlined"
-                        >
-                            arrow_forward
-                        </span>
-
-                    </button>
-
-                </form>
-
-                <!-- Register -->
-                <div class="mt-7 pt-6 border-t border-white/10 text-center">
-
-                    <p class="text-sm text-white/45">
-
-                        Don't have an account?
-
-                        <a
-                            href="register.html"
-                            class="text-secondary font-semibold hover:underline"
-                        >
-                            Create one
-                        </a>
-
-                    </p>
-
-                </div>
-
-                <div class="mt-6 text-center">
-
-                    <a
-                        href="landing.html"
-                        class="text-sm text-white/35 hover:text-white transition"
-                    >
-                        ← Back to Solace
-                    </a>
-
-                </div>
-
             </div>
 
-            <p class="mt-5 text-center text-xs text-white/30">
-                Solace is a wellness support tool and not a replacement
-                for professional medical or mental-health care.
+            <h1 class="mt-5 text-3xl font-bold">
+                Welcome Back
+            </h1>
+
+            <p class="mt-2 text-white/50">
+                Sign in to your Solace space.
             </p>
 
         </div>
 
-    </main>
+        <div id="message"
+             class="hidden mt-6 rounded-xl px-4 py-3 text-sm">
+        </div>
+
+        <form id="loginForm" class="mt-7 space-y-5">
+
+            <div>
+                <label class="block text-sm text-white/70 mb-2">
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    type="email"
+                    required
+                    autocomplete="email"
+                    placeholder="you@example.com"
+                    class="w-full rounded-xl px-4 py-3.5 outline-none"
+                >
+            </div>
+
+            <div>
+                <label class="block text-sm text-white/70 mb-2">
+                    Password
+                </label>
+
+                <div class="relative">
+
+                    <input
+                        id="password"
+                        type="password"
+                        required
+                        autocomplete="current-password"
+                        placeholder="Your password"
+                        class="w-full rounded-xl px-4 py-3.5 pr-12 outline-none"
+                    >
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40"
+                    >
+                        <span class="material-symbols-outlined">
+                            visibility
+                        </span>
+                    </button>
+
+                </div>
+
+                <button
+                    id="forgotBtn"
+                    type="button"
+                    class="mt-2 text-xs text-[#A8CFBC] hover:underline"
+                >
+                    Forgot password?
+                </button>
+            </div>
+
+            <button
+                id="loginBtn"
+                type="submit"
+                class="w-full rounded-xl bg-[#A8CFBC] text-slate-950 py-3.5 font-semibold"
+            >
+                Sign In
+            </button>
+
+        </form>
+
+        <div class="mt-7 pt-6 border-t border-white/10 text-center text-sm text-white/45">
+
+            Don't have an account?
+
+            <a href="register.html"
+               class="text-[#A8CFBC] font-semibold">
+                Create one
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+    const button = document.getElementById("loginBtn");
+
+    function showMessage(text, success = false) {
+        message.textContent = text;
+        message.className =
+            "mt-6 rounded-xl px-4 py-3 text-sm " +
+            (success
+                ? "bg-green-500/10 text-green-300 border border-green-500/20"
+                : "bg-red-500/10 text-red-200 border border-red-500/20");
+        message.classList.remove("hidden");
+    }
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    <script src="api.js"></script>
+        button.disabled = true;
+        button.textContent = "Signing in...";
 
-    <script src="auth.js"></script>
+        const body = new URLSearchParams();
 
-    <script>
-        requireAuth();
-    </script>
-
-    <script>
-
-        const loginForm =
-            document.getElementById("login-form");
-
-        const emailInput =
-            document.getElementById("email");
-
-        const passwordInput =
-            document.getElementById("password");
-
-        const loginButton =
-            document.getElementById("login-button");
-
-        const loginButtonText =
-            document.getElementById("login-button-text");
-
-        const loginSpinner =
-            document.getElementById("login-spinner");
-
-        const loginArrow =
-            document.getElementById("login-arrow");
-
-        const errorMessage =
-            document.getElementById("error-message");
-
-        const successMessage =
-            document.getElementById("success-message");
-
-
-        function showError(message) {
-
-            errorMessage.textContent = message;
-
-            errorMessage.classList.remove("hidden");
-
-            successMessage.classList.add("hidden");
-        }
-
-
-        function showSuccess(message) {
-
-            successMessage.textContent = message;
-
-            successMessage.classList.remove("hidden");
-
-            errorMessage.classList.add("hidden");
-        }
-
-
-        function setLoading(loading) {
-
-            loginButton.disabled = loading;
-
-            loginSpinner.classList.toggle(
-                "hidden",
-                !loading
-            );
-
-            loginArrow.classList.toggle(
-                "hidden",
-                loading
-            );
-
-            loginButtonText.textContent =
-                loading
-                    ? "Signing in..."
-                    : "Sign In";
-        }
-
-
-        loginForm.addEventListener(
-            "submit",
-            async (event) => {
-
-                event.preventDefault();
-
-                errorMessage.classList.add("hidden");
-                successMessage.classList.add("hidden");
-
-                const email =
-                    emailInput.value.trim();
-
-                const password =
-                    passwordInput.value;
-
-                if (!email || !password) {
-
-                    showError(
-                        "Please enter your email and password."
-                    );
-
-                    return;
-                }
-
-                setLoading(true);
-
-                try {
-
-                    /*
-                     * IMPORTANT:
-                     *
-                     * Your FastAPI backend uses
-                     * OAuth2PasswordRequestForm.
-                     *
-                     * Therefore the email MUST be sent
-                     * as "username".
-                     */
-
-                    const body =
-                        new URLSearchParams();
-
-                    body.append(
-                        "username",
-                        email
-                    );
-
-                    body.append(
-                        "password",
-                        password
-                    );
-
-                    const response =
-                        await fetch(
-                            `${API_BASE}/auth/login`,
-                            {
-                                method: "POST",
-
-                                headers: {
-                                    "Content-Type":
-                                        "application/x-www-form-urlencoded"
-                                },
-
-                                body: body
-                            }
-                        );
-
-                    let data = {};
-
-                    try {
-                        data = await response.json();
-                    } catch {
-                        data = {};
-                    }
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            data.detail ||
-                            "Invalid email or password."
-                        );
-                    }
-
-                    /*
-                     * Save authentication information.
-                     */
-
-                    localStorage.setItem(
-                        "access_token",
-                        data.access_token
-                    );
-
-                    localStorage.setItem(
-                        "user_id",
-                        data.user_id
-                    );
-
-                    showSuccess(
-                        "Signed in successfully. Opening your dashboard..."
-                    );
-
-                    setTimeout(() => {
-
-                        window.location.href =
-                            "dashboard.html";
-
-                    }, 500);
-
-                } catch (error) {
-
-                    console.error(
-                        "Login error:",
-                        error
-                    );
-
-                    showError(
-                        error.message ||
-                        "Unable to sign in. Please try again."
-                    );
-
-                } finally {
-
-                    setLoading(false);
-
-                }
-
-            }
+        body.append(
+            "username",
+            document.getElementById("email").value.trim()
         );
 
-
-        /*
-         * Show / hide password
-         */
-
-        const togglePassword =
-            document.getElementById(
-                "toggle-password"
-            );
-
-        const passwordIcon =
-            document.getElementById(
-                "password-icon"
-            );
-
-
-        togglePassword.addEventListener(
-            "click",
-            () => {
-
-                const isPassword =
-                    passwordInput.type === "password";
-
-                passwordInput.type =
-                    isPassword
-                        ? "text"
-                        : "password";
-
-                passwordIcon.textContent =
-                    isPassword
-                        ? "visibility_off"
-                        : "visibility";
-
-            }
+        body.append(
+            "password",
+            document.getElementById("password").value
         );
 
+        try {
 
-        /*
-         * Development password reset helper
-         *
-         * Your backend currently exposes a development
-         * endpoint /auth/reset-password.
-         */
-
-        document
-            .getElementById("forgot-password")
-            .addEventListener(
-                "click",
-                async () => {
-
-                    const email =
-                        emailInput.value.trim();
-
-                    if (!email) {
-
-                        showError(
-                            "Enter your email address first."
-                        );
-
-                        emailInput.focus();
-
-                        return;
-                    }
-
-                    const newPassword =
-                        window.prompt(
-                            "Enter your new password:"
-                        );
-
-                    if (!newPassword) {
-                        return;
-                    }
-
-                    try {
-
-                        const body =
-                            new URLSearchParams();
-
-                        body.append(
-                            "email",
-                            email
-                        );
-
-                        body.append(
-                            "new_password",
-                            newPassword
-                        );
-
-                        const response =
-                            await fetch(
-                                `${API_BASE}/auth/reset-password`,
-                                {
-                                    method: "POST",
-
-                                    headers: {
-                                        "Content-Type":
-                                            "application/x-www-form-urlencoded"
-                                    },
-
-                                    body
-                                }
-                            );
-
-                        const data =
-                            await response.json();
-
-                        if (!response.ok) {
-
-                            throw new Error(
-                                data.detail ||
-                                "Password reset failed."
-                            );
-                        }
-
-                        showSuccess(
-                            "Password reset successfully. You can now sign in."
-                        );
-
-                    } catch (error) {
-
-                        showError(
-                            error.message ||
-                            "Password reset failed."
-                        );
-
-                    }
-
+            const response = await fetch(
+                `${API_BASE}/auth/login`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+                    body
                 }
             );
 
+            const data = await response.json();
 
-        /*
-         * Generate a lightweight background.
-         */
+            if (!response.ok) {
+                throw new Error(
+                    data.detail || "Invalid email or password."
+                );
+            }
 
-        const starfield =
-            document.getElementById(
-                "starfield"
+            localStorage.setItem(
+                "access_token",
+                data.access_token
             );
 
+            localStorage.setItem(
+                "user_id",
+                data.user_id
+            );
 
-        for (let i = 0; i < 80; i++) {
+            localStorage.setItem(
+                "token_type",
+                data.token_type || "bearer"
+            );
 
-            const star =
-                document.createElement("div");
+            showMessage(
+                "Welcome back to Solace.",
+                true
+            );
 
-            star.className =
-                "star";
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 500);
 
-            star.style.left =
-                `${Math.random() * 100}%`;
+        } catch (error) {
 
-            star.style.top =
-                `${Math.random() * 100}%`;
+            console.error(error);
 
-            star.style.animationDelay =
-                `${Math.random() * 8}s`;
+            showMessage(
+                error.message ||
+                "Unable to sign in."
+            );
 
-            starfield.appendChild(star);
+        } finally {
+
+            button.disabled = false;
+            button.textContent = "Sign In";
         }
+    });
 
-    </script>
+    document.getElementById("togglePassword")
+        .addEventListener("click", () => {
+
+            const password =
+                document.getElementById("password");
+
+            password.type =
+                password.type === "password"
+                    ? "text"
+                    : "password";
+        });
+
+    document.getElementById("forgotBtn")
+        .addEventListener("click", async () => {
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            if (!email) {
+                showMessage("Enter your email first.");
+                return;
+            }
+
+            const newPassword =
+                prompt("Enter your new password:");
+
+            if (!newPassword) return;
+
+            const url =
+                `${API_BASE}/auth/reset-password` +
+                `?email=${encodeURIComponent(email)}` +
+                `&new_password=${encodeURIComponent(newPassword)}`;
+
+            try {
+
+                const response =
+                    await fetch(url, {
+                        method: "POST"
+                    });
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.detail || "Reset failed."
+                    );
+                }
+
+                showMessage(
+                    "Password reset successfully.",
+                    true
+                );
+
+            } catch (error) {
+
+                showMessage(error.message);
+            }
+        });
+</script>
 
 </body>
 </html>
