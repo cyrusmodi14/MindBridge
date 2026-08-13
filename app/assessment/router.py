@@ -121,64 +121,52 @@ def score_assessment(
 # 2. COMPLETE AI + RAG ASSESSMENT REPORT
 # ============================================================
 
-@router.post("/report")
+@router.post("/report/{assessment_id}")
 def assessment_report(
-    request: AssessmentRequest,
+    assessment_id: int,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
-    # Validate answers
-    validate_answers(request.answers)
+    # --------------------------------------------------------
+    # Find the existing assessment
+    # --------------------------------------------------------
 
-    # Safety check
-    safety_result = check_safety(request.answers)
-
-    if safety_result["safety_concern"]:
-
-        return {
-            "safety_override": True,
-            "overall_score": None,
-            "category": "safety_concern",
-            "safety": safety_result,
-            "recommendation": (
-                "Please seek immediate support from a "
-                "qualified mental-health professional or "
-                "appropriate local emergency/crisis services."
-            )
-        }
-
-    # Calculate assessment
-    result = calculate_assessment(
-        request.answers
+    assessment = (
+        db.query(Assessment)
+        .filter(
+            Assessment.id == assessment_id,
+            Assessment.user_id == current_user.id
+        )
+        .first()
     )
 
-    # Save assessment
-    assessment = Assessment(
-        user_id=current_user.id,
-        overall_score=result["overall_score"],
-        category=result["category"],
-        domain_scores=result["domain_scores"],
-        answers=request.answers
-    )
+    if assessment is None:
+        raise HTTPException(
+            status_code=404,
+            detail="Assessment not found."
+        )
 
-    db.add(assessment)
-    db.commit()
-    db.refresh(assessment)
-
+    # --------------------------------------------------------
     # Generate AI + RAG report
+    # --------------------------------------------------------
+
     report = generate_assessment_report(
-        overall_score=result["overall_score"],
-        category=result["category"],
-        domain_scores=result["domain_scores"]
+        overall_score=assessment.overall_score,
+        category=assessment.category,
+        domain_scores=assessment.domain_scores
     )
+
+    # --------------------------------------------------------
+    # Return complete report
+    # --------------------------------------------------------
 
     return {
         "assessment_id": assessment.id,
         "user_id": current_user.id,
-        "overall_score": result["overall_score"],
-        "category": result["category"],
-        "domain_scores": result["domain_scores"],
+        "overall_score": assessment.overall_score,
+        "category": assessment.category,
+        "domain_scores": assessment.domain_scores,
         "report": report
     }
 
