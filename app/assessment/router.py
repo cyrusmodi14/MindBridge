@@ -7,9 +7,9 @@ from app.assessment.safety import check_safety
 from app.services.assessment_report import generate_assessment_report
 
 from app.database.database import get_db
-from app.database.models import Assessment
+from app.database.models import Assessment, User
 
-from app.core.security import get_current_user
+from app.api.dependencies import get_current_user
 
 
 router = APIRouter(
@@ -23,7 +23,6 @@ router = APIRouter(
 # ============================================================
 
 class AssessmentRequest(BaseModel):
-
     answers: dict[int, int] = Field(
         ...,
         description="Question ID mapped to answer value from 0 to 4"
@@ -31,11 +30,33 @@ class AssessmentRequest(BaseModel):
 
 
 class ReassessmentRequest(BaseModel):
-
     answers: dict[int, int] = Field(
         ...,
         description="Reassessment question ID mapped to answer value from 0 to 4"
     )
+
+
+# ============================================================
+# HELPER — VALIDATE ANSWERS
+# ============================================================
+
+def validate_answers(answers: dict[int, int]):
+    for question_id, answer in answers.items():
+
+        if answer < 0 or answer > 4:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    f"Invalid answer for question {question_id}. "
+                    "Answer must be between 0 and 4."
+                )
+            )
+
+    if not answers:
+        raise HTTPException(
+            status_code=400,
+            detail="No answers provided."
+        )
 
 
 # ============================================================
@@ -45,30 +66,14 @@ class ReassessmentRequest(BaseModel):
 @router.post("/score")
 def score_assessment(
     request: AssessmentRequest,
-    current_user: int = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
-    # --------------------------------------------------------
     # Validate answers
-    # --------------------------------------------------------
+    validate_answers(request.answers)
 
-    for question_id, answer in request.answers.items():
-
-        if answer < 0 or answer > 4:
-
-            return {
-                "error": (
-                    f"Invalid answer for question "
-                    f"{question_id}. "
-                    "Answer must be between 0 and 4."
-                )
-            }
-
-    # --------------------------------------------------------
     # Safety check
-    # --------------------------------------------------------
-
     safety_result = check_safety(request.answers)
 
     if safety_result["safety_concern"]:
@@ -85,20 +90,14 @@ def score_assessment(
             )
         }
 
-    # --------------------------------------------------------
     # Calculate assessment
-    # --------------------------------------------------------
-
     result = calculate_assessment(
         request.answers
     )
 
-    # --------------------------------------------------------
-    # Save assessment to database
-    # --------------------------------------------------------
-
+    # Save assessment
     assessment = Assessment(
-        user_id=current_user,
+        user_id=current_user.id,
         overall_score=result["overall_score"],
         category=result["category"],
         domain_scores=result["domain_scores"],
@@ -109,13 +108,9 @@ def score_assessment(
     db.commit()
     db.refresh(assessment)
 
-    # --------------------------------------------------------
-    # Return result
-    # --------------------------------------------------------
-
     return {
         "assessment_id": assessment.id,
-        "user_id": current_user,
+        "user_id": current_user.id,
         "overall_score": result["overall_score"],
         "category": result["category"],
         "domain_scores": result["domain_scores"]
@@ -129,30 +124,14 @@ def score_assessment(
 @router.post("/report")
 def assessment_report(
     request: AssessmentRequest,
-    current_user: int = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
-    # --------------------------------------------------------
     # Validate answers
-    # --------------------------------------------------------
+    validate_answers(request.answers)
 
-    for question_id, answer in request.answers.items():
-
-        if answer < 0 or answer > 4:
-
-            return {
-                "error": (
-                    f"Invalid answer for question "
-                    f"{question_id}. "
-                    "Answer must be between 0 and 4."
-                )
-            }
-
-    # --------------------------------------------------------
     # Safety check
-    # --------------------------------------------------------
-
     safety_result = check_safety(request.answers)
 
     if safety_result["safety_concern"]:
@@ -169,20 +148,14 @@ def assessment_report(
             )
         }
 
-    # --------------------------------------------------------
     # Calculate assessment
-    # --------------------------------------------------------
-
     result = calculate_assessment(
         request.answers
     )
 
-    # --------------------------------------------------------
     # Save assessment
-    # --------------------------------------------------------
-
     assessment = Assessment(
-        user_id=current_user,
+        user_id=current_user.id,
         overall_score=result["overall_score"],
         category=result["category"],
         domain_scores=result["domain_scores"],
@@ -193,23 +166,16 @@ def assessment_report(
     db.commit()
     db.refresh(assessment)
 
-    # --------------------------------------------------------
     # Generate AI + RAG report
-    # --------------------------------------------------------
-
     report = generate_assessment_report(
         overall_score=result["overall_score"],
         category=result["category"],
         domain_scores=result["domain_scores"]
     )
 
-    # --------------------------------------------------------
-    # Return complete report
-    # --------------------------------------------------------
-
     return {
         "assessment_id": assessment.id,
-        "user_id": current_user,
+        "user_id": current_user.id,
         "overall_score": result["overall_score"],
         "category": result["category"],
         "domain_scores": result["domain_scores"],
@@ -224,46 +190,35 @@ def assessment_report(
 @router.post("/reassess")
 def reassess(
     request: ReassessmentRequest,
-    current_user: int = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
-    # --------------------------------------------------------
     # Validate answers
-    # --------------------------------------------------------
+    validate_answers(request.answers)
 
-    for question_id, answer in request.answers.items():
+    # Safety check
+    safety_result = check_safety(request.answers)
 
-        if answer < 0 or answer > 4:
-
-            return {
-                "error": (
-                    f"Invalid answer for question "
-                    f"{question_id}. "
-                    "Answer must be between 0 and 4."
-                )
-            }
-
-    # --------------------------------------------------------
-    # Check answers exist
-    # --------------------------------------------------------
-
-    count = len(request.answers)
-
-    if count == 0:
+    if safety_result["safety_concern"]:
 
         return {
-            "error": "No reassessment answers provided."
+            "safety_override": True,
+            "overall_score": None,
+            "category": "safety_concern",
+            "safety": safety_result,
+            "recommendation": (
+                "Please seek immediate support from a "
+                "qualified mental-health professional or "
+                "appropriate local emergency/crisis services."
+            )
         }
 
-    # --------------------------------------------------------
-    # Find previous assessment belonging to this user
-    # --------------------------------------------------------
-
+    # Find user's previous assessment
     previous_assessment = (
         db.query(Assessment)
         .filter(
-            Assessment.user_id == current_user
+            Assessment.user_id == current_user.id
         )
         .order_by(
             Assessment.created_at.desc()
@@ -278,24 +233,18 @@ def reassess(
             detail="No previous assessment found."
         )
 
-    # --------------------------------------------------------
     # Calculate reassessment score
-    # --------------------------------------------------------
-
     total = sum(request.answers.values())
+    count = len(request.answers)
 
     average = total / count
 
-    # Convert 0-4 scale to 1-10 scale
     reassessment_score = round(
         1 + (average / 4) * 9,
         2
     )
 
-    # --------------------------------------------------------
     # Determine category
-    # --------------------------------------------------------
-
     if reassessment_score <= 3.5:
 
         category = "significant_concern"
@@ -326,10 +275,7 @@ def reassess(
             "strategies and self-care."
         )
 
-    # --------------------------------------------------------
     # Compare with previous assessment
-    # --------------------------------------------------------
-
     previous_score = previous_assessment.overall_score
 
     change = round(
@@ -363,10 +309,7 @@ def reassess(
             "Your assessment score has remained relatively stable."
         )
 
-    # --------------------------------------------------------
     # Domain comparison
-    # --------------------------------------------------------
-
     domain_comparison = {}
 
     previous_domains = (
@@ -398,15 +341,12 @@ def reassess(
         )
 
         if domain_change < -0.1:
-
             domain_status = "improved"
 
         elif domain_change > 0.1:
-
             domain_status = "worsened"
 
         else:
-
             domain_status = "stable"
 
         domain_comparison[domain] = {
@@ -416,10 +356,7 @@ def reassess(
             "status": domain_status
         }
 
-    # --------------------------------------------------------
-    # Save reassessment as a new assessment
-    # --------------------------------------------------------
-
+    # Category object
     reassessment_category = {
         "category": category,
         "label": (
@@ -434,13 +371,14 @@ def reassess(
         "action": recommendation
     }
 
+    # Save reassessment as a new assessment
     reassessment_domain_scores = {
         domain: reassessment_score
         for domain in domains
     }
 
     new_assessment = Assessment(
-        user_id=current_user,
+        user_id=current_user.id,
         overall_score=reassessment_score,
         category=reassessment_category,
         domain_scores=reassessment_domain_scores,
@@ -451,13 +389,10 @@ def reassess(
     db.commit()
     db.refresh(new_assessment)
 
-    # --------------------------------------------------------
-    # Return reassessment
-    # --------------------------------------------------------
-
     return {
         "previous_assessment_id": previous_assessment.id,
         "new_assessment_id": new_assessment.id,
+        "user_id": current_user.id,
         "reassessment_score": reassessment_score,
         "category": category,
         "recommendation": recommendation,
@@ -478,14 +413,14 @@ def reassess(
 
 @router.get("/history")
 def assessment_history(
-    current_user: int = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
     assessments = (
         db.query(Assessment)
         .filter(
-            Assessment.user_id == current_user
+            Assessment.user_id == current_user.id
         )
         .order_by(
             Assessment.created_at.desc()
@@ -494,7 +429,7 @@ def assessment_history(
     )
 
     return {
-        "user_id": current_user,
+        "user_id": current_user.id,
         "count": len(assessments),
         "assessments": [
             {
@@ -502,6 +437,7 @@ def assessment_history(
                 "overall_score": assessment.overall_score,
                 "category": assessment.category,
                 "domain_scores": assessment.domain_scores,
+                "answers": assessment.answers,
                 "created_at": assessment.created_at
             }
             for assessment in assessments
@@ -516,7 +452,7 @@ def assessment_history(
 @router.get("/details/{assessment_id}")
 def assessment_details(
     assessment_id: int,
-    current_user: int = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
@@ -524,7 +460,7 @@ def assessment_details(
         db.query(Assessment)
         .filter(
             Assessment.id == assessment_id,
-            Assessment.user_id == current_user
+            Assessment.user_id == current_user.id
         )
         .first()
     )
@@ -553,14 +489,14 @@ def assessment_details(
 
 @router.get("/progress")
 def assessment_progress(
-    current_user: int = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
 
     assessments = (
         db.query(Assessment)
         .filter(
-            Assessment.user_id == current_user
+            Assessment.user_id == current_user.id
         )
         .order_by(
             Assessment.created_at.asc()
@@ -569,7 +505,7 @@ def assessment_progress(
     )
 
     return {
-        "user_id": current_user,
+        "user_id": current_user.id,
         "count": len(assessments),
         "progress": [
             {

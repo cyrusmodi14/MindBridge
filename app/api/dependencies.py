@@ -17,7 +17,7 @@ def get_current_user(
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
+        detail="Invalid or expired authentication token.",
         headers={
             "WWW-Authenticate": "Bearer"
         }
@@ -27,7 +27,7 @@ def get_current_user(
         payload = jwt.decode(
             token,
             settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM]
+            algorithms=[settings.JWT_ALGORITHM]
         )
 
         user_id = payload.get("sub")
@@ -37,7 +37,7 @@ def get_current_user(
 
         user_id = int(user_id)
 
-    except (InvalidTokenError, ValueError):
+    except (InvalidTokenError, ValueError, TypeError):
         raise credentials_exception
 
     user = (
