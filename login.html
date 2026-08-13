@@ -1,230 +1,757 @@
 <!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Solace - Login</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
+    <title>Solace — Sign In</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        rel="stylesheet"
+    >
+
+    <script>
         tailwind.config = {
             darkMode: "class",
+
             theme: {
                 extend: {
-                    "colors": {
-                        "on-secondary": "#113729",
-                        "surface-container": "#122131",
-                        "secondary": "#a8cfbc",
-                        "on-surface-variant": "#c6c6cd",
-                        "surface-container-low": "#0d1c2d",
-                        "surface-variant": "#273647",
-                        "primary-fixed-dim": "#bec6e0",
-                        "surface-dim": "#051424",
-                        "on-tertiary-container": "#738298",
-                        "primary-fixed": "#dae2fd",
-                        "surface-container-lowest": "#010f1f",
-                        "surface": "#051424",
-                        "background": "#051424",
-                        "surface-container-highest": "#273647",
-                        "tertiary-fixed": "#d5e3fd",
-                        "tertiary-fixed-dim": "#b9c7e0",
-                        "surface-tint": "#bec6e0",
-                        "inverse-primary": "#565e74",
-                        "on-tertiary-fixed": "#0d1c2f",
-                        "on-surface": "#d4e4fa",
-                        "surface-bright": "#2c3a4c",
-                        "on-tertiary": "#233144",
-                        "inverse-surface": "#d4e4fa",
-                        "on-secondary-fixed-variant": "#294e3f",
-                        "on-error": "#690005",
-                        "tertiary-container": "#09182a",
-                        "surface-container-high": "#1c2b3c",
-                        "on-tertiary-fixed-variant": "#3a485c",
-                        "inverse-on-surface": "#233143",
-                        "secondary-fixed-dim": "#a8cfbc",
-                        "error": "#ffb4ab",
-                        "on-primary-container": "#798098",
-                        "outline": "#909097",
-                        "primary-container": "#0f172a",
-                        "on-secondary-container": "#96beab",
-                        "on-primary-fixed-variant": "#3f465c",
-                        "on-secondary-fixed": "#002115",
-                        "primary": "#bec6e0",
-                        "on-error-container": "#ffdad6",
-                        "on-primary": "#283044",
-                        "on-background": "#d4e4fa",
-                        "on-primary-fixed": "#131b2e",
-                        "secondary-fixed": "#c3ecd7",
-                        "error-container": "#93000a",
-                        "outline-variant": "#45464d",
-                        "tertiary": "#b9c7e0",
-                        "secondary-container": "#294e3f"
+
+                    colors: {
+                        background: "#051424",
+                        surface: "#051424",
+
+                        primary: "#d4e4fa",
+
+                        secondary: "#a8cfbc",
+                        secondaryContainer: "#294e3f",
+
+                        surfaceContainer: "#122131",
+                        surfaceHigh: "#1c2b3c",
+                        surfaceHighest: "#273647",
+
+                        muted: "#c6c6cd",
+
+                        error: "#ffb4ab"
                     },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "container-max": "1200px",
-                        "margin-desktop": "64px",
-                        "unit": "8px",
-                        "margin-mobile": "16px",
-                        "gutter": "24px"
-                    },
-                    "fontFamily": {
-                        "body-lg": ["Inter"],
-                        "display-lg": ["Manrope"],
-                        "headline-md": ["Manrope"],
-                        "display-lg-mobile": ["Manrope"],
-                        "body-md": ["Inter"],
-                        "label-sm": ["JetBrains Mono"]
-                    },
-                    "fontSize": {
-                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
-                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
-                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
-                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                        body: ["Inter", "sans-serif"]
                     }
                 }
             }
         }
     </script>
-<style>
-        .material-symbols-outlined {
-            font-family: 'Material Symbols Outlined';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            -webkit-font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        /* Starfield animation */
-        .stars {
-            width: 1px;
-            height: 1px;
-            background: transparent;
-            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF; /* Simplified for example, real would have hundreds */
-            animation: animStar 50s linear infinite;
+
+    <style>
+
+        * {
+            box-sizing: border-box;
         }
 
-        .stars2 {
+        body {
+            margin: 0;
+
+            background:
+                radial-gradient(
+                    circle at 50% 15%,
+                    rgba(41, 78, 63, 0.35),
+                    transparent 35%
+                ),
+                #051424;
+        }
+
+        .glass {
+            background: rgba(18, 33, 49, 0.55);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .input-field {
+            background: rgba(5,20,36,0.65);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .input-field:focus {
+            border-color: rgba(168,207,188,0.8);
+
+            box-shadow:
+                0 0 0 3px rgba(168,207,188,0.08);
+        }
+
+        .star {
+            position: absolute;
+
             width: 2px;
             height: 2px;
-            background: transparent;
-            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
-            animation: animStar 100s linear infinite;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,0.75);
+
+            animation:
+                floatStar 8s linear infinite;
         }
 
-        .stars3 {
-            width: 3px;
-            height: 3px;
-            background: transparent;
-            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
-            animation: animStar 150s linear infinite;
+        @keyframes floatStar {
+
+            0% {
+                opacity: 0.1;
+                transform: translateY(0);
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-90px);
+            }
+
         }
 
-        @keyframes animStar {
-            from { transform: translateY(0px) }
-            to { transform: translateY(-2000px) }
+        .spinner {
+            width: 18px;
+            height: 18px;
+
+            border: 2px solid rgba(15,23,42,0.25);
+            border-top-color: rgba(15,23,42,0.9);
+
+            border-radius: 50%;
+
+            animation: spin .7s linear infinite;
         }
 
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-    </style>
-</head>
-<body class="bg-[#020617] text-on-surface min-h-screen relative overflow-hidden flex items-center justify-center font-body-md text-body-md">
-<!-- Animated Shader Background Integration (Assuming Placeholder for Starfield if needed, but CSS provided above for fallback) -->
-<!-- <webgl-shader src="{{DATA:ANIMATION:ANIMATION_1}}" class="absolute inset-0 w-full h-full z-0"></webgl-shader> -->
-<div class="absolute inset-0 z-0 overflow-hidden opacity-50" id="stars-container"></div>
-<div class="relative z-10 w-full max-w-md px-margin-mobile md:px-0">
-<div class="glass-panel rounded-xl p-8 shadow-2xl flex flex-col items-center">
-<!-- Brand Logo Area -->
-<div class="mb-8 flex flex-col items-center">
-<span class="material-symbols-outlined text-4xl text-secondary mb-2" data-icon="spa" data-weight="fill" style="font-variation-settings: 'FILL' 1;">spa</span>
-<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Solace</h1>
-</div>
-<h2 class="font-headline-md text-headline-md text-on-surface mb-6 text-center">Welcome Back to Your Space</h2>
-<form class="w-full space-y-6">
-<!-- Email Input -->
-<div class="space-y-2">
-<label class="font-label-sm text-label-sm text-on-surface-variant ml-1" for="email">Email Address</label>
-<div class="relative">
-<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="mail">mail</span>
-</span>
-<input class="w-full bg-[#0F172A] border border-surface-variant text-on-surface rounded-lg pl-10 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300 outline-none" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
-</div>
-</div>
-<!-- Password Input -->
-<div class="space-y-2">
-<div class="flex justify-between items-center ml-1">
-<label class="font-label-sm text-label-sm text-on-surface-variant" for="password">Password</label>
-<a class="font-label-sm text-label-sm text-secondary hover:text-secondary-fixed transition-colors" href="#">Forgot Password?</a>
-</div>
-<div class="relative">
-<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock">lock</span>
-</span>
-<input class="w-full bg-[#0F172A] border border-surface-variant text-on-surface rounded-lg pl-10 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300 outline-none" id="password" name="password" placeholder="••••••••" required="" type="password"/>
-</div>
-</div>
-<!-- Submit Button -->
-<button class="w-full bg-[#D1FAE5] text-[#0F172A] font-headline-md text-body-md font-bold py-3 rounded-lg hover:bg-secondary-fixed transition-colors duration-300 flex items-center justify-center space-x-2" type="submit">
-<span>Sign In</span>
-<span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
-</button>
-</form>
-<div class="mt-8 text-center">
-<p class="text-on-surface-variant">
-                    Don't have an account? 
-                    <a class="text-secondary hover:text-secondary-fixed font-semibold transition-colors" href="#">Create one</a>
-</p>
-</div>
-</div>
-</div>
-<script>
-        // Simple starfield generation for fallback visual effect if animation token isn't used
-        function createStars() {
-            const container = document.getElementById('stars-container');
-            const numStars = 100;
-            
-            for(let i=0; i<3; i++) {
-                let layer = document.createElement('div');
-                layer.className = `stars${i===0 ? '' : i+1} absolute top-0 left-0`;
-                
-                let shadows = [];
-                for(let j=0; j<numStars; j++) {
-                    shadows.push(`${Math.floor(Math.random() * window.innerWidth)}px ${Math.floor(Math.random() * window.innerHeight * 2)}px #FFF`);
-                }
-                layer.style.boxShadow = shadows.join(', ');
-                container.appendChild(layer);
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
-        createStars();
-        window.addEventListener('resize', () => {
-            const container = document.getElementById('stars-container');
-            container.innerHTML = '';
-            createStars();
-        });
+
+    </style>
+</head>
+
+<body class="min-h-screen text-primary font-body">
+
+    <!-- Background -->
+    <div
+        id="starfield"
+        class="fixed inset-0 overflow-hidden pointer-events-none"
+    ></div>
+
+    <!-- Header -->
+    <header class="absolute top-0 left-0 right-0 z-20">
+
+        <div class="max-w-6xl mx-auto px-5 py-5">
+
+            <a
+                href="landing.html"
+                class="inline-flex items-center gap-2 text-secondary font-display font-bold text-xl"
+            >
+
+                <span class="material-symbols-outlined">
+                    spa
+                </span>
+
+                Solace
+
+            </a>
+
+        </div>
+
+    </header>
+
+    <!-- Main -->
+    <main class="min-h-screen flex items-center justify-center px-5 py-24">
+
+        <div class="w-full max-w-md">
+
+            <!-- Card -->
+            <div class="glass rounded-3xl p-7 md:p-9 shadow-2xl">
+
+                <!-- Logo -->
+                <div class="text-center mb-8">
+
+                    <div class="mx-auto w-14 h-14 rounded-2xl bg-secondaryContainer flex items-center justify-center">
+
+                        <span class="material-symbols-outlined text-secondary text-3xl">
+                            self_improvement
+                        </span>
+
+                    </div>
+
+                    <h1 class="mt-5 text-3xl font-display font-bold text-white">
+                        Welcome Back
+                    </h1>
+
+                    <p class="mt-2 text-white/50">
+                        Return to your Solace space.
+                    </p>
+
+                </div>
+
+                <!-- Error -->
+                <div
+                    id="error-message"
+                    class="hidden mb-5 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200"
+                ></div>
+
+                <!-- Success -->
+                <div
+                    id="success-message"
+                    class="hidden mb-5 rounded-xl border border-secondary/20 bg-secondary/10 px-4 py-3 text-sm text-secondary"
+                ></div>
+
+                <!-- Form -->
+                <form id="login-form" class="space-y-5">
+
+                    <!-- Email -->
+                    <div>
+
+                        <label
+                            for="email"
+                            class="block text-sm font-medium text-white/70 mb-2"
+                        >
+                            Email address
+                        </label>
+
+                        <div class="relative">
+
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
+                                <span class="material-symbols-outlined">
+                                    mail
+                                </span>
+                            </span>
+
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                autocomplete="email"
+                                required
+                                placeholder="you@example.com"
+                                class="input-field w-full rounded-xl px-4 pl-12 py-3.5 text-white placeholder:text-white/25 outline-none"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    <!-- Password -->
+                    <div>
+
+                        <div class="flex items-center justify-between mb-2">
+
+                            <label
+                                for="password"
+                                class="text-sm font-medium text-white/70"
+                            >
+                                Password
+                            </label>
+
+                            <button
+                                type="button"
+                                id="forgot-password"
+                                class="text-sm text-secondary hover:underline"
+                            >
+                                Forgot password?
+                            </button>
+
+                        </div>
+
+                        <div class="relative">
+
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35">
+                                <span class="material-symbols-outlined">
+                                    lock
+                                </span>
+                            </span>
+
+                            <input
+                                id="password"
+                                name="password"
+                                type="password"
+                                autocomplete="current-password"
+                                required
+                                placeholder="Enter your password"
+                                class="input-field w-full rounded-xl px-4 pl-12 pr-12 py-3.5 text-white placeholder:text-white/25 outline-none"
+                            >
+
+                            <button
+                                type="button"
+                                id="toggle-password"
+                                class="absolute right-4 top-1/2 -translate-y-1/2 text-white/35 hover:text-white"
+                                aria-label="Show password"
+                            >
+                                <span
+                                    id="password-icon"
+                                    class="material-symbols-outlined"
+                                >
+                                    visibility
+                                </span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Submit -->
+                    <button
+                        id="login-button"
+                        type="submit"
+                        class="w-full rounded-xl bg-secondary text-slate-950 font-semibold py-3.5 flex items-center justify-center gap-2 hover:opacity-90 transition"
+                    >
+
+                        <span id="login-button-text">
+                            Sign In
+                        </span>
+
+                        <span
+                            id="login-spinner"
+                            class="spinner hidden"
+                        ></span>
+
+                        <span
+                            id="login-arrow"
+                            class="material-symbols-outlined"
+                        >
+                            arrow_forward
+                        </span>
+
+                    </button>
+
+                </form>
+
+                <!-- Register -->
+                <div class="mt-7 pt-6 border-t border-white/10 text-center">
+
+                    <p class="text-sm text-white/45">
+
+                        Don't have an account?
+
+                        <a
+                            href="register.html"
+                            class="text-secondary font-semibold hover:underline"
+                        >
+                            Create one
+                        </a>
+
+                    </p>
+
+                </div>
+
+                <div class="mt-6 text-center">
+
+                    <a
+                        href="landing.html"
+                        class="text-sm text-white/35 hover:text-white transition"
+                    >
+                        ← Back to Solace
+                    </a>
+
+                </div>
+
+            </div>
+
+            <p class="mt-5 text-center text-xs text-white/30">
+                Solace is a wellness support tool and not a replacement
+                for professional medical or mental-health care.
+            </p>
+
+        </div>
+
+    </main>
+
+    <script src="api.js"></script>
+
+    <script src="auth.js"></script>
+
+    <script>
+        requireAuth();
     </script>
-</body></html>
+
+    <script>
+
+        const loginForm =
+            document.getElementById("login-form");
+
+        const emailInput =
+            document.getElementById("email");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const loginButton =
+            document.getElementById("login-button");
+
+        const loginButtonText =
+            document.getElementById("login-button-text");
+
+        const loginSpinner =
+            document.getElementById("login-spinner");
+
+        const loginArrow =
+            document.getElementById("login-arrow");
+
+        const errorMessage =
+            document.getElementById("error-message");
+
+        const successMessage =
+            document.getElementById("success-message");
+
+
+        function showError(message) {
+
+            errorMessage.textContent = message;
+
+            errorMessage.classList.remove("hidden");
+
+            successMessage.classList.add("hidden");
+        }
+
+
+        function showSuccess(message) {
+
+            successMessage.textContent = message;
+
+            successMessage.classList.remove("hidden");
+
+            errorMessage.classList.add("hidden");
+        }
+
+
+        function setLoading(loading) {
+
+            loginButton.disabled = loading;
+
+            loginSpinner.classList.toggle(
+                "hidden",
+                !loading
+            );
+
+            loginArrow.classList.toggle(
+                "hidden",
+                loading
+            );
+
+            loginButtonText.textContent =
+                loading
+                    ? "Signing in..."
+                    : "Sign In";
+        }
+
+
+        loginForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+                errorMessage.classList.add("hidden");
+                successMessage.classList.add("hidden");
+
+                const email =
+                    emailInput.value.trim();
+
+                const password =
+                    passwordInput.value;
+
+                if (!email || !password) {
+
+                    showError(
+                        "Please enter your email and password."
+                    );
+
+                    return;
+                }
+
+                setLoading(true);
+
+                try {
+
+                    /*
+                     * IMPORTANT:
+                     *
+                     * Your FastAPI backend uses
+                     * OAuth2PasswordRequestForm.
+                     *
+                     * Therefore the email MUST be sent
+                     * as "username".
+                     */
+
+                    const body =
+                        new URLSearchParams();
+
+                    body.append(
+                        "username",
+                        email
+                    );
+
+                    body.append(
+                        "password",
+                        password
+                    );
+
+                    const response =
+                        await fetch(
+                            `${API_BASE}/auth/login`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/x-www-form-urlencoded"
+                                },
+
+                                body: body
+                            }
+                        );
+
+                    let data = {};
+
+                    try {
+                        data = await response.json();
+                    } catch {
+                        data = {};
+                    }
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            data.detail ||
+                            "Invalid email or password."
+                        );
+                    }
+
+                    /*
+                     * Save authentication information.
+                     */
+
+                    localStorage.setItem(
+                        "access_token",
+                        data.access_token
+                    );
+
+                    localStorage.setItem(
+                        "user_id",
+                        data.user_id
+                    );
+
+                    showSuccess(
+                        "Signed in successfully. Opening your dashboard..."
+                    );
+
+                    setTimeout(() => {
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    }, 500);
+
+                } catch (error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+                    showError(
+                        error.message ||
+                        "Unable to sign in. Please try again."
+                    );
+
+                } finally {
+
+                    setLoading(false);
+
+                }
+
+            }
+        );
+
+
+        /*
+         * Show / hide password
+         */
+
+        const togglePassword =
+            document.getElementById(
+                "toggle-password"
+            );
+
+        const passwordIcon =
+            document.getElementById(
+                "password-icon"
+            );
+
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                const isPassword =
+                    passwordInput.type === "password";
+
+                passwordInput.type =
+                    isPassword
+                        ? "text"
+                        : "password";
+
+                passwordIcon.textContent =
+                    isPassword
+                        ? "visibility_off"
+                        : "visibility";
+
+            }
+        );
+
+
+        /*
+         * Development password reset helper
+         *
+         * Your backend currently exposes a development
+         * endpoint /auth/reset-password.
+         */
+
+        document
+            .getElementById("forgot-password")
+            .addEventListener(
+                "click",
+                async () => {
+
+                    const email =
+                        emailInput.value.trim();
+
+                    if (!email) {
+
+                        showError(
+                            "Enter your email address first."
+                        );
+
+                        emailInput.focus();
+
+                        return;
+                    }
+
+                    const newPassword =
+                        window.prompt(
+                            "Enter your new password:"
+                        );
+
+                    if (!newPassword) {
+                        return;
+                    }
+
+                    try {
+
+                        const body =
+                            new URLSearchParams();
+
+                        body.append(
+                            "email",
+                            email
+                        );
+
+                        body.append(
+                            "new_password",
+                            newPassword
+                        );
+
+                        const response =
+                            await fetch(
+                                `${API_BASE}/auth/reset-password`,
+                                {
+                                    method: "POST",
+
+                                    headers: {
+                                        "Content-Type":
+                                            "application/x-www-form-urlencoded"
+                                    },
+
+                                    body
+                                }
+                            );
+
+                        const data =
+                            await response.json();
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.detail ||
+                                "Password reset failed."
+                            );
+                        }
+
+                        showSuccess(
+                            "Password reset successfully. You can now sign in."
+                        );
+
+                    } catch (error) {
+
+                        showError(
+                            error.message ||
+                            "Password reset failed."
+                        );
+
+                    }
+
+                }
+            );
+
+
+        /*
+         * Generate a lightweight background.
+         */
+
+        const starfield =
+            document.getElementById(
+                "starfield"
+            );
+
+
+        for (let i = 0; i < 80; i++) {
+
+            const star =
+                document.createElement("div");
+
+            star.className =
+                "star";
+
+            star.style.left =
+                `${Math.random() * 100}%`;
+
+            star.style.top =
+                `${Math.random() * 100}%`;
+
+            star.style.animationDelay =
+                `${Math.random() * 8}s`;
+
+            starfield.appendChild(star);
+        }
+
+    </script>
+
+</body>
+</html>

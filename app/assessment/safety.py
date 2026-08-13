@@ -37,7 +37,7 @@ def check_safety(answers: dict[int, int]):
             "flags": safety_flags,
             "message": (
                 "Your responses indicate that you may need "
-                "immediate support. MindBridge cannot assess "
+                "immediate support. Solace cannot assess "
                 "or manage an emergency. Please contact a "
                 "qualified mental-health professional or your "
                 "local emergency/crisis service, and consider "

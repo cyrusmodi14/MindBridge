@@ -33,7 +33,7 @@ def generate_assessment_interpretation(prompt: str) -> str:
                 "role": "system",
                 "content": (
                     "You are the AI interpretation component "
-                    "of MindBridge. Provide supportive, cautious "
+                    "of Solace. Provide supportive, cautious "
                     "and evidence-grounded mental-health information. "
                     "Never diagnose the user."
                 ),

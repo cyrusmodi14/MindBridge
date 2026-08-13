@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MindBridge — Dashboard</title>
+    <title>Solace — Dashboard</title>
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
@@ -100,7 +100,7 @@
 
         <a href="dashboard.html"
            class="font-display text-2xl font-bold text-secondary">
-            MindBridge
+            Solace
         </a>
 
         <p class="text-xs text-white/40 mt-1">
@@ -171,7 +171,7 @@
 
         <a href="dashboard.html"
            class="font-display text-xl font-bold text-secondary">
-            MindBridge
+            Solace
         </a>
 
         <button
@@ -543,6 +543,10 @@
 
     <script src="api.js"></script>
 
+    <script src="auth.js"></script>
+
+    <script src="dashboard.js"></script>
+
     <script>
         /*
          * Backend-ready dashboard.
@@ -602,7 +606,7 @@
 
             if (!token) {
                 document.getElementById("welcome-message").textContent =
-                    "Welcome to MindBridge";
+                    "Welcome to Solace";
 
                 document.getElementById("current-vibe").textContent =
                     "Sign in required";

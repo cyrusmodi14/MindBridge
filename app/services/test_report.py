@@ -32,7 +32,7 @@ report = generate_assessment_report(
 
 
 print("\n==============================")
-print("MINDBRIDGE ASSESSMENT REPORT")
+print("Solace ASSESSMENT REPORT")
 print("==============================")
 
 print("\nOVERALL SCORE:")

@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    APP_NAME: str = "MindBridge"
+    APP_NAME: str = "Solace"
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = True
 

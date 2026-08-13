@@ -34,9 +34,9 @@ def build_assessment_prompt(
             evidence_text += "\n"
 
     prompt = f"""
-You are the assessment interpretation component of MindBridge.
+You are the assessment interpretation component of Solace.
 
-MindBridge is a mental-health support application.
+Solace is a mental-health support application.
 
 IMPORTANT:
 - Do NOT diagnose the user.

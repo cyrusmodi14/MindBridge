@@ -11,7 +11,7 @@ from chromadb.utils.embedding_functions import (
 # ==============================
 
 VECTOR_DB_PATH = Path("vector_db")
-COLLECTION_NAME = "mindbridge_knowledge"
+COLLECTION_NAME = "Solace_knowledge"
 
 embedding_function = SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2"
