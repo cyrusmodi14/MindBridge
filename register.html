@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solace - Begin Your Journey</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#113729",
+                        "surface-container": "#122131",
+                        "secondary": "#a8cfbc",
+                        "on-surface-variant": "#c6c6cd",
+                        "surface-container-low": "#0d1c2d",
+                        "surface-variant": "#273647",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface-dim": "#051424",
+                        "on-tertiary-container": "#738298",
+                        "primary-fixed": "#dae2fd",
+                        "surface-container-lowest": "#010f1f",
+                        "surface": "#051424",
+                        "background": "#051424",
+                        "surface-container-highest": "#273647",
+                        "tertiary-fixed": "#d5e3fd",
+                        "tertiary-fixed-dim": "#b9c7e0",
+                        "surface-tint": "#bec6e0",
+                        "inverse-primary": "#565e74",
+                        "on-tertiary-fixed": "#0d1c2f",
+                        "on-surface": "#d4e4fa",
+                        "surface-bright": "#2c3a4c",
+                        "on-tertiary": "#233144",
+                        "inverse-surface": "#d4e4fa",
+                        "on-secondary-fixed-variant": "#294e3f",
+                        "on-error": "#690005",
+                        "tertiary-container": "#09182a",
+                        "surface-container-high": "#1c2b3c",
+                        "on-tertiary-fixed-variant": "#3a485c",
+                        "inverse-on-surface": "#233143",
+                        "secondary-fixed-dim": "#a8cfbc",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#798098",
+                        "outline": "#909097",
+                        "primary-container": "#0f172a",
+                        "on-secondary-container": "#96beab",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed": "#002115",
+                        "primary": "#bec6e0",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#283044",
+                        "on-background": "#d4e4fa",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed": "#c3ecd7",
+                        "error-container": "#93000a",
+                        "outline-variant": "#45464d",
+                        "tertiary": "#b9c7e0",
+                        "secondary-container": "#294e3f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "display-lg-mobile": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background-color: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .input-dark {
+            background-color: #0F172A;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .input-dark:focus {
+            border-color: #D1FAE5;
+            box-shadow: 0 0 8px rgba(209, 250, 229, 0.4);
+            outline: none;
+        }
+        .star-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, #020617, #051424);
+        }
+        .stars {
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 5s infinite;
+            opacity: 0.3;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.4; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex items-center justify-center font-body-md overflow-hidden relative">
+<div class="star-bg">
+<div class="stars"></div>
+</div>
+<!-- Main Registration Card -->
+<main class="w-full max-w-md mx-margin-mobile md:mx-auto relative z-10">
+<!-- Logo Area -->
+<div class="text-center mb-10">
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tight">Solace</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-2">Restorative Clarity</p>
+</div>
+<!-- Form Container -->
+<div class="glass-panel rounded-xl p-8 md:p-10 shadow-2xl relative overflow-hidden group">
+<div class="mb-8 text-center">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Begin Your Journey</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Create an account to enter the sanctuary.</p>
+</div>
+<form class="space-y-6">
+<!-- Name Input -->
+<div>
+<label class="block font-label-sm text-label-sm text-primary-fixed-dim mb-2 uppercase tracking-wider" for="name">Full Name</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">person</span>
+<input class="input-dark w-full rounded-lg py-3 pl-12 pr-4 text-on-surface placeholder-on-surface-variant/50 focus:ring-0" id="name" name="name" placeholder="Jane Doe" required="" type="text"/>
+</div>
+</div>
+<!-- Email Input -->
+<div>
+<label class="block font-label-sm text-label-sm text-primary-fixed-dim mb-2 uppercase tracking-wider" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">mail</span>
+<input class="input-dark w-full rounded-lg py-3 pl-12 pr-4 text-on-surface placeholder-on-surface-variant/50 focus:ring-0" id="email" name="email" placeholder="jane@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div>
+<label class="block font-label-sm text-label-sm text-primary-fixed-dim mb-2 uppercase tracking-wider" for="password">Password</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+<input class="input-dark w-full rounded-lg py-3 pl-12 pr-4 text-on-surface placeholder-on-surface-variant/50 focus:ring-0" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-[#D1FAE5] hover:bg-[#A8CFBC] text-[#020617] font-body-lg text-body-lg font-semibold py-3 px-6 rounded-lg transition-colors duration-300 mt-8 flex justify-center items-center gap-2 group/btn" type="submit">
+                    Join Solace
+                    <span class="material-symbols-outlined transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>
+</button>
+</form>
+<!-- Secondary Link -->
+<div class="mt-8 text-center border-t border-white/10 pt-6">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Already have an account? 
+                    <a class="text-primary hover:text-white transition-colors duration-200 ml-1 font-medium underline-offset-4 hover:underline" href="#">Log in</a>
+</p>
+</div>
+</div>
+</main>
+</body></html>

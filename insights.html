@@ -1,457 +1,672 @@
 <!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Solace Wellness Tracker</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-                "surface-container-highest": "#273647",
-                "error": "#ffb4ab",
-                "on-error": "#690005",
-                "on-background": "#d4e4fa",
-                "surface-container-low": "#0d1c2d",
-                "surface-container-lowest": "#010f1f",
-                "secondary-fixed": "#c3ecd7",
-                "on-tertiary-fixed-variant": "#3a485c",
-                "surface": "#051424",
-                "secondary-container": "#294e3f",
-                "on-primary-fixed-variant": "#3f465c",
-                "on-secondary-fixed-variant": "#294e3f",
-                "on-primary-fixed": "#131b2e",
-                "primary-container": "#0f172a",
-                "primary-fixed": "#dae2fd",
-                "on-primary": "#283044",
-                "primary": "#bec6e0",
-                "inverse-primary": "#565e74",
-                "surface-bright": "#2c3a4c",
-                "on-surface-variant": "#c6c6cd",
-                "inverse-on-surface": "#233143",
-                "on-secondary": "#113729",
-                "inverse-surface": "#d4e4fa",
-                "primary-fixed-dim": "#bec6e0",
-                "error-container": "#93000a",
-                "secondary-fixed-dim": "#a8cfbc",
-                "background": "#051424",
-                "on-surface": "#d4e4fa",
-                "on-secondary-fixed": "#002115",
-                "surface-variant": "#273647",
-                "surface-dim": "#051424",
-                "surface-container": "#122131",
-                "on-error-container": "#ffdad6",
-                "tertiary": "#b9c7e0",
-                "tertiary-container": "#09182a",
-                "on-primary-container": "#798098",
-                "outline": "#909097",
-                "surface-tint": "#bec6e0",
-                "surface-container-high": "#1c2b3c",
-                "tertiary-fixed-dim": "#b9c7e0",
-                "on-tertiary-fixed": "#0d1c2f",
-                "on-tertiary": "#233144",
-                "tertiary-fixed": "#d5e3fd",
-                "on-tertiary-container": "#738298",
-                "outline-variant": "#45464d",
-                "secondary": "#a8cfbc",
-                "on-secondary-container": "#96beab"
-        },
-        "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-        },
-        "spacing": {
-                "container-max": "1200px",
-                "unit": "8px",
-                "margin-desktop": "64px",
-                "gutter": "24px",
-                "margin-mobile": "16px"
-        },
-        "fontFamily": {
-                "display-lg": [
-                        "Manrope"
-                ],
-                "body-md": [
-                        "Inter"
-                ],
-                "headline-md": [
-                        "Manrope"
-                ],
-                "label-sm": [
-                        "JetBrains Mono"
-                ],
-                "display-lg-mobile": [
-                        "Manrope"
-                ],
-                "body-lg": [
-                        "Inter"
-                ]
-        },
-        "fontSize": {
-                "display-lg": [
-                        "48px",
-                        {
-                                "lineHeight": "56px",
-                                "letterSpacing": "-0.02em",
-                                "fontWeight": "700"
-                        }
-                ],
-                "body-md": [
-                        "16px",
-                        {
-                                "lineHeight": "24px",
-                                "fontWeight": "400"
-                        }
-                ],
-                "headline-md": [
-                        "24px",
-                        {
-                                "lineHeight": "32px",
-                                "fontWeight": "600"
-                        }
-                ],
-                "label-sm": [
-                        "12px",
-                        {
-                                "lineHeight": "16px",
-                                "letterSpacing": "0.05em",
-                                "fontWeight": "500"
-                        }
-                ],
-                "display-lg-mobile": [
-                        "32px",
-                        {
-                                "lineHeight": "40px",
-                                "letterSpacing": "-0.02em",
-                                "fontWeight": "700"
-                        }
-                ],
-                "body-lg": [
-                        "18px",
-                        {
-                                "lineHeight": "28px",
-                                "fontWeight": "400"
-                        }
-                ]
+    <title>MindBridge — Insights</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        rel="stylesheet"
+    >
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#051424",
+                        primary: "#d4e4fa",
+                        secondary: "#a8cfbc",
+                        secondaryContainer: "#294e3f",
+                        surfaceContainer: "#122131",
+                        surfaceHigh: "#1c2b3c",
+                        muted: "#c6c6cd"
+                    },
+
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
         }
-},
-    },
-  }
-</script>
-<style>
+    </script>
+
+    <style>
         body {
-            background-color: transparent;
-            overflow-x: hidden;
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at 25% 0%,
+                    rgba(41,78,63,.25),
+                    transparent 35%
+                ),
+                #051424;
         }
-        .glass-card {
-            background: rgba(39, 54, 71, 0.45);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.3);
+
+        .glass {
+            background: rgba(39,54,71,.42);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .mood-button {
+            transition:
+                transform .2s ease,
+                border-color .2s ease,
+                background .2s ease;
+        }
+
+        .mood-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .mood-button.selected {
+            background: rgba(41,78,63,.75);
+            border-color: rgba(168,207,188,.6);
+            box-shadow: 0 0 0 1px rgba(168,207,188,.12);
+        }
+
+        input[type="range"] {
+            accent-color: #a8cfbc;
         }
     </style>
 </head>
-<body class="text-on-background font-body-md antialiased bg-background">
-<!-- Interactive Shader Background -->
-<canvas class="fixed inset-0 -z-10 w-full h-full" id="shader-bg"></canvas>
-<!-- Top App Bar (Desktop) -->
-<header class="hidden md:flex fixed top-0 w-full z-50 flex justify-between items-center px-gutter h-16 bg-surface-container/60 backdrop-blur-lg border-b border-white/10 shadow-lg transition-all duration-300 ease-in-out">
-<div class="font-headline-md text-headline-md font-bold text-primary">Solace</div>
-<nav class="flex space-x-unit">
-<a class="text-on-surface-variant font-medium hover:opacity-80 transition-opacity flex items-center gap-2 px-3" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span> Home
-            </a>
-<a class="text-primary font-bold border-b-2 border-primary flex items-center gap-2 px-3" href="#">
-<span class="material-symbols-outlined" data-icon="sentiment_satisfied">sentiment_satisfied</span> Mood
-            </a>
-<a class="text-on-surface-variant font-medium hover:opacity-80 transition-opacity flex items-center gap-2 px-3" href="#">
-<span class="material-symbols-outlined" data-icon="self_improvement">self_improvement</span> Sessions
-            </a>
-<a class="text-on-surface-variant font-medium hover:opacity-80 transition-opacity flex items-center gap-2 px-3" href="#">
-<span class="material-symbols-outlined" data-icon="person">person</span> Profile
-            </a>
-</nav>
-<div class="flex items-center space-x-unit">
-<button class="text-primary hover:opacity-80 transition-opacity px-2"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
-<button class="text-primary hover:opacity-80 transition-opacity px-2"><span class="material-symbols-outlined" data-icon="settings">settings</span></button>
-<img alt="User profile photo" class="w-8 h-8 rounded-full object-cover border border-white/20 ml-2" data-alt="A small, circular profile picture of a person looking relaxed in a natural setting. The lighting is soft and natural, emphasizing a calm and serene aesthetic. The overall mood is peaceful and supportive." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAroW6ueMzCP5iekY5ioyD3lLid4Ap2QsaeOM5putNsrK5oyl0LFqXC0C4B-ZlF_sCMTB1ykpD2ryb4iGrJV9vWrlDw-cBoqtPZNCLH-y_MmUzyHswwBuwyrGhy8_hp4YRnzmGztmm45UR1iK9zDK8k9HLk-64vr49Jbj6RfvTPzrapz9nw0LXjVGW53jrdHSI1WUh2al8DehBE_vEvNNbEZL0gfS1sAFmc6JnsgS_q1gEXBL5eC-FOvg"/>
-</div>
-</header>
-<!-- Side Nav Bar (Desktop) -->
-<nav class="hidden md:flex flex-col fixed left-0 top-0 h-full p-unit z-40 bg-surface-container/60 backdrop-blur-lg border-r border-white/10 shadow-lg w-64 rounded-r-xl transition-all duration-300 ease-in-out mt-16 pt-gutter">
-<div class="mb-gutter px-2">
-<div class="font-headline-md text-headline-md font-bold text-primary">Solace</div>
-<div class="font-body-md text-body-md text-on-surface-variant">Restorative Clarity</div>
-</div>
-<div class="flex-grow flex flex-col space-y-2">
-<a class="text-on-surface-variant hover:bg-white/10 rounded-xl px-4 py-2 flex items-center gap-3 font-label-sm text-label-sm hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="spa">spa</span> Sanctuary
-            </a>
-<a class="bg-secondary-container text-on-secondary-container rounded-xl font-bold px-4 py-2 flex items-center gap-3 font-label-sm text-label-sm hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="edit_note">edit_note</span> Journal
-            </a>
-<a class="text-on-surface-variant hover:bg-white/10 rounded-xl px-4 py-2 flex items-center gap-3 font-label-sm text-label-sm hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="analytics">analytics</span> Insights
-            </a>
-<a class="text-on-surface-variant hover:bg-white/10 rounded-xl px-4 py-2 flex items-center gap-3 font-label-sm text-label-sm hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="group">group</span> Community
-            </a>
-<a class="text-on-surface-variant hover:bg-white/10 rounded-xl px-4 py-2 flex items-center gap-3 font-label-sm text-label-sm hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="auto_stories">auto_stories</span> Resources
-            </a>
-</div>
-<button class="mt-auto mb-gutter w-full bg-secondary-container text-on-secondary-container rounded-full py-2 font-body-md font-semibold hover:opacity-90 transition-all">Guided Session</button>
-<div class="flex flex-col space-y-2 mt-auto border-t border-outline-variant/30 pt-4">
-<a class="text-on-surface-variant hover:bg-white/10 rounded-xl px-4 py-1 flex items-center gap-3 font-body-md text-body-md hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span> Support
-            </a>
-<a class="text-on-surface-variant hover:bg-white/10 rounded-xl px-4 py-1 flex items-center gap-3 font-body-md text-body-md hover:scale-[1.02] transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="shield">shield</span> Privacy
-            </a>
-</div>
-</nav>
-<!-- Main Content Canvas -->
-<main class="md:ml-64 pt-24 md:pt-32 pb-24 px-margin-mobile md:px-margin-desktop min-h-screen">
-<div class="max-w-container-max mx-auto space-y-gutter md:space-y-12">
-<!-- Header Section -->
-<div class="mb-gutter">
-<h1 class="font-display-lg-mobile md:font-display-lg text-primary mb-2">Good Morning, Alex.</h1>
-<p class="font-body-md text-on-surface-variant max-w-2xl">Take a moment to reflect. How are you feeling today?</p>
-</div>
-<!-- Bento Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
-<!-- Mood Selection (8 cols) -->
-<div class="glass-card rounded-xl p-gutter md:p-8 md:col-span-8 flex flex-col justify-center">
-<h2 class="font-headline-md text-primary mb-gutter">Log Your Mood</h2>
-<div class="flex flex-wrap gap-4 justify-center md:justify-start">
-<!-- Mood Chips -->
-<button class="flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container hover:bg-secondary-container/50 border border-transparent hover:border-secondary transition-all duration-300 w-20 h-24 group">
-<span class="material-symbols-outlined text-4xl text-outline group-hover:text-secondary transition-colors" data-icon="sentiment_very_satisfied" data-weight="fill">sentiment_very_satisfied</span>
-<span class="font-label-sm text-on-surface-variant mt-2">Joyful</span>
-</button>
-<button class="flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container hover:bg-secondary-container/50 border border-transparent hover:border-secondary transition-all duration-300 w-20 h-24 group">
-<span class="material-symbols-outlined text-4xl text-outline group-hover:text-secondary transition-colors" data-icon="sentiment_satisfied" data-weight="fill">sentiment_satisfied</span>
-<span class="font-label-sm text-on-surface-variant mt-2">Content</span>
-</button>
-<button class="flex flex-col items-center justify-center p-2 rounded-xl bg-secondary-container/50 border border-secondary transition-all duration-300 w-20 h-24 group">
-<span class="material-symbols-outlined text-4xl text-secondary transition-colors" data-icon="sentiment_neutral" data-weight="fill">sentiment_neutral</span>
-<span class="font-label-sm text-secondary mt-2">Neutral</span>
-</button>
-<button class="flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container hover:bg-secondary-container/50 border border-transparent hover:border-secondary transition-all duration-300 w-20 h-24 group">
-<span class="material-symbols-outlined text-4xl text-outline group-hover:text-secondary transition-colors" data-icon="sentiment_dissatisfied" data-weight="fill">sentiment_dissatisfied</span>
-<span class="font-label-sm text-on-surface-variant mt-2">Anxious</span>
-</button>
-<button class="flex flex-col items-center justify-center p-2 rounded-xl bg-surface-container hover:bg-secondary-container/50 border border-transparent hover:border-secondary transition-all duration-300 w-20 h-24 group">
-<span class="material-symbols-outlined text-4xl text-outline group-hover:text-secondary transition-colors" data-icon="sentiment_very_dissatisfied" data-weight="fill">sentiment_very_dissatisfied</span>
-<span class="font-label-sm text-on-surface-variant mt-2">Sad</span>
-</button>
-</div>
-<div class="mt-gutter">
-<label class="font-body-md font-semibold text-on-surface-variant block mb-2" for="energy-slider">Energy Level</label>
-<input class="w-full h-2 bg-surface-container rounded-lg appearance-none cursor-pointer accent-secondary" id="energy-slider" max="10" min="1" type="range" value="6"/>
-<div class="flex justify-between text-label-sm text-outline mt-2">
-<span>Low</span>
-<span>High</span>
-</div>
-</div>
-</div>
-<!-- Supportive Companion Widget (4 cols) -->
-<div class="glass-card rounded-xl p-gutter md:p-8 md:col-span-4 bg-gradient-to-br from-surface-container/50 to-primary-container/30 relative overflow-hidden flex flex-col">
-<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl -mr-10 -mt-10 animate-pulse"></div>
-<div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary" data-icon="auto_awesome">auto_awesome</span>
-<h3 class="font-body-md font-semibold text-primary">Solace Guide</h3>
-</div>
-<p class="font-body-md text-on-surface-variant italic mb-auto">"It's completely okay to feel neutral today. Taking time to just 'be' is an important part of restorative clarity."</p>
-<button class="mt-4 w-full glass-card border-primary/30 text-primary py-2 rounded-full font-body-md font-semibold hover:bg-white/10 transition-colors">Start a Breathing Exercise</button>
-</div>
-<!-- Mood Trends Chart (12 cols) -->
-<div class="glass-card rounded-xl p-gutter md:p-8 md:col-span-12">
-<div class="flex justify-between items-center mb-gutter">
-<h2 class="font-headline-md text-primary">Mood Trends</h2>
-<select class="glass-card rounded-lg text-body-md text-on-surface-variant py-1 px-3 border-none focus:ring-secondary bg-surface-container">
-<option>This Week</option>
-<option>This Month</option>
-</select>
-</div>
-<!-- Placeholder for Chart - using CSS gradient to simulate curved line -->
-<div class="w-full h-48 relative border-l border-b border-outline-variant/30 flex items-end pt-4 pb-2 px-2">
-<!-- Simulated SVG Curve for visual effect only as requested to not use base64/SVG -->
-<div class="absolute inset-0 bg-gradient-to-t from-secondary-container/10 to-transparent rounded-bl-lg"></div>
-<div class="w-1/5 h-2/5 bg-secondary-container/60 rounded-t-sm mx-1 flex-grow hover:bg-secondary-container transition-colors relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface/90 text-inverse-on-surface text-label-sm px-2 py-1 rounded backdrop-blur">Mon</div>
-</div>
-<div class="w-1/5 h-3/5 bg-secondary-container/60 rounded-t-sm mx-1 flex-grow hover:bg-secondary-container transition-colors relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface/90 text-inverse-on-surface text-label-sm px-2 py-1 rounded backdrop-blur">Tue</div>
-</div>
-<div class="w-1/5 h-1/5 bg-secondary-container/60 rounded-t-sm mx-1 flex-grow hover:bg-secondary-container transition-colors relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface/90 text-inverse-on-surface text-label-sm px-2 py-1 rounded backdrop-blur">Wed</div>
-</div>
-<div class="w-1/5 h-4/5 bg-secondary-container/60 rounded-t-sm mx-1 flex-grow hover:bg-secondary-container transition-colors relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface/90 text-inverse-on-surface text-label-sm px-2 py-1 rounded backdrop-blur">Thu</div>
-</div>
-<div class="w-1/5 h-3/5 bg-secondary-fixed/50 rounded-t-sm mx-1 flex-grow border-t-2 border-secondary-fixed relative group">
-<div class="absolute -top-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-inverse-surface/90 text-inverse-on-surface text-label-sm px-2 py-1 rounded backdrop-blur">Today</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</main>
-<!-- Bottom Nav Bar (Mobile) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface-container/60 backdrop-blur-lg border-t border-white/10 shadow-lg rounded-t-xl transition-all duration-200">
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-label-sm text-label-sm mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="sentiment_satisfied">sentiment_satisfied</span>
-<span class="font-label-sm text-label-sm mt-1">Mood</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="self_improvement">self_improvement</span>
-<span class="font-label-sm text-label-sm mt-1">Sessions</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-label-sm text-label-sm mt-1">Profile</span>
-</a>
-</nav>
-<script>
-const canvas = document.getElementById('shader-bg');
-const gl = canvas.getContext('webgl');
 
-if (gl) {
-    let mouse = { x: 0, y: 0 };
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = canvas.height - e.clientY;
-    });
-    
-    window.addEventListener('touchmove', (e) => {
-        mouse.x = e.touches[0].clientX;
-        mouse.y = canvas.height - e.touches[0].clientY;
-    });
+<body class="text-primary font-body min-h-screen">
 
-    const resize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-    window.addEventListener('resize', resize);
-    resize();
+    <!-- Desktop nav -->
+    <header class="hidden md:flex fixed top-0 left-0 right-0 z-40 h-16 glass border-b border-white/5">
 
-    const vsSource = `
-        attribute vec2 position;
-        varying vec2 v_texCoord;
-        void main() {
-            gl_Position = vec4(position, 0.0, 1.0);
-            v_texCoord = position * 0.5 + 0.5;
-            v_texCoord.y = 1.0 - v_texCoord.y;
+        <div class="w-full max-w-7xl mx-auto px-8 flex items-center justify-between">
+
+            <a href="dashboard.html"
+               class="font-display text-xl font-bold text-secondary">
+                MindBridge
+            </a>
+
+            <nav class="flex items-center gap-2">
+
+                <a href="dashboard.html"
+                   class="px-4 py-2 rounded-xl text-sm text-white/55 hover:text-white hover:bg-white/5 transition">
+                    Dashboard
+                </a>
+
+                <a href="insights.html"
+                   class="px-4 py-2 rounded-xl text-sm text-secondary bg-secondaryContainer/70 font-semibold">
+                    Insights
+                </a>
+
+                <a href="chat.html"
+                   class="px-4 py-2 rounded-xl text-sm text-white/55 hover:text-white hover:bg-white/5 transition">
+                    AI Companion
+                </a>
+
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="max-w-7xl mx-auto px-5 md:px-8 py-24 md:py-28">
+
+        <!-- Header -->
+        <section class="mb-8">
+
+            <p class="text-xs uppercase tracking-[0.2em] text-secondary">
+                Daily check-in
+            </p>
+
+            <h1
+                id="welcome-message"
+                class="mt-3 text-3xl md:text-4xl font-display font-bold text-white"
+            >
+                How are you feeling today?
+            </h1>
+
+            <p class="mt-3 text-white/50 max-w-2xl">
+                Take a moment to check in with yourself. Your answers can
+                help build a clearer picture of your emotional patterns.
+            </p>
+
+        </section>
+
+        <!-- Mood selector -->
+        <section class="glass rounded-3xl p-6 md:p-8">
+
+            <div class="flex items-center justify-between gap-4 mb-7">
+
+                <div>
+                    <h2 class="text-xl font-display font-bold text-white">
+                        Choose your mood
+                    </h2>
+
+                    <p class="mt-1 text-sm text-white/45">
+                        Select the option that feels closest right now.
+                    </p>
+                </div>
+
+                <span
+                    id="selected-mood-label"
+                    class="hidden md:block text-sm text-secondary font-semibold"
+                >
+                    Nothing selected
+                </span>
+
+            </div>
+
+            <div id="mood-grid"
+                 class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+
+                <button
+                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
+                    data-mood="joyful"
+                    type="button"
+                >
+                    <span class="material-symbols-outlined text-yellow-300">
+                        sentiment_very_satisfied
+                    </span>
+
+                    <span class="block mt-4 font-semibold text-white">
+                        Joyful
+                    </span>
+
+                    <span class="block mt-1 text-xs text-white/40">
+                        Energized & positive
+                    </span>
+                </button>
+
+                <button
+                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
+                    data-mood="content"
+                    type="button"
+                >
+                    <span class="material-symbols-outlined text-secondary">
+                        sentiment_satisfied
+                    </span>
+
+                    <span class="block mt-4 font-semibold text-white">
+                        Content
+                    </span>
+
+                    <span class="block mt-1 text-xs text-white/40">
+                        Calm & comfortable
+                    </span>
+                </button>
+
+                <button
+                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
+                    data-mood="neutral"
+                    type="button"
+                >
+                    <span class="material-symbols-outlined text-white/70">
+                        sentiment_neutral
+                    </span>
+
+                    <span class="block mt-4 font-semibold text-white">
+                        Neutral
+                    </span>
+
+                    <span class="block mt-1 text-xs text-white/40">
+                        Neither high nor low
+                    </span>
+                </button>
+
+                <button
+                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
+                    data-mood="anxious"
+                    type="button"
+                >
+                    <span class="material-symbols-outlined text-orange-300">
+                        sentiment_dissatisfied
+                    </span>
+
+                    <span class="block mt-4 font-semibold text-white">
+                        Anxious
+                    </span>
+
+                    <span class="block mt-1 text-xs text-white/40">
+                        Restless or worried
+                    </span>
+                </button>
+
+                <button
+                    class="mood-button glass rounded-2xl p-5 text-left border border-white/5"
+                    data-mood="sad"
+                    type="button"
+                >
+                    <span class="material-symbols-outlined text-blue-300">
+                        sentiment_very_dissatisfied
+                    </span>
+
+                    <span class="block mt-4 font-semibold text-white">
+                        Sad
+                    </span>
+
+                    <span class="block mt-1 text-xs text-white/40">
+                        Low or heavy
+                    </span>
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- Energy -->
+        <section class="glass rounded-3xl p-6 md:p-8 mt-6">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+                    <h2 class="text-xl font-display font-bold text-white">
+                        Energy level
+                    </h2>
+
+                    <p class="mt-1 text-sm text-white/45">
+                        How much energy do you have right now?
+                    </p>
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-secondaryContainer flex items-center justify-center">
+
+                    <span
+                        id="energy-value"
+                        class="text-xl font-display font-bold text-secondary"
+                    >
+                        5
+                    </span>
+
+                </div>
+
+            </div>
+
+            <input
+                id="energy-slider"
+                type="range"
+                min="1"
+                max="10"
+                value="5"
+                class="w-full mt-8"
+            >
+
+            <div class="flex justify-between text-xs text-white/35 mt-2">
+                <span>Very low</span>
+                <span>Balanced</span>
+                <span>Very high</span>
+            </div>
+
+        </section>
+
+        <!-- Save -->
+        <section class="mt-6 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+
+            <button
+                id="save-mood-button"
+                class="flex-1 bg-secondary text-slate-950 rounded-2xl px-6 py-4 font-semibold hover:opacity-90 transition"
+            >
+                Save Check-In
+            </button>
+
+            <a
+                href="chat.html"
+                class="flex-1 glass rounded-2xl px-6 py-4 text-center font-semibold text-white hover:bg-white/10 transition"
+            >
+                Talk About How You Feel
+            </a>
+
+        </section>
+
+        <p
+            id="save-status"
+            class="mt-4 text-sm text-center text-white/45 min-h-5"
+        ></p>
+
+        <!-- History -->
+        <section class="mt-12">
+
+            <div class="flex items-center justify-between mb-6">
+
+                <div>
+                    <p class="text-xs uppercase tracking-[0.2em] text-secondary">
+                        History
+                    </p>
+
+                    <h2 class="mt-2 text-2xl font-display font-bold text-white">
+                        Recent emotional rhythm
+                    </h2>
+                </div>
+
+                <a href="dashboard.html"
+                   class="text-sm text-secondary font-semibold">
+                    Dashboard →
+                </a>
+
+            </div>
+
+            <div class="glass rounded-3xl p-6">
+
+                <div
+                    id="history-chart"
+                    class="h-64 flex items-end gap-3"
+                >
+                    <!-- Populated by JavaScript -->
+                </div>
+
+                <div
+                    id="history-labels"
+                    class="mt-3 grid grid-cols-7 text-center text-xs text-white/35"
+                >
+                    <!-- Populated by JavaScript -->
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Mobile nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 glass border-t border-white/5 px-4 py-3">
+
+        <div class="grid grid-cols-3">
+
+            <a href="dashboard.html"
+               class="flex flex-col items-center gap-1 text-white/50">
+                <span class="material-symbols-outlined">
+                    dashboard
+                </span>
+                <span class="text-[11px]">
+                    Dashboard
+                </span>
+            </a>
+
+            <a href="insights.html"
+               class="flex flex-col items-center gap-1 text-secondary">
+                <span class="material-symbols-outlined">
+                    insights
+                </span>
+                <span class="text-[11px]">
+                    Insights
+                </span>
+            </a>
+
+            <a href="chat.html"
+               class="flex flex-col items-center gap-1 text-white/50">
+                <span class="material-symbols-outlined">
+                    chat
+                </span>
+                <span class="text-[11px]">
+                    Chat
+                </span>
+            </a>
+
+        </div>
+
+    </nav>
+
+    <script src="api.js"></script>
+
+    <script>
+        let selectedMood = null;
+
+        const moodButtons =
+            document.querySelectorAll(".mood-button");
+
+        const energySlider =
+            document.getElementById("energy-slider");
+
+        const energyValue =
+            document.getElementById("energy-value");
+
+        const selectedMoodLabel =
+            document.getElementById("selected-mood-label");
+
+        const saveButton =
+            document.getElementById("save-mood-button");
+
+        const saveStatus =
+            document.getElementById("save-status");
+
+        moodButtons.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                moodButtons.forEach(item => {
+                    item.classList.remove("selected");
+                });
+
+                button.classList.add("selected");
+
+                selectedMood =
+                    button.dataset.mood;
+
+                selectedMoodLabel.textContent =
+                    selectedMood.charAt(0).toUpperCase() +
+                    selectedMood.slice(1);
+            });
+
+        });
+
+        energySlider.addEventListener("input", () => {
+            energyValue.textContent =
+                energySlider.value;
+        });
+
+        function renderHistory(history = []) {
+
+            const chart =
+                document.getElementById("history-chart");
+
+            const labels =
+                document.getElementById("history-labels");
+
+            chart.innerHTML = "";
+            labels.innerHTML = "";
+
+            if (!history.length) {
+
+                const fallback =
+                    [30, 45, 55, 40, 65, 50, 70];
+
+                const dayNames =
+                    ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+                fallback.forEach((value, index) => {
+
+                    const wrapper =
+                        document.createElement("div");
+
+                    wrapper.className =
+                        "flex-1 h-full flex items-end";
+
+                    const bar =
+                        document.createElement("div");
+
+                    bar.className =
+                        "w-full bg-secondary/45 rounded-t-xl";
+
+                    bar.style.height =
+                        `${value}%`;
+
+                    wrapper.appendChild(bar);
+                    chart.appendChild(wrapper);
+
+                    const label =
+                        document.createElement("span");
+
+                    label.textContent =
+                        dayNames[index];
+
+                    labels.appendChild(label);
+                });
+
+                return;
+            }
+
+            history.slice(-7).forEach(entry => {
+
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.className =
+                    "flex-1 h-full flex items-end";
+
+                const bar =
+                    document.createElement("div");
+
+                bar.className =
+                    "w-full bg-secondary/55 rounded-t-xl";
+
+                const value =
+                    Number(entry.energy ?? entry.value ?? 50);
+
+                bar.style.height =
+                    `${Math.max(5, Math.min(100, value * 10))}%`;
+
+                wrapper.appendChild(bar);
+                chart.appendChild(wrapper);
+
+                const label =
+                    document.createElement("span");
+
+                label.textContent =
+                    entry.day || entry.date || "—";
+
+                labels.appendChild(label);
+            });
         }
-    `;
 
-    const fsSource = `
-precision highp float;
+        async function saveMood() {
 
-uniform float u_time;
-uniform vec2 u_resolution;
-uniform vec2 u_mouse;
-varying vec2 v_texCoord;
+            if (!selectedMood) {
 
-float hash(vec2 p) {
-    p = fract(p * vec2(123.34, 456.21));
-    p += dot(p, p + 45.32);
-    return fract(p.x * p.y);
-}
+                saveStatus.textContent =
+                    "Please select your mood first.";
 
-void main() {
-    vec2 uv = v_texCoord;
-    vec2 pos = uv * u_resolution;
-    
-    // Background color: Deep midnight
-    vec3 color = vec3(0.02, 0.08, 0.14); // #051424 approx
-    
-    // Star field
-    float star = hash(floor(pos * 0.4));
-    if (star > 0.995) {
-        float flicker = sin(u_time * 3.0 + star * 100.0) * 0.5 + 0.5;
-        color += vec3(1.0, 1.0, 1.0) * flicker * 0.7;
-    } else if (star > 0.985) {
-        color += vec3(0.7, 0.8, 0.9) * 0.3;
-    }
-    
-    // Subtle nebula / organic clouds using mint/teal accents
-    float noise = sin(uv.x * 3.0 + u_time * 0.1) * cos(uv.y * 2.0 - u_time * 0.15);
-    vec3 teal = vec3(0.16, 0.31, 0.25); // #294e3f approx
-    color = mix(color, color + teal * 0.3, noise * 0.5 + 0.5);
-    
-    // Mouse interaction - subtle ripple/glow
-    vec2 mouse = u_mouse / u_resolution;
-    float dist = distance(uv, mouse);
-    color += vec3(0.16, 0.31, 0.25) * exp(-dist * 4.0) * 0.4;
-    
-    // Add subtle vignette
-    float vignette = 1.0 - smoothstep(0.5, 1.5, length(uv - 0.5));
-    color *= vignette;
+                saveStatus.className =
+                    "mt-4 text-sm text-center text-yellow-300";
 
-    gl_FragColor = vec4(color, 1.0);
-}
-    `;
+                return;
+            }
 
-    const createShader = (gl, type, source) => {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        return shader;
-    };
+            const energy =
+                Number(energySlider.value);
 
-    const program = gl.createProgram();
-    gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vsSource));
-    gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fsSource));
-    gl.linkProgram(program);
-    gl.useProgram(program);
+            if (!getToken()) {
 
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-        -1.0, -1.0,
-         1.0, -1.0,
-        -1.0,  1.0,
-        -1.0,  1.0,
-         1.0, -1.0,
-         1.0,  1.0
-    ]), gl.STATIC_DRAW);
+                saveStatus.textContent =
+                    "Please log in before saving your check-in.";
 
-    const positionLocation = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+                saveStatus.className =
+                    "mt-4 text-sm text-center text-yellow-300";
 
-    const uTimeLoc = gl.getUniformLocation(program, "u_time");
-    const uResLoc = gl.getUniformLocation(program, "u_resolution");
-    const uMouseLoc = gl.getUniformLocation(program, "u_mouse");
+                return;
+            }
 
-    const startTime = performance.now();
-    
-    const render = () => {
-        const time = (performance.now() - startTime) * 0.001;
-        
-        gl.uniform1f(uTimeLoc, time);
-        gl.uniform2f(uResLoc, canvas.width, canvas.height);
-        gl.uniform2f(uMouseLoc, mouse.x, mouse.y);
-        
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(render);
-    };
-    
-    render();
-}
-</script>
-</body></html>
+            saveButton.disabled = true;
+            saveButton.textContent = "Saving...";
+
+            try {
+
+                /*
+                 * Expected backend endpoint:
+                 *
+                 * POST /mood/
+                 *
+                 * {
+                 *     "mood": "anxious",
+                 *     "energy": 4
+                 * }
+                 */
+
+                await apiFetch("/mood/", {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        mood: selectedMood,
+                        energy: energy
+                    })
+                });
+
+                saveStatus.textContent =
+                    "Your check-in has been saved.";
+
+                saveStatus.className =
+                    "mt-4 text-sm text-center text-secondary";
+
+                loadHistory();
+
+            } catch (error) {
+
+                console.error(error);
+
+                saveStatus.textContent =
+                    "The mood API is not connected yet.";
+
+                saveStatus.className =
+                    "mt-4 text-sm text-center text-yellow-300";
+
+            } finally {
+
+                saveButton.disabled = false;
+                saveButton.textContent =
+                    "Save Check-In";
+
+            }
+        }
+
+        async function loadHistory() {
+
+            if (!getToken()) {
+                renderHistory();
+                return;
+            }
+
+            try {
+
+                const data =
+                    await apiFetch("/mood/history");
+
+                renderHistory(
+                    Array.isArray(data)
+                        ? data
+                        : data.history || []
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Mood history unavailable:",
+                    error
+                );
+
+                renderHistory();
+            }
+        }
+
+        saveButton.addEventListener(
+            "click",
+            saveMood
+        );
+
+        loadHistory();
+    </script>
+
+</body>
+</html>

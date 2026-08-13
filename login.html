@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Solace - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;family=Manrope:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#113729",
+                        "surface-container": "#122131",
+                        "secondary": "#a8cfbc",
+                        "on-surface-variant": "#c6c6cd",
+                        "surface-container-low": "#0d1c2d",
+                        "surface-variant": "#273647",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface-dim": "#051424",
+                        "on-tertiary-container": "#738298",
+                        "primary-fixed": "#dae2fd",
+                        "surface-container-lowest": "#010f1f",
+                        "surface": "#051424",
+                        "background": "#051424",
+                        "surface-container-highest": "#273647",
+                        "tertiary-fixed": "#d5e3fd",
+                        "tertiary-fixed-dim": "#b9c7e0",
+                        "surface-tint": "#bec6e0",
+                        "inverse-primary": "#565e74",
+                        "on-tertiary-fixed": "#0d1c2f",
+                        "on-surface": "#d4e4fa",
+                        "surface-bright": "#2c3a4c",
+                        "on-tertiary": "#233144",
+                        "inverse-surface": "#d4e4fa",
+                        "on-secondary-fixed-variant": "#294e3f",
+                        "on-error": "#690005",
+                        "tertiary-container": "#09182a",
+                        "surface-container-high": "#1c2b3c",
+                        "on-tertiary-fixed-variant": "#3a485c",
+                        "inverse-on-surface": "#233143",
+                        "secondary-fixed-dim": "#a8cfbc",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#798098",
+                        "outline": "#909097",
+                        "primary-container": "#0f172a",
+                        "on-secondary-container": "#96beab",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-secondary-fixed": "#002115",
+                        "primary": "#bec6e0",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#283044",
+                        "on-background": "#d4e4fa",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed": "#c3ecd7",
+                        "error-container": "#93000a",
+                        "outline-variant": "#45464d",
+                        "tertiary": "#b9c7e0",
+                        "secondary-container": "#294e3f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1200px",
+                        "margin-desktop": "64px",
+                        "unit": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "display-lg-mobile": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Starfield animation */
+        .stars {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF; /* Simplified for example, real would have hundreds */
+            animation: animStar 50s linear infinite;
+        }
+
+        .stars2 {
+            width: 2px;
+            height: 2px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+            animation: animStar 100s linear infinite;
+        }
+
+        .stars3 {
+            width: 3px;
+            height: 3px;
+            background: transparent;
+            box-shadow: 1744px 122px #FFF , 134px 1321px #FFF , 92px 859px #FFF;
+            animation: animStar 150s linear infinite;
+        }
+
+        @keyframes animStar {
+            from { transform: translateY(0px) }
+            to { transform: translateY(-2000px) }
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-[#020617] text-on-surface min-h-screen relative overflow-hidden flex items-center justify-center font-body-md text-body-md">
+<!-- Animated Shader Background Integration (Assuming Placeholder for Starfield if needed, but CSS provided above for fallback) -->
+<!-- <webgl-shader src="{{DATA:ANIMATION:ANIMATION_1}}" class="absolute inset-0 w-full h-full z-0"></webgl-shader> -->
+<div class="absolute inset-0 z-0 overflow-hidden opacity-50" id="stars-container"></div>
+<div class="relative z-10 w-full max-w-md px-margin-mobile md:px-0">
+<div class="glass-panel rounded-xl p-8 shadow-2xl flex flex-col items-center">
+<!-- Brand Logo Area -->
+<div class="mb-8 flex flex-col items-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2" data-icon="spa" data-weight="fill" style="font-variation-settings: 'FILL' 1;">spa</span>
+<h1 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-on-surface">Solace</h1>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-6 text-center">Welcome Back to Your Space</h2>
+<form class="w-full space-y-6">
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1" for="email">Email Address</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="mail">mail</span>
+</span>
+<input class="w-full bg-[#0F172A] border border-surface-variant text-on-surface rounded-lg pl-10 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300 outline-none" id="email" name="email" placeholder="you@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-2">
+<div class="flex justify-between items-center ml-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-secondary hover:text-secondary-fixed transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="lock">lock</span>
+</span>
+<input class="w-full bg-[#0F172A] border border-surface-variant text-on-surface rounded-lg pl-10 py-3 focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-300 outline-none" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- Submit Button -->
+<button class="w-full bg-[#D1FAE5] text-[#0F172A] font-headline-md text-body-md font-bold py-3 rounded-lg hover:bg-secondary-fixed transition-colors duration-300 flex items-center justify-center space-x-2" type="submit">
+<span>Sign In</span>
+<span class="material-symbols-outlined text-lg" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</form>
+<div class="mt-8 text-center">
+<p class="text-on-surface-variant">
+                    Don't have an account? 
+                    <a class="text-secondary hover:text-secondary-fixed font-semibold transition-colors" href="#">Create one</a>
+</p>
+</div>
+</div>
+</div>
+<script>
+        // Simple starfield generation for fallback visual effect if animation token isn't used
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            const numStars = 100;
+            
+            for(let i=0; i<3; i++) {
+                let layer = document.createElement('div');
+                layer.className = `stars${i===0 ? '' : i+1} absolute top-0 left-0`;
+                
+                let shadows = [];
+                for(let j=0; j<numStars; j++) {
+                    shadows.push(`${Math.floor(Math.random() * window.innerWidth)}px ${Math.floor(Math.random() * window.innerHeight * 2)}px #FFF`);
+                }
+                layer.style.boxShadow = shadows.join(', ');
+                container.appendChild(layer);
+            }
+        }
+        createStars();
+        window.addEventListener('resize', () => {
+            const container = document.getElementById('stars-container');
+            container.innerHTML = '';
+            createStars();
+        });
+    </script>
+</body></html>

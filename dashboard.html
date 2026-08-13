@@ -1,410 +1,725 @@
 <!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Solace Dashboard</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-                "surface-container-highest": "#273647",
-                "error": "#ffb4ab",
-                "on-error": "#690005",
-                "on-background": "#d4e4fa",
-                "surface-container-low": "#0d1c2d",
-                "surface-container-lowest": "#010f1f",
-                "secondary-fixed": "#c3ecd7",
-                "on-tertiary-fixed-variant": "#3a485c",
-                "surface": "#051424",
-                "secondary-container": "#294e3f",
-                "on-primary-fixed-variant": "#3f465c",
-                "on-secondary-fixed-variant": "#294e3f",
-                "on-primary-fixed": "#131b2e",
-                "primary-container": "#0f172a",
-                "primary-fixed": "#dae2fd",
-                "on-primary": "#283044",
-                "primary": "#bec6e0",
-                "inverse-primary": "#565e74",
-                "surface-bright": "#2c3a4c",
-                "on-surface-variant": "#c6c6cd",
-                "inverse-on-surface": "#233143",
-                "on-secondary": "#113729",
-                "inverse-surface": "#d4e4fa",
-                "primary-fixed-dim": "#bec6e0",
-                "error-container": "#93000a",
-                "secondary-fixed-dim": "#a8cfbc",
-                "background": "#051424",
-                "on-surface": "#d4e4fa",
-                "on-secondary-fixed": "#002115",
-                "surface-variant": "#273647",
-                "surface-dim": "#051424",
-                "surface-container": "#122131",
-                "on-error-container": "#ffdad6",
-                "tertiary": "#b9c7e0",
-                "tertiary-container": "#09182a",
-                "on-primary-container": "#798098",
-                "outline": "#909097",
-                "surface-tint": "#bec6e0",
-                "surface-container-high": "#1c2b3c",
-                "tertiary-fixed-dim": "#b9c7e0",
-                "on-tertiary-fixed": "#0d1c2f",
-                "on-tertiary": "#233144",
-                "tertiary-fixed": "#d5e3fd",
-                "on-tertiary-container": "#738298",
-                "outline-variant": "#45464d",
-                "secondary": "#a8cfbc",
-                "on-secondary-container": "#96beab"
-        },
-        "borderRadius": {
-                "DEFAULT": "0.25rem",
-                "lg": "0.5rem",
-                "xl": "0.75rem",
-                "full": "9999px"
-        },
-        "spacing": {
-                "container-max": "1200px",
-                "unit": "8px",
-                "margin-desktop": "64px",
-                "gutter": "24px",
-                "margin-mobile": "16px"
-        },
-        "fontFamily": {
-                "display-lg": [
-                        "Manrope"
-                ],
-                "body-md": [
-                        "Inter"
-                ],
-                "headline-md": [
-                        "Manrope"
-                ],
-                "label-sm": [
-                        "JetBrains Mono"
-                ],
-                "display-lg-mobile": [
-                        "Manrope"
-                ],
-                "body-lg": [
-                        "Inter"
-                ]
-        },
-        "fontSize": {
-                "display-lg": [
-                        "48px",
-                        {
-                                "lineHeight": "56px",
-                                "letterSpacing": "-0.02em",
-                                "fontWeight": "700"
-                        }
-                ],
-                "body-md": [
-                        "16px",
-                        {
-                                "lineHeight": "24px",
-                                "fontWeight": "400"
-                        }
-                ],
-                "headline-md": [
-                        "24px",
-                        {
-                                "lineHeight": "32px",
-                                "fontWeight": "600"
-                        }
-                ],
-                "label-sm": [
-                        "12px",
-                        {
-                                "lineHeight": "16px",
-                                "letterSpacing": "0.05em",
-                                "fontWeight": "500"
-                        }
-                ],
-                "display-lg-mobile": [
-                        "32px",
-                        {
-                                "lineHeight": "40px",
-                                "letterSpacing": "-0.02em",
-                                "fontWeight": "700"
-                        }
-                ],
-                "body-lg": [
-                        "18px",
-                        {
-                                "lineHeight": "28px",
-                                "fontWeight": "400"
-                        }
-                ]
+    <title>MindBridge — Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL@0;1"
+        rel="stylesheet"
+    >
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: "#051424",
+                        surface: "#051424",
+                        primary: "#d4e4fa",
+                        secondary: "#a8cfbc",
+                        secondaryContainer: "#294e3f",
+                        surfaceContainer: "#122131",
+                        surfaceHigh: "#1c2b3c",
+                        surfaceHighest: "#273647",
+                        muted: "#c6c6cd",
+                        danger: "#ffb4ab"
+                    },
+
+                    fontFamily: {
+                        display: ["Manrope", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
         }
-},
-    },
-  }
-</script>
-<style>
+    </script>
+
+    <style>
         body {
-            overflow-x: hidden;
-            background: transparent;
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at 70% 0%,
+                    rgba(41, 78, 63, 0.2),
+                    transparent 35%
+                ),
+                #051424;
         }
-        
-        .glass-card {
-            background-color: rgba(39, 54, 71, 0.4);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.4);
+
+        .glass {
+            background: rgba(19, 33, 49, 0.58);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .card-hover {
+            transition: transform .25s ease, border-color .25s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-3px);
+            border-color: rgba(168,207,188,.25);
+        }
+
+        .bar {
+            transition: height .5s ease;
+        }
+
+        .loading-shimmer {
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: .45;
+            }
+            50% {
+                opacity: .9;
+            }
         }
     </style>
 </head>
-<body class="text-on-surface font-body-md antialiased bg-background">
-<!-- Interactive Shader Background -->
-<canvas class="fixed inset-0 w-full h-full -z-10" id="glcanvas"></canvas>
-<!-- Side Nav Bar (Desktop) -->
-<nav class="hidden md:flex flex-col fixed left-0 top-0 h-full w-64 rounded-r-xl p-margin-mobile z-40 bg-surface-container-lowest/80 backdrop-blur-xl border-r border-outline-variant/30 shadow-[0_12px_32px_-8px_rgba(0,0,0,0.5)]">
-<div class="mb-gutter">
-<h1 class="font-headline-md text-headline-md font-bold text-primary">Solace</h1>
-<p class="font-label-sm text-label-sm text-on-surface-variant">Restorative Clarity</p>
-</div>
-<ul class="space-y-unit flex-1">
-<li>
-<a class="flex items-center gap-3 p-3 bg-secondary-container/80 text-on-secondary-container rounded-xl font-bold transition-transform hover:scale-[1.02]" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">spa</span>
-                    Sanctuary
-                </a>
-</li>
-<li>
-<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-transform hover:scale-[1.02]" href="#">
-<span class="material-symbols-outlined">edit_note</span>
-                    Journal
-                </a>
-</li>
-<li>
-<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-transform hover:scale-[1.02]" href="#">
-<span class="material-symbols-outlined">analytics</span>
-                    Insights
-                </a>
-</li>
-<li>
-<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-transform hover:scale-[1.02]" href="#">
-<span class="material-symbols-outlined">group</span>
-                    Community
-                </a>
-</li>
-<li>
-<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-transform hover:scale-[1.02]" href="#">
-<span class="material-symbols-outlined">auto_stories</span>
-                    Resources
-                </a>
-</li>
-</ul>
-<div class="mb-gutter">
-<button class="w-full py-3 px-4 rounded-full bg-gradient-to-r from-primary-container to-[#1a2942] text-on-surface font-body-md shadow-md hover:shadow-[0_0_15px_rgba(168,207,188,0.2)] transition-shadow border border-outline-variant/30">
-                Guided Session
+
+<body class="text-primary font-body min-h-screen">
+
+    <!-- Desktop sidebar -->
+    <aside class="hidden md:flex fixed left-0 top-0 bottom-0 w-64 glass border-r border-white/5 flex-col p-5 z-40">
+
+        <a href="dashboard.html"
+           class="font-display text-2xl font-bold text-secondary">
+            MindBridge
+        </a>
+
+        <p class="text-xs text-white/40 mt-1">
+            Mental wellness companion
+        </p>
+
+        <nav class="mt-10 space-y-2">
+
+            <a href="dashboard.html"
+               class="flex items-center gap-3 rounded-xl px-4 py-3 bg-secondaryContainer/70 text-secondary font-semibold">
+                <span class="material-symbols-outlined">
+                    dashboard
+                </span>
+
+                Dashboard
+            </a>
+
+            <a href="insights.html"
+               class="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition">
+                <span class="material-symbols-outlined">
+                    insights
+                </span>
+
+                Insights
+            </a>
+
+            <a href="chat.html"
+               class="flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition">
+                <span class="material-symbols-outlined">
+                    chat
+                </span>
+
+                AI Companion
+            </a>
+
+            <button
+                id="assessment-button"
+                class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-white/60 hover:bg-white/5 hover:text-white transition text-left"
+            >
+                <span class="material-symbols-outlined">
+                    assignment
+                </span>
+
+                Assessment
             </button>
-</div>
-<ul class="space-y-unit border-t border-outline-variant/30 pt-unit">
-<li>
-<a class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-transform hover:scale-[1.02] font-label-sm text-label-sm" href="#">
-<span class="material-symbols-outlined text-[18px]">help_outline</span>
-                    Support
-                </a>
-</li>
-<li>
-<a class="flex items-center gap-3 p-2 text-on-surface-variant hover:bg-surface-container-low rounded-xl transition-transform hover:scale-[1.02] font-label-sm text-label-sm" href="#">
-<span class="material-symbols-outlined text-[18px]">shield</span>
-                    Privacy
-                </a>
-</li>
-</ul>
-</nav>
-<!-- Main Content Area -->
-<main class="md:ml-64 p-margin-mobile md:p-margin-desktop min-h-screen pb-[80px] md:pb-margin-desktop transition-all duration-300">
-<!-- Header -->
-<header class="flex justify-between items-center mb-gutter md:mb-margin-desktop">
-<div>
-<h2 class="font-display-lg-mobile md:font-display-lg text-primary">Good Morning.</h2>
-<p class="text-on-surface-variant font-body-md">Welcome to your sanctuary.</p>
-</div>
-<div class="flex items-center gap-4">
-<button class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-secondary hover:opacity-80 transition-opacity">
-<span class="material-symbols-outlined">notifications</span>
-</button>
-<img class="w-10 h-10 rounded-full object-cover border border-white/20" data-alt="A small, circular profile picture of a serene person in a minimal setting, soft lighting, calm aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByWugNgz1LZ5GjDTGxvqARGEVfEe2rEiw0MzBP4iblg2AOqVl2YJlpdnfFHQ5_NVawx370IQwJHktTYfHaaO9J4Gp80LLjmhBaBAtMTNv1OcImBDQlUDvFTHwEKkIWwz3d1ImQYCy9wyiLzefK9MiJSBUHCtokRYm_XkP4LWOVIpoXxFR8hW02AIhI8X6npWSfQJ7vpkJGf-vsykUnmt9vmaktDVilzlggP4Ht07bWOYnnXftt9Ao7tg"/>
-</div>
-</header>
-<!-- Bento Grid -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-margin-mobile md:gap-gutter auto-rows-min">
-<!-- Current Vibe Widget (Spans 4 cols on desktop) -->
-<div class="glass-card rounded-xl p-gutter md:col-span-4 flex flex-col justify-between">
-<div class="flex items-center justify-between mb-margin-mobile">
-<h3 class="font-headline-md text-headline-md text-primary">Current Vibe</h3>
-<span class="material-symbols-outlined text-secondary">sentiment_satisfied</span>
-</div>
-<div class="flex-1 flex items-center justify-center py-gutter">
-<div class="text-center">
-<span class="material-symbols-outlined text-5xl text-secondary mb-2" style="font-variation-settings: 'FILL' 1;">water_drop</span>
-<p class="font-body-md font-bold text-primary text-lg">Calm &amp; Centered</p>
-</div>
-</div>
-<div class="flex gap-2 mt-4">
-<button class="flex-1 py-2 rounded-xl border border-outline-variant/50 text-on-surface-variant hover:border-secondary hover:text-secondary transition-colors font-body-md">Log Mood</button>
-</div>
-</div>
-<!-- Weekly Progress Widget (Spans 8 cols on desktop) -->
-<div class="glass-card rounded-xl p-gutter md:col-span-8 flex flex-col">
-<div class="flex items-center justify-between mb-gutter">
-<h3 class="font-headline-md text-headline-md text-primary">Weekly Rhythm</h3>
-<span class="material-symbols-outlined text-secondary">calendar_month</span>
-</div>
-<div class="flex-1 flex items-end gap-2 h-32 mt-auto">
-<!-- Faux Bar Chart -->
-<div class="flex-1 bg-surface-container/60 rounded-t-lg h-[40%] hover:bg-secondary/80 transition-colors relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Mon</div>
-</div>
-<div class="flex-1 bg-surface-container/60 rounded-t-lg h-[70%] hover:bg-secondary/80 transition-colors relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Tue</div>
-</div>
-<div class="flex-1 bg-secondary/80 rounded-t-lg h-[90%] relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Wed</div>
-</div>
-<div class="flex-1 bg-surface-container/60 rounded-t-lg h-[30%] hover:bg-secondary/80 transition-colors relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Thu</div>
-</div>
-<div class="flex-1 bg-surface-container/60 rounded-t-lg h-[50%] hover:bg-secondary/80 transition-colors relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Fri</div>
-</div>
-<div class="flex-1 bg-surface-container/60 rounded-t-lg h-[20%] hover:bg-secondary/80 transition-colors relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Sat</div>
-</div>
-<div class="flex-1 bg-surface-container/60 rounded-t-lg h-[10%] hover:bg-secondary/80 transition-colors relative group">
-<div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm bg-primary-container text-on-surface px-2 py-1 rounded border border-outline-variant/30">Sun</div>
-</div>
-</div>
-</div>
-<!-- Quick Meditation Widget (Spans 6 cols on desktop) -->
-<div class="glass-card rounded-xl p-gutter md:col-span-6 relative overflow-hidden group cursor-pointer">
-<div class="absolute inset-0 bg-gradient-to-br from-primary-container/30 to-transparent z-0"></div>
-<div class="relative z-10 flex flex-col h-full">
-<div class="flex items-center gap-2 mb-margin-mobile">
-<span class="material-symbols-outlined text-secondary">self_improvement</span>
-<span class="font-label-sm text-label-sm text-secondary uppercase">Quick Reset</span>
-</div>
-<h3 class="font-headline-md text-headline-md text-primary mb-2">5-Minute Breathing</h3>
-<p class="text-on-surface-variant font-body-md mb-gutter">Re-center yourself with a short, guided breathing exercise.</p>
-<div class="mt-auto flex items-center justify-between">
-<span class="text-sm text-on-surface-variant font-body-md">Est. 5 mins</span>
-<div class="w-10 h-10 rounded-full bg-secondary text-surface-container-lowest flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Journal Prompt Widget (Spans 6 cols on desktop) -->
-<div class="glass-card rounded-xl p-gutter md:col-span-6 flex flex-col">
-<div class="flex items-center gap-2 mb-margin-mobile">
-<span class="material-symbols-outlined text-secondary">edit_note</span>
-<span class="font-label-sm text-label-sm text-secondary uppercase">Daily Prompt</span>
-</div>
-<p class="font-headline-md text-headline-md text-on-surface mb-gutter italic">"What is one small thing that brought you peace today?"</p>
-<div class="mt-auto">
-<textarea class="w-full bg-surface-container-highest/50 backdrop-blur-sm border border-outline-variant/40 rounded-xl p-3 focus:outline-none focus:border-secondary focus:ring-1 focus:ring-secondary transition-all resize-none h-24 placeholder-on-surface-variant/60 text-on-surface font-body-md" placeholder="Start writing..."></textarea>
-<div class="flex justify-end mt-2">
-<button class="px-4 py-2 rounded-xl bg-surface-container-low text-secondary font-body-md font-bold hover:bg-surface-variant transition-colors text-sm border border-outline-variant/30">Save Note</button>
-</div>
-</div>
-</div>
-</div>
-</main>
-<!-- Bottom Nav Bar (Mobile) -->
-<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-surface-container-lowest/80 backdrop-blur-xl border-t border-outline-variant/30 shadow-[0_-8px_24px_-4px_rgba(0,0,0,0.5)] rounded-t-xl transition-all duration-200">
-<a class="flex flex-col items-center justify-center bg-secondary-container/80 text-on-secondary-container rounded-full px-4 py-1 active:scale-95 transition-transform" href="#">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
-<span class="font-label-sm text-label-sm mt-1">Home</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform hover:text-secondary" href="#">
-<span class="material-symbols-outlined">sentiment_satisfied</span>
-<span class="font-label-sm text-label-sm mt-1">Mood</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform hover:text-secondary" href="#">
-<span class="material-symbols-outlined">self_improvement</span>
-<span class="font-label-sm text-label-sm mt-1">Sessions</span>
-</a>
-<a class="flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform hover:text-secondary" href="#">
-<span class="material-symbols-outlined">person</span>
-<span class="font-label-sm text-label-sm mt-1">Profile</span>
-</a>
-</nav>
-<script>
-    const canvas = document.getElementById('glcanvas');
-    const gl = canvas.getContext('webgl');
 
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, canvas.width, canvas.height);
-    }
-    window.addEventListener('resize', resize);
-    resize();
+        </nav>
 
-    const program = gl.createProgram();
+        <div class="mt-auto">
 
-    function compileShader(type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        return shader;
-    }
+            <button
+                id="logout-button"
+                class="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-white/50 hover:text-white hover:bg-white/5 transition"
+            >
+                <span class="material-symbols-outlined">
+                    logout
+                </span>
 
-    gl.attachShader(program, compileShader(gl.VERTEX_SHADER, `
-        attribute vec2 position;
-        varying vec2 v_texCoord;
-        void main() {
-            gl_Position = vec4(position, 0.0, 1.0);
-            v_texCoord = position * 0.5 + 0.5;
-            v_texCoord.y = 1.0 - v_texCoord.y;
+                Logout
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- Mobile header -->
+    <header class="md:hidden fixed top-0 left-0 right-0 z-40 glass border-b border-white/5 px-5 h-16 flex items-center justify-between">
+
+        <a href="dashboard.html"
+           class="font-display text-xl font-bold text-secondary">
+            MindBridge
+        </a>
+
+        <button
+            id="mobile-menu-button"
+            class="text-secondary"
+        >
+            <span class="material-symbols-outlined">
+                menu
+            </span>
+        </button>
+
+    </header>
+
+    <!-- Mobile menu -->
+    <div
+        id="mobile-menu"
+        class="hidden md:hidden fixed top-16 left-0 right-0 z-30 glass p-4 border-b border-white/5"
+    >
+        <div class="grid grid-cols-3 gap-2">
+
+            <a href="dashboard.html"
+               class="text-center p-3 rounded-xl bg-secondaryContainer text-secondary text-xs">
+                Dashboard
+            </a>
+
+            <a href="insights.html"
+               class="text-center p-3 rounded-xl bg-white/5 text-white/70 text-xs">
+                Insights
+            </a>
+
+            <a href="chat.html"
+               class="text-center p-3 rounded-xl bg-white/5 text-white/70 text-xs">
+                Chat
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="md:ml-64 min-h-screen">
+
+        <div class="max-w-7xl mx-auto px-5 md:px-8 py-24 md:py-10">
+
+            <!-- Greeting -->
+            <section class="mb-8">
+
+                <p class="text-sm text-secondary uppercase tracking-[0.18em]">
+                    Your space
+                </p>
+
+                <h1
+                    id="welcome-message"
+                    class="mt-2 text-3xl md:text-4xl font-display font-bold text-white"
+                >
+                    Welcome back
+                </h1>
+
+                <p class="mt-2 text-white/50">
+                    Here's a snapshot of your recent wellness activity.
+                </p>
+
+            </section>
+
+            <!-- Top cards -->
+            <section class="grid md:grid-cols-3 gap-5 mb-6">
+
+                <div class="glass rounded-3xl p-6 card-hover">
+
+                    <div class="flex justify-between items-start">
+
+                        <div>
+                            <p class="text-sm text-white/50">
+                                Current Vibe
+                            </p>
+
+                            <h2
+                                id="current-vibe"
+                                class="mt-2 text-2xl font-display font-bold text-white loading-shimmer"
+                            >
+                                Loading...
+                            </h2>
+                        </div>
+
+                        <div class="w-11 h-11 rounded-2xl bg-secondaryContainer flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">
+                                mood
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <p
+                        id="vibe-description"
+                        class="mt-4 text-sm text-white/50"
+                    >
+                        Your latest wellness information will appear here.
+                    </p>
+
+                </div>
+
+                <div class="glass rounded-3xl p-6 card-hover">
+
+                    <div class="flex justify-between items-start">
+
+                        <div>
+                            <p class="text-sm text-white/50">
+                                Overall Score
+                            </p>
+
+                            <h2
+                                id="overall-score"
+                                class="mt-2 text-3xl font-display font-bold text-white"
+                            >
+                                —
+                            </h2>
+                        </div>
+
+                        <div class="w-11 h-11 rounded-2xl bg-secondaryContainer flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">
+                                monitoring
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-5 h-2 bg-white/5 rounded-full overflow-hidden">
+                        <div
+                            id="score-bar"
+                            class="h-full bg-secondary rounded-full"
+                            style="width:0%"
+                        ></div>
+                    </div>
+
+                </div>
+
+                <div class="glass rounded-3xl p-6 card-hover">
+
+                    <div class="flex justify-between items-start">
+
+                        <div>
+                            <p class="text-sm text-white/50">
+                                Latest Assessment
+                            </p>
+
+                            <h2
+                                id="assessment-status"
+                                class="mt-2 text-xl font-display font-bold text-white"
+                            >
+                                No assessment
+                            </h2>
+                        </div>
+
+                        <div class="w-11 h-11 rounded-2xl bg-secondaryContainer flex items-center justify-center">
+                            <span class="material-symbols-outlined text-secondary">
+                                assignment_turned_in
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <button
+                        id="assessment-action"
+                        class="mt-5 text-sm text-secondary font-semibold hover:underline"
+                    >
+                        Take assessment →
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- Main content -->
+            <section class="grid lg:grid-cols-12 gap-6">
+
+                <!-- Weekly activity -->
+                <div class="lg:col-span-8 glass rounded-3xl p-6">
+
+                    <div class="flex items-center justify-between">
+
+                        <div>
+                            <h2 class="text-xl font-display font-bold text-white">
+                                Weekly Rhythm
+                            </h2>
+
+                            <p class="mt-1 text-sm text-white/45">
+                                Your recent activity pattern
+                            </p>
+                        </div>
+
+                        <a href="insights.html"
+                           class="text-sm text-secondary font-semibold">
+                            View insights
+                        </a>
+
+                    </div>
+
+                    <div
+                        id="weekly-chart"
+                        class="mt-8 h-64 flex items-end gap-3"
+                    >
+                        <!-- Bars created by JavaScript -->
+
+                        <div class="flex-1 h-8 bg-white/5 rounded-lg loading-shimmer"></div>
+                        <div class="flex-1 h-16 bg-white/5 rounded-lg loading-shimmer"></div>
+                        <div class="flex-1 h-24 bg-white/5 rounded-lg loading-shimmer"></div>
+                        <div class="flex-1 h-14 bg-white/5 rounded-lg loading-shimmer"></div>
+                        <div class="flex-1 h-20 bg-white/5 rounded-lg loading-shimmer"></div>
+                        <div class="flex-1 h-12 bg-white/5 rounded-lg loading-shimmer"></div>
+                        <div class="flex-1 h-10 bg-white/5 rounded-lg loading-shimmer"></div>
+                    </div>
+
+                    <div class="mt-3 grid grid-cols-7 text-center text-xs text-white/35">
+                        <span>Mon</span>
+                        <span>Tue</span>
+                        <span>Wed</span>
+                        <span>Thu</span>
+                        <span>Fri</span>
+                        <span>Sat</span>
+                        <span>Sun</span>
+                    </div>
+
+                </div>
+
+                <!-- Quick actions -->
+                <div class="lg:col-span-4 grid gap-6">
+
+                    <a
+                        href="insights.html"
+                        class="glass rounded-3xl p-6 card-hover"
+                    >
+
+                        <div class="flex items-start justify-between">
+
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-secondary">
+                                    Daily check-in
+                                </p>
+
+                                <h2 class="mt-3 text-xl font-display font-bold text-white">
+                                    Log your mood
+                                </h2>
+
+                                <p class="mt-2 text-sm leading-6 text-white/50">
+                                    Record how you're feeling today.
+                                </p>
+                            </div>
+
+                            <span class="material-symbols-outlined text-secondary">
+                                sentiment_satisfied
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                    <a
+                        href="chat.html"
+                        class="glass rounded-3xl p-6 card-hover"
+                    >
+
+                        <div class="flex items-start justify-between">
+
+                            <div>
+                                <p class="text-xs uppercase tracking-widest text-secondary">
+                                    Companion
+                                </p>
+
+                                <h2 class="mt-3 text-xl font-display font-bold text-white">
+                                    Talk it through
+                                </h2>
+
+                                <p class="mt-2 text-sm leading-6 text-white/50">
+                                    Open a private conversation with your AI companion.
+                                </p>
+                            </div>
+
+                            <span class="material-symbols-outlined text-secondary">
+                                chat
+                            </span>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+                <!-- Latest insight -->
+                <div class="lg:col-span-12 glass rounded-3xl p-6">
+
+                    <div class="flex items-start gap-4">
+
+                        <div class="w-12 h-12 rounded-2xl bg-secondaryContainer flex items-center justify-center flex-shrink-0">
+                            <span class="material-symbols-outlined text-secondary">
+                                lightbulb
+                            </span>
+                        </div>
+
+                        <div class="flex-1">
+
+                            <p class="text-xs uppercase tracking-widest text-secondary">
+                                Latest insight
+                            </p>
+
+                            <h2
+                                id="latest-insight-title"
+                                class="mt-2 text-xl font-display font-bold text-white"
+                            >
+                                Your latest insight will appear here.
+                            </h2>
+
+                            <p
+                                id="latest-insight"
+                                class="mt-2 text-white/50 leading-7"
+                            >
+                                Complete an assessment or add mood information
+                                to start building your personal insight history.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- Mobile bottom nav -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-white/5 px-4 py-3">
+
+        <div class="grid grid-cols-3">
+
+            <a href="dashboard.html"
+               class="flex flex-col items-center gap-1 text-secondary">
+                <span class="material-symbols-outlined">
+                    dashboard
+                </span>
+                <span class="text-[11px]">
+                    Dashboard
+                </span>
+            </a>
+
+            <a href="insights.html"
+               class="flex flex-col items-center gap-1 text-white/50">
+                <span class="material-symbols-outlined">
+                    insights
+                </span>
+                <span class="text-[11px]">
+                    Insights
+                </span>
+            </a>
+
+            <a href="chat.html"
+               class="flex flex-col items-center gap-1 text-white/50">
+                <span class="material-symbols-outlined">
+                    chat
+                </span>
+                <span class="text-[11px]">
+                    Chat
+                </span>
+            </a>
+
+        </div>
+
+    </nav>
+
+    <script src="api.js"></script>
+
+    <script>
+        /*
+         * Backend-ready dashboard.
+         *
+         * Expected future backend endpoint:
+         * GET /dashboard/
+         *
+         * Example response:
+         * {
+         *   "user_name": "Aatulya",
+         *   "current_vibe": "Calm & Centered",
+         *   "overall_score": 72,
+         *   "category": "Balanced",
+         *   "weekly_activity": [20, 45, 75, 40, 65, 30, 25],
+         *   "latest_insight": "..."
+         * }
+         */
+
+        function escapeHtml(value) {
+            const div = document.createElement("div");
+            div.textContent = value ?? "";
+            return div.innerHTML;
         }
-    `));
 
-    gl.attachShader(program, compileShader(gl.FRAGMENT_SHADER, `<webgl-shader src="{{DATA:ANIMATION:ANIMATION_08}}" class=""></webgl-shader>`));
-    gl.linkProgram(program);
-    gl.useProgram(program);
+        function renderWeeklyChart(values = []) {
+            const chart = document.getElementById("weekly-chart");
 
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-        -1, -1,  1, -1,  -1, 1,
-        -1,  1,  1, -1,   1, 1
-    ]), gl.STATIC_DRAW);
+            const safeValues = values.length === 7
+                ? values
+                : [20, 35, 50, 30, 45, 25, 20];
 
-    const positionLocation = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+            chart.innerHTML = "";
 
-    const timeLocation = gl.getUniformLocation(program, "u_time");
-    const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-    const mouseLocation = gl.getUniformLocation(program, "u_mouse");
+            safeValues.forEach((value) => {
 
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', e => {
-        mouseX = e.clientX;
-        mouseY = canvas.height - e.clientY;
-    });
-    document.addEventListener('touchmove', e => {
-        mouseX = e.touches[0].clientX;
-        mouseY = canvas.height - e.touches[0].clientY;
-    });
+                const wrapper = document.createElement("div");
+                wrapper.className = "flex-1 h-full flex items-end";
 
-    function render(time) {
-        gl.uniform1f(timeLocation, time * 0.001);
-        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-        gl.uniform2f(mouseLocation, mouseX, mouseY);
-        
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(render);
-    }
-    requestAnimationFrame(render);
-</script>
-</body></html>
+                const bar = document.createElement("div");
+
+                bar.className =
+                    "w-full bg-secondary/50 rounded-t-xl bar hover:bg-secondary";
+
+                const clamped =
+                    Math.max(5, Math.min(100, Number(value) || 5));
+
+                bar.style.height = `${clamped}%`;
+
+                wrapper.appendChild(bar);
+                chart.appendChild(wrapper);
+            });
+        }
+
+        async function loadDashboard() {
+
+            const token = getToken();
+
+            if (!token) {
+                document.getElementById("welcome-message").textContent =
+                    "Welcome to MindBridge";
+
+                document.getElementById("current-vibe").textContent =
+                    "Sign in required";
+
+                document.getElementById("vibe-description").textContent =
+                    "Log in to see your personal wellness information.";
+
+                document.getElementById("assessment-status").textContent =
+                    "Sign in to continue";
+
+                renderWeeklyChart();
+
+                return;
+            }
+
+            try {
+
+                const data = await apiFetch("/dashboard/");
+
+                document.getElementById("welcome-message").textContent =
+                    data.user_name
+                        ? `Welcome back, ${data.user_name}`
+                        : "Welcome back";
+
+                document.getElementById("current-vibe").textContent =
+                    data.current_vibe || data.category || "No data yet";
+
+                document.getElementById("vibe-description").textContent =
+                    data.vibe_description ||
+                    "Your latest wellness information is shown here.";
+
+                const score = Number(data.overall_score);
+
+                if (!Number.isNaN(score)) {
+                    document.getElementById("overall-score").textContent =
+                        `${score}`;
+
+                    document.getElementById("score-bar").style.width =
+                        `${Math.max(0, Math.min(100, score))}%`;
+                }
+
+                if (data.assessment_id) {
+                    document.getElementById("assessment-status").textContent =
+                        "Completed";
+
+                    document.getElementById("assessment-action").textContent =
+                        "View latest assessment →";
+                }
+
+                document.getElementById("latest-insight-title").textContent =
+                    data.latest_insight_title ||
+                    "Your latest insight";
+
+                document.getElementById("latest-insight").textContent =
+                    data.latest_insight ||
+                    "Continue checking in to build a more useful personal history.";
+
+                renderWeeklyChart(data.weekly_activity);
+
+            } catch (error) {
+
+                console.error("Dashboard request failed:", error);
+
+                document.getElementById("current-vibe").textContent =
+                    "Not available yet";
+
+                document.getElementById("vibe-description").textContent =
+                    "The dashboard API has not been connected yet.";
+
+                document.getElementById("assessment-status").textContent =
+                    "Backend needed";
+
+                document.getElementById("overall-score").textContent = "—";
+
+                renderWeeklyChart();
+
+            }
+        }
+
+        document
+            .getElementById("assessment-button")
+            .addEventListener("click", () => {
+                alert(
+                    "Assessment page is the next frontend screen to connect to /assessment/score."
+                );
+            });
+
+        document
+            .getElementById("assessment-action")
+            .addEventListener("click", () => {
+                alert(
+                    "Connect this button to your assessment page."
+                );
+            });
+
+        document
+            .getElementById("logout-button")
+            .addEventListener("click", () => {
+
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("user_id");
+
+                window.location.href = "landing.html";
+            });
+
+        const mobileMenuButton =
+            document.getElementById("mobile-menu-button");
+
+        const mobileMenu =
+            document.getElementById("mobile-menu");
+
+        mobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        loadDashboard();
+    </script>
+
+</body>
+</html>
